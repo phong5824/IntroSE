@@ -33,3 +33,6 @@ export const registerUser = async (userData) => {
   }
   return false;
 };
+
+// send message
+export const sendMessage = async (msg) => {};
