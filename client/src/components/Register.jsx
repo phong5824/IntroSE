@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { registerUser } from "../action/accountAction";
+import { handleRegister } from "../action/accountAction";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -10,14 +11,15 @@ export default function Register() {
   const onSubmit = (e) => {
     e.preventDefault();
     const userData = {
+      email: email,
       username: username,
       password: password,
     };
-    if (username === "" || password === "") {
+    if (email === "" || username === "" || password === "") {
       alert("Please fill in all fields");
       return;
     }
-    if (registerUser(userData)) {
+    if (handleRegister(userData)) {
       navigate("/login");
     }
   };
@@ -32,6 +34,14 @@ export default function Register() {
           // action="/api/account"
           // method="POST"
         >
+          <label htmlFor="email">Email</label>
+          <input
+            type="text"
+            name="email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
           <label htmlFor="username">Username</label>
           <input
             type="text"
