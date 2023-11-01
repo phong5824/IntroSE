@@ -1,4 +1,4 @@
-import SearchBar from "./SearchBar";
+import SearchBar from "./searchBar";
 import LogoIcon from "./LogoIcon";
 import Avatar from "./Avatar";
 import Menu from "./Menu";
