@@ -5,6 +5,6 @@ const schema = mongoose.Schema({
   password: String,
 });
 
-const Model = mongoose.model("testCollection2", schema, "testCollection2");
+const Model = mongoose.model("def", schema, "ghj");
 
 module.exports = Model;
