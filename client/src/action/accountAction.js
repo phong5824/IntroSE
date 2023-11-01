@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //Login
-export const loginUser = (userData) => {
+export const handleLogin = (userData) => {
   axios
     .post("http://127.0.0.1:8000/login", userData)
     .then((result) => {
@@ -18,11 +18,11 @@ export const loginUser = (userData) => {
 };
 
 //Register
-export const registerUser = async (userData) => {
+export const handleRegister = async (userData) => {
   try {
     const result = await axios.post("http://127.0.0.1:8000/register", userData);
     console.log(result);
-    if (result.data === "Success") {
+    if (result.data.success == true) {
       alert("Register successful!");
       return true;
     } else {
