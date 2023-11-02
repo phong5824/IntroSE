@@ -34,12 +34,14 @@ const ImageSlider = ({ images }) => {
                     </div>
                 ))}
             </Slider>
+
             <button onClick={handlePrev} className="absolute top-1/2 left-4 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md focus:outline-none">
                 ←
             </button>
             <button onClick={handleNext} className="absolute top-1/2 right-4 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md focus:outline-none">
                 →
             </button>
+
         </div>
     );
 };
