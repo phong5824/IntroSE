@@ -71,7 +71,7 @@ export default function Login() {
         <div className="login-form w-[350px] py-1">
           <form className="flex flex-col justify-around w-full" onSubmit={onSubmit}>
             <div style={labelStyle}>
-              Tên đăng nhập
+              Email
             </div>
             <input
               type="text"
