@@ -70,10 +70,10 @@ export default function Register() {
         ></div>
         <div className="login-form w-[350px] py-1">
           <form className="flex flex-col justify-around w-full" onSubmit={onSubmit}>
-            <div style={labelStyle}>Tên đăng nhập</div>
+            <div style={labelStyle}>Tên người dùng</div>
             <input
               type="text"
-              name="ten dang nhap"
+              name="ten nguoi dung"
               // onChange={(e) => {
               // }}
               className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-[100%] bg-white text-center"
