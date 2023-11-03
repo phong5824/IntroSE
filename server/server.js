@@ -1,9 +1,11 @@
-
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
 const accountModel = require("./routes/account");
+const userModel = require("./routes/user");
 
 const app = express();
 app.use(express.json());
@@ -26,7 +28,8 @@ async function main() {
 
 main();
 
-app.use('/',accountModel)
+app.use('/',accountModel);
+app.use('/users',userModel);
 
 
 app.post("/send", (req, res) => {
