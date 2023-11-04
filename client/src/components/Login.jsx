@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     const userData = {
       email: email,
@@ -18,9 +18,14 @@ export default function Login() {
       alert("Vui lòng điền đầy đủ thông tin");
       return;
     }
-    if (handleLogin(userData)) {
-      navigate("/home");
-    }
+     const userId = await handleLogin(userData);
+      if (userId) {
+        alert("Chuẩn bị điều hướng trang");
+        navigate(`/home/${userId}`);
+      } else {
+        alert("Đã xảy ra lỗi");
+      }
+
   };
 
   const containerStyle = {

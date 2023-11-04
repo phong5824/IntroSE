@@ -15,12 +15,14 @@ router.post("/login", async(req, res) => {
          
           console.log("Username does not exist!");
           res.json({ success: false, error: "Username does not exist!" });
-  
+          
         } else {
   
           if (result.password === password && result.password) {
             console.log("Success");
-            res.json({ success: true, message:"Login Success"});
+            res.json({ success: true, userId: result.user_id, message:"Login Success"});
+            
+            // res.redirect(`/home/${result.email}`);
           } else {
             console.log("Fail");
             res.json({ success: false, error: "Incorrect password!" });
@@ -37,24 +39,32 @@ router.post("/login", async(req, res) => {
     
   });
   
- router.post("/register", async(req, res) => {
+  router.post("/register", async (req, res) => {
     const { email, password } = req.body;
-    accountModel.findOne({email:email }).then((result) => {
-      if (result) {
-        res
-          .status(409)
-          .json({ success: false, error: "Username already exists!" });
-      } else {
-        console.log("Success");
-        const account = new accountModel({
-          email: email,
-          password: password,
-        });
-        account.save().then(() => {
-          res.json({ success: true, message:"Register Success"});
-        });
-      }
-    });
+    const result = await accountModel.findOne({ email: email });
+  
+    if (result) {
+      res
+        .status(409)
+        .json({ success: false, error: "Username already exists!" });
+    } else {
+      console.log("Success");
+      
+      const maxUser = await accountModel.findOne({}, {}, { sort: { user_id: -1 } });
+      const maxUserId = maxUser ? maxUser.user_id : 0; // Kiểm tra nếu có bản ghi user_id lớn nhất
+      
+      console.log(maxUserId, email, password) 
+      const account = new accountModel({
+        user_id: maxUserId + 1,
+        email: email,
+        password: password,
+      });
+  
+      account.save().then(() => {
+        res.json({ success: true, message: "Register Success" });
+      });
+    }
   });
+  
 
   module.exports = router;

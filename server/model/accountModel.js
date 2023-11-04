@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
 
     user_id: {
-      type: Schema.Types.ObjectId,
+      type: Number,
       unique: true,
-      ref:"users",
+      required: true
     },
 
     password: {

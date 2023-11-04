@@ -2,7 +2,7 @@ import loupe from "/src/assets/loupe.png";
 const SearchBar = () => {
     const handleSearch = () => {
         // Hành động tìm kiếm của bạn sẽ được thêm vào đây sau
-    }
+    } 
 
     return (
         <div className="relative w-1/2 rounded-lg">
