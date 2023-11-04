@@ -6,7 +6,7 @@ export const handleLogin = async (userData) => {
 
     if (result.data.success === true) {
       alert("Login successful!");
-      return result.data.userId;
+      return result.data.accessToken;
     } else {
       alert(result.data.error);
       return false;
@@ -25,6 +25,7 @@ export const handleRegister = async (userData) => {
     if (result.data.success == true) {
       alert("Register successful!");
       return true;
+      
     } else {
       alert(result.data.error);
     }

@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require("express");
 const router = express.Router();
-const cors = require("cors");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const accountModel = require("../model/accountModel");
+const jwt = require("jsonwebtoken");
+
+const verifyToken = require("../middleware/account");
+const User = require("../model/userModel");
 
 
 router.post("/login", async(req, res) => {
@@ -20,12 +22,15 @@ router.post("/login", async(req, res) => {
   
           if (result.password === password && result.password) {
             console.log("Success");
-            res.json({ success: true, userId: result.user_id, message:"Login Success"});
             
-            // res.redirect(`/home/${result.email}`);
+            const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
+
+            res.status(200).json({ success: true, message:"Login Success",accessToken});
+            
           } else {
             console.log("Fail");
-            res.json({ success: false, error: "Incorrect password!" });
+            res.status(404)
+            .json({ success: false, error: "Incorrect password!" });
           }
         }
       });
@@ -58,7 +63,8 @@ router.post("/login", async(req, res) => {
       });
   
       account.save().then(() => {
-        res.json({ success: true, message: "Register Success" });
+        const accessToken = jwt.sign({userid:account._id},process.env.ACCESS_TOKEN_SECRET);
+        res.json({ success: true, message: "Register Success",accessToken});
       });
     }
   });
