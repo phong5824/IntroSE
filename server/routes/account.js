@@ -23,7 +23,6 @@ router.post("/login", async(req, res) => {
           if (result.password === password && result.password) {
             console.log("Success");
             
-            console.log(result._id);
             const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
 
             res.status(200).json({ success: true, message:"Login Success",accessToken});
@@ -63,7 +62,7 @@ router.post("/login", async(req, res) => {
           password: password,
         });
         account.save().then(() => {
-          const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
+          const accessToken = jwt.sign({userid:account._id},process.env.ACCESS_TOKEN_SECRET);
           res.status(200)
           .json({ success: true, message:"Register Success",accessToken});
         });
