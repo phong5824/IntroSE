@@ -17,16 +17,12 @@ router.post("/login", async(req, res) => {
          
           console.log("Username does not exist!");
           res.json({ success: false, error: "Username does not exist!" });
-  
+          
         } else {
   
           if (result.password === password && result.password) {
             console.log("Success");
-            
-            const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
-
-            res.status(200).json({ success: true, message:"Login Success",accessToken});
-
+            res.json({ success: true, message:"Login Success"});
           } else {
             console.log("Fail");
             res.status(404)
@@ -43,11 +39,7 @@ router.post("/login", async(req, res) => {
     }
     
   });
-
-// @route POST /register
-// @desc Resgister user
-// @access public
-
+  
  router.post("/register", async(req, res) => {
     const { email, password } = req.body;
     accountModel.findOne({email:email }).then((result) => {
@@ -62,14 +54,10 @@ router.post("/login", async(req, res) => {
           password: password,
         });
         account.save().then(() => {
-          const accessToken = jwt.sign({userid:account._id},process.env.ACCESS_TOKEN_SECRET);
-          res.status(200)
-          .json({ success: true, message:"Register Success",accessToken});
+          res.json({ success: true, message:"Register Success"});
         });
       }
     });
   });
-
-
 
   module.exports = router;
