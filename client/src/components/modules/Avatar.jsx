@@ -17,6 +17,7 @@ const Avatar = () => {
   return (
     <div className="auth-actions relative rounded-full">
       <img src={avatar} alt="Avatar" onClick={toggleMenu} className="w-10 h-10 object-cover rounded-full cursor-pointer transition duration-300 ease-in-out bg-green-500" />
+      
 
       {isMenuVisible && (
         <div className="auth-menu absolute left transform -translate-x-1/2 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg z-10 transition duration-300">

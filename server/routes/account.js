@@ -50,10 +50,7 @@ router.post("/login", async(req, res) => {
     } else {
       console.log("Success");
       
-      const maxUser = await accountModel.findOne({}, {}, { sort: { user_id: -1 } });
-      const maxUserId = maxUser ? maxUser.user_id : 0; // Kiểm tra nếu có bản ghi user_id lớn nhất
-      
-      console.log(maxUserId, email, password) 
+      const maxUserId = await accountModel.estimatedDocumentCount()
       const account = new accountModel({
         user_id: maxUserId + 1,
         email: email,

@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Register from "./components/Register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profile from "./components/Profile";
+import ResetPassword from "./components/resetPassword";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -18,6 +19,8 @@ function App() {
           <Route path="/home/:username" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+
         </Routes>
       </BrowserRouter>
     </div>
