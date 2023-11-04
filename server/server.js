@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const accountRouter = require("./routes/accountRouter");
 const db = require("./db/index");
+// const { auth, provider } = require("./server/firebase");
 
 const app = express();
 app.use(express.json());

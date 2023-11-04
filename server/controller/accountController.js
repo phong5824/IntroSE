@@ -78,4 +78,11 @@ const registerControl = async (req, res) => {
     });
 };
 
-module.exports = { loginControl, registerControl };
+const loginWithGoogleControl = async (req, res) => {
+  console.log("loginWithGoogleControl");
+  const { email } = req.body;
+  console.log("email:", email);
+  res.json({ success: true, message: "Login Success" });
+};
+
+module.exports = { loginControl, registerControl, loginWithGoogleControl };

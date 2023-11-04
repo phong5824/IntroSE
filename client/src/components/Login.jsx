@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { handleLogin } from "../action/accountAction";
+import { handleLogin, handleLoginWithGoogle } from "../action/accountAction";
+import { auth, provider } from "./Firebase/firebase.initialize";
+import { signInWithPopup } from "firebase/auth";
 import { message } from "antd";
+import { GoogleButton } from "react-google-button";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,6 +24,15 @@ export default function Login() {
     if (handleLogin(userData)) {
       navigate("/home");
     }
+  };
+
+  const onLoginWithGoogle = async () => {
+    console.log("Login with google");
+    await signInWithPopup(auth, provider).then(async (data) => {
+      await handleLoginWithGoogle(data);
+      localStorage.setItem("email", data.user.email);
+    });
+    navigate("/home");
   };
 
   return (
@@ -81,7 +93,7 @@ export default function Login() {
             >
               Register
             </Link>
-            <Link to="/login/federated/google">Sign in with Google</Link>
+            <GoogleButton onClick={onLoginWithGoogle} />
           </form>
         </div>
       </div>
