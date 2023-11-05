@@ -26,7 +26,7 @@ router.post("/login", async(req, res) => {
             const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
 
             res.status(200).json({ success: true, message:"Login Success",accessToken});
-
+            
           } else {
             console.log("Fail");
             res.status(404)
@@ -72,7 +72,5 @@ router.post("/login", async(req, res) => {
     }
   });
   
-
-
 
   module.exports = router;
