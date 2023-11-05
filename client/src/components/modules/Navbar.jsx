@@ -22,7 +22,7 @@ const NavBar = () => {
 
     return (
         <nav className="navbar flex relative items-center justify-between px-6 h-[80px] bg-green-500">
-            <Link to="/home"> {/* Đặt đường dẫn đến trang Home */}
+            <Link to="/home">
                 <LogoIcon className="flex-shrink-0" />
             </Link>
 
