@@ -1,9 +1,10 @@
 import slide_1 from '../assets/slide_1.png';
 import slide_2 from '../assets/slide_2.png';
 import slide_3 from '../assets/slide_3.png';
-import ImageSlider from "./modules/ImageSlider";
-import NavBar from "./modules/Navbar";
-import RecommendedRecipes from './modules/RecommendedRecipes';
+import ImageSlider from "../components/modules/ImageSlider";
+import NavBar from "../components/modules/Navbar";
+import Footer from "../components/modules/Footer"
+import RecommendedRecipes from '../components/modules/RecommendedRecipes';
 
 
 const Home = () => {
@@ -34,7 +35,7 @@ const Home = () => {
       <ButtonGroup />
       <ImageSlider images={images} />
       <RecommendedRecipes />
-
+      <Footer />
     </div>
   );
 };
