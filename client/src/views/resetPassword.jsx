@@ -70,7 +70,7 @@ export default function ResetPassword() {
         ></div>
         <div className="login-form w-[350px] py-1">
           <form className="flex flex-col justify-around w-full" onSubmit={onSubmit}>
-            <div style={labelStyle}>email</div>
+            <div style={labelStyle}>Email</div>
             <input
               type="text"
               name="gmail nguoi dung"
@@ -79,7 +79,7 @@ export default function ResetPassword() {
               className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-[100%] bg-white text-center"
               placeholder="Nhập ở đây..."
             />
-            <div style={labelStyle}>mật khẩu mới</div>
+            <div style={labelStyle}>Mật khẩu mới</div>
             <input
               type="password"
               name="password"

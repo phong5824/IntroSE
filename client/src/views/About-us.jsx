@@ -1,6 +1,6 @@
-import NavBar from "./modules/Navbar";
+import NavBar from "../components/modules/Navbar";
 import Namdua from '../assets/5dua.jpg';
-import Footer from "./modules/Footer";
+import Footer from "../components/modules/Footer";
 
 const About_us = () => {
     return (

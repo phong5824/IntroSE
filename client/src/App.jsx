@@ -1,12 +1,11 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Profile from "./components/Profile";
-import About_us from "./components/About-us";
+import About_us from "./views/About-us";
 import Login from "./views/Login";
 import Home from "./views/Home";
 import Register from "./views/Register";
-// import Profile from "./views/Profile";
+import Profile from "./views/Profile";
 import ResetPassword from "./views/resetPassword";
 
 function App() {

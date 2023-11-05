@@ -70,19 +70,32 @@ export default function Login() {
               placeholder="Nhập ở đây..."
             />
 
-            <button className="btn w-[50%] py-1.5 rounded-full mt-4 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <input type="checkbox" id="rememberMe" name="rememberMe" className="ml-1" />
+                <label htmlFor="rememberMe" className="text-gray-700 text-sm ml-1">Ghi nhớ đăng nhập</label>
+              </div>
+
+              <Link to="/resetPassword" className="btn text-gray-700 font-semibold text-sm">
+                Quên mật khẩu
+              </Link>
+            </div>
+
+
+
+            <button className="btn w-[50%] py-1.5 rounded-full mt-2 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
               Đăng nhập
             </button>
 
-            <div className="bg-green-300 text-black text-base font-semibold text-left mt-3 mx-auto w-[max-content]">
+            <div className="bg-green-300 text-black text-base font-semibold text-left mt-2 mx-auto w-[max-content]">
               --hoặc--</div>
 
             <div className="flex justify-center space-x-4">
-              <button className="btn w-[50%] py-1.5 rounded-full mt-3 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">
+              <button className="btn w-[50%] py-1.5 rounded-full mt-2 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">
                 <img src={GoogleIcon} alt="Google Icon" className="w-6 h-6" />
                 <span className="ml-2">Google</span>
               </button>
-              <button className="btn w-[50%] py-1.5 rounded-full mt-3 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">
+              <button className="btn w-[50%] py-1.5 rounded-full mt-2 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">
                 <img src={FacebookIcon} alt="Facebook Icon" className="w-6 h-6" />
                 <span className="ml-2">Facebook</span>
               </button>
@@ -91,14 +104,7 @@ export default function Login() {
             <Link to="/register" className="btn text-gray-700 hover:font-bold mt-3">
               Đăng ký tài khoản
             </Link>
-<<<<<<< HEAD:client/src/components/Login.jsx
 
-
-=======
-            <Link to="/resetPassword" className="btn text-gray-700 hover:text-gray-900 mt-3" style={{ labelStyle, margin: "0 auto" }}>
-              Quên mật khẩu
-            </Link>
->>>>>>> a9d23570651802acab23fffe050e66c87ed4aa13:client/src/views/Login.jsx
           </form>
         </div>
       </div>

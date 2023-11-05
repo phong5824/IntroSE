@@ -1,16 +1,10 @@
 import slide_1 from '../assets/slide_1.png';
 import slide_2 from '../assets/slide_2.png';
 import slide_3 from '../assets/slide_3.png';
-<<<<<<< HEAD:client/src/components/Home.jsx
-import Footer from './modules/Footer';
-import ImageSlider from "./modules/ImageSlider";
-import NavBar from "./modules/Navbar";
-import RecommendedRecipes from './modules/RecommendedRecipes';
-=======
 import ImageSlider from "../components/modules/ImageSlider";
 import NavBar from "../components/modules/Navbar";
+import Footer from "../components/modules/Footer"
 import RecommendedRecipes from '../components/modules/RecommendedRecipes';
->>>>>>> a9d23570651802acab23fffe050e66c87ed4aa13:client/src/views/Home.jsx
 
 
 const Home = () => {
@@ -42,7 +36,6 @@ const Home = () => {
       <ImageSlider images={images} />
       <RecommendedRecipes />
       <Footer />
-
     </div>
   );
 };
