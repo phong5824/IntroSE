@@ -1,10 +1,22 @@
+require('dotenv').config();
 const express = require("express");
 const router = express.Router();
-const cors = require("cors");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const accountModel = require("../model/accountModel");
+const nodemailer = require('nodemailer');
+const jwt = require("jsonwebtoken");
 
+const accountModel = require("../model/accountModel");
+const verifyToken = require("../middleware/account");
+const User = require("../model/userModel");
+
+const verificationCodes = {};
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail', 
+  auth: {
+    user: '1nguyenan19072003@gmail.com', 
+    pass: 'ufns qanp qyvb fdhe', 
+  },
+});
 
 router.post("/login", async(req, res) => {
     const {email, password } = req.body;
@@ -20,12 +32,15 @@ router.post("/login", async(req, res) => {
   
           if (result.password === password && result.password) {
             console.log("Success");
-            res.json({ success: true, userId: result.user_id, message:"Login Success"});
             
-            // res.redirect(`/home/${result.email}`);
+            const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
+
+            res.status(200).json({ success: true, message:"Login Success",accessToken});
+            
           } else {
             console.log("Fail");
-            res.json({ success: false, error: "Incorrect password!" });
+            res.status(404)
+            .json({ success: false, error: "Incorrect password!" });
           }
         }
       });
@@ -39,7 +54,7 @@ router.post("/login", async(req, res) => {
     
   });
   
-  router.post("/register", async (req, res) => {
+router.post("/register", async (req, res) => {
     const { email, password } = req.body;
     const result = await accountModel.findOne({ email: email });
   
@@ -50,10 +65,7 @@ router.post("/login", async(req, res) => {
     } else {
       console.log("Success");
       
-      const maxUser = await accountModel.findOne({}, {}, { sort: { user_id: -1 } });
-      const maxUserId = maxUser ? maxUser.user_id : 0; // Kiểm tra nếu có bản ghi user_id lớn nhất
-      
-      console.log(maxUserId, email, password) 
+      const maxUserId = await accountModel.estimatedDocumentCount()
       const account = new accountModel({
         user_id: maxUserId + 1,
         email: email,
@@ -61,10 +73,51 @@ router.post("/login", async(req, res) => {
       });
   
       account.save().then(() => {
-        res.json({ success: true, message: "Register Success" });
+        const accessToken = jwt.sign({userid:account._id},process.env.ACCESS_TOKEN_SECRET);
+        res.json({ success: true, message: "Register Success",accessToken});
       });
     }
   });
-  
 
+router.post('/sendVerificationCode', async (req, res) => {
+    const userEmail = await accountModel.findOne({ email: req.body.email });
+    if (userEmail) {
+      // Tạo một mã xác thực ngẫu nhiên
+      const verificationCode = Math.floor(100000 + Math.random() * 900000);
+      verificationCodes[userEmail.email] = verificationCode
+      // nội dung Email
+      const mailOptions = {
+        from: '1nguyenan19072003@gmail.com',
+        to: userEmail.email,
+        subject: 'Mã xác thực',
+        text: `Mã xác thực cho tài khoản LoveCook của bạn là: ${verificationCode}`,
+      };
+      // Gửi email
+      console.log(transporter, mailOptions)
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          res.status(500).json({ success: false, message: 'Gửi mã xác thực thất bại' });
+        } else {
+          res.status(200).json({ success: true, message: 'Gửi mã xác thực thành công' });
+        }
+      });
+    } else {
+      res.status(404).json({ success: false, message: 'Email không tồn tại' });
+    }
+  });
+router.post('/changePassword',async (req, res) => {
+  const email = req.body.email;
+  const verificationCode = req.body.verificationCode;
+  const newPassword = req.body.newPassword;
+  // console.log(verificationCodes[email], verificationCode)
+  // Kiểm tra mã xác thực
+  if (verificationCodes[email] && verificationCodes[email] == verificationCode) {
+    const userEmail = await accountModel.findOne({ email: req.body.email });
+    userEmail.password = newPassword
+    await userEmail.save() 
+    res.status(200).json({ success: true, message: 'Thay đổi mật khẩu thành công' });
+  } else {
+    res.status(400).json({ success: false, message: 'Mã xác thực không hợp lệ' });
+  }
+});
   module.exports = router;

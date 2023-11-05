@@ -1,11 +1,13 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./components/Login";
-import Home from "./components/Home";
-import Register from "./components/Register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profile from "./components/Profile";
 import About_us from "./components/About-us";
+import Login from "./views/Login";
+import Home from "./views/Home";
+import Register from "./views/Register";
+// import Profile from "./views/Profile";
+import ResetPassword from "./views/resetPassword";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -20,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about-us" element={<About_us />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </div>

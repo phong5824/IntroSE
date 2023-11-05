@@ -91,8 +91,14 @@ export default function Login() {
             <Link to="/register" className="btn text-gray-700 hover:font-bold mt-3">
               Đăng ký tài khoản
             </Link>
+<<<<<<< HEAD:client/src/components/Login.jsx
 
 
+=======
+            <Link to="/resetPassword" className="btn text-gray-700 hover:text-gray-900 mt-3" style={{ labelStyle, margin: "0 auto" }}>
+              Quên mật khẩu
+            </Link>
+>>>>>>> a9d23570651802acab23fffe050e66c87ed4aa13:client/src/views/Login.jsx
           </form>
         </div>
       </div>
