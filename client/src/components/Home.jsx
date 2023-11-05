@@ -1,6 +1,7 @@
 import slide_1 from '../assets/slide_1.png';
 import slide_2 from '../assets/slide_2.png';
 import slide_3 from '../assets/slide_3.png';
+import Footer from './modules/Footer';
 import ImageSlider from "./modules/ImageSlider";
 import NavBar from "./modules/Navbar";
 import RecommendedRecipes from './modules/RecommendedRecipes';
@@ -34,6 +35,7 @@ const Home = () => {
       <ButtonGroup />
       <ImageSlider images={images} />
       <RecommendedRecipes />
+      <Footer />
 
     </div>
   );

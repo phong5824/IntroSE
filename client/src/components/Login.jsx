@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { handleLogin } from "../action/accountAction";
 import Logo from '../assets/logo-recipe.png';
+import GoogleIcon from '../assets/google.png';
+import FacebookIcon from '../assets/facebook.png';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,53 +20,20 @@ export default function Login() {
       alert("Vui lòng điền đầy đủ thông tin");
       return;
     }
-     const userId = await handleLogin(userData);
-      if (userId) {
-        alert("Chuẩn bị điều hướng trang");
-        navigate(`/home/${userId}`);
-      } else {
-        alert("Đã xảy ra lỗi");
-      }
+    const userId = await handleLogin(userData);
+    if (userId) {
+      alert("Chuẩn bị điều hướng trang");
+      navigate(`/home/${userId}`);
+    } else {
+      alert("Đã xảy ra lỗi");
+    }
 
   };
 
-  const containerStyle = {
-    backgroundColor: "#7CFFC0",
-    width: "500px",
-    height: "500px",
-    borderRadius: "20px",
-  };
-
-  const labelStyle = {
-    backgroundColor: "#7CFFC0",
-    fontFamily: 'Poppins, sans-serif',
-    color: "black",
-    fontSize: "18px",
-    fontWeight: "bold",
-    textAlign: "left",
-    padding: "10px 20px",
-    margin: "0 auto",
-  };
-
-  const buttonStyle = {
-    backgroundColor: "#FFADB7",
-    fontFamily: 'Poppins, sans-serif',
-    color: "black",
-    fontSize: "15px",
-    textAlign: "center",
-    padding: "10px 20px",
-    borderRadius: "20px",
-    cursor: "pointer",
-    margin: "0 auto",
-  };
-
-  const pageStyle = {
-    backgroundColor: "#7CFF99",
-  };
 
   return (
-    <div style={pageStyle} className="flex items-center justify-center h-screen">
-      <div className="login-container flex relative flex-col items-center justify-around w-[500px] h-[450px]" style={containerStyle}>
+    <div className="flex items-center justify-center h-screen bg-green-400">
+      <div className="login-container flex relative flex-col items-center justify-around w-[500px] h-[550px] bg-green-300 rounded-3xl">
         <div
           className="login-logo w-24 h-24 rounded-full mb-[-4rem]"
           style={{
@@ -75,7 +44,7 @@ export default function Login() {
         ></div>
         <div className="login-form w-[350px] py-1">
           <form className="flex flex-col justify-around w-full" onSubmit={onSubmit}>
-            <div style={labelStyle}>
+            <div className="bg-green-300 text-black text-lg font-semibold text-left p-2 px-4 my-1 mx-auto w-[max-content]">
               Email
             </div>
             <input
@@ -84,10 +53,11 @@ export default function Login() {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-[100%] bg-white text-center"
+              className="border py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-300 w-full bg-white text-center"
               placeholder="Nhập ở đây..."
             />
-            <div style={labelStyle}>
+
+            <div className="bg-green-250 text-black text-lg font-semibold text-left p-2 px-2 my-1 mx-auto w-[max-content]">
               Mật khẩu
             </div>
             <input
@@ -96,15 +66,33 @@ export default function Login() {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-full text-center"
+              className="border py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-300 w-full bg-white text-center"
               placeholder="Nhập ở đây..."
             />
-            <button className="btn w-[50%] py-2 rounded-md mt-3" style={buttonStyle} >
+
+            <button className="btn w-[50%] py-1.5 rounded-full mt-4 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
               Đăng nhập
             </button>
-            <Link to="/register" className="btn text-gray-700 hover:text-gray-900 mt-3" style={{ labelStyle, margin: "0 auto" }}>
+
+            <div className="bg-green-300 text-black text-base font-semibold text-left mt-3 mx-auto w-[max-content]">
+              --hoặc--</div>
+
+            <div className="flex justify-center space-x-4">
+              <button className="btn w-[50%] py-1.5 rounded-full mt-3 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">
+                <img src={GoogleIcon} alt="Google Icon" className="w-6 h-6" />
+                <span className="ml-2">Google</span>
+              </button>
+              <button className="btn w-[50%] py-1.5 rounded-full mt-3 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">
+                <img src={FacebookIcon} alt="Facebook Icon" className="w-6 h-6" />
+                <span className="ml-2">Facebook</span>
+              </button>
+            </div>
+
+            <Link to="/register" className="btn text-gray-700 hover:font-bold mt-3">
               Đăng ký tài khoản
             </Link>
+
+
           </form>
         </div>
       </div>
