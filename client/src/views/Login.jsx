@@ -76,14 +76,14 @@ export default function Login() {
                 <label htmlFor="rememberMe" className="text-gray-700 text-sm ml-1">Ghi nhớ đăng nhập</label>
               </div>
 
-              <Link to="/resetPassword" className="btn text-gray-700 font-semibold text-sm">
+              <Link to="/resetPassword" className="text-gray-700 font-semibold text-sm">
                 Quên mật khẩu
               </Link>
             </div>
 
 
 
-            <button className="btn w-[50%] py-1.5 rounded-full mt-2 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
+            <button className="btn w-[50%] py-1.5 rounded-full mt-2.5 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
               Đăng nhập
             </button>
 
@@ -101,7 +101,7 @@ export default function Login() {
               </button>
             </div>
 
-            <Link to="/register" className="btn text-gray-700 hover:font-bold mt-3">
+            <Link to="/register" className="text-gray-700 hover:font-bold mt-3 mx-auto">
               Đăng ký tài khoản
             </Link>
 

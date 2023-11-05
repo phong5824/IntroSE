@@ -12,7 +12,7 @@ const About_us = () => {
                 </p>
             </div>
             <div
-                className="w-full h-50 mx-0 bg-no-repeat bg-center rounded-lg"
+                className="w-full h-50 mx-0 bg-no-repeat bg-center"
                 style={{
                     backgroundImage: `url(${Namdua})`,
                 }}
@@ -22,37 +22,36 @@ const About_us = () => {
                 Các thành viên của nhóm
             </h1>
 
-
             <div className="container mt-5">
                 <div className="row text-center">
                     <div className="col-md-4 font-semibold mb-10">
                         <div className="member-card flex flex-col items-center">
-                            <img src={Namdua} alt="Member 1" className="w-100 h-100 rounded-full" />
+                            <img src={Namdua} alt="Member 1" className="w-100 h-100 rounded-full transform transition-transform hover:scale-105" />
                             <p className="mt-4">Tô Tấn Hiệp</p>
                         </div>
                     </div>
                     <div className="col-md-4 font-semibold mb-10">
                         <div className="member-card flex flex-col items-center">
-                            <img src={Namdua} alt="Member 2" className="w-100 h-100 rounded-full" />
+                            <img src={Namdua} alt="Member 2" className="w-100 h-100 rounded-full transform transition-transform hover:scale-105" />
                             <p className="mt-4">Nguyễn Minh Nhật</p>
                         </div>
                     </div>
                     <div className="col-md-4 font-semibold mb-10">
                         <div className="member-card flex flex-col items-center">
-                            <img src={Namdua} alt="Member 3" className="w-100 h-100 rounded-full" />
+                            <img src={Namdua} alt="Member 3" className="w-100 h-100 rounded-full transform transition-transform hover:scale-105" />
                             <p className="mt-4">Nguyễn Duy Khang</p>
                         </div>
                     </div>
                     <div className="flex justify-center space-x-6">
                         <div className="col-md-4 font-semibold mb-20">
                             <div className="member-card flex flex-col items-center">
-                                <img src={Namdua} alt="Member 4" className="w-100 h-100 rounded-full" />
+                                <img src={Namdua} alt="Member 4" className="w-100 h-100 rounded-full transform transition-transform hover:scale-105" />
                                 <p className="mt-4">Nguyễn Ngọc Thiên Ân</p>
                             </div>
                         </div>
                         <div className="col-md-4 font-semibold mb-20">
                             <div className="member-card flex flex-col items-center">
-                                <img src={Namdua} alt="Member 5" className="w-100 h-100 rounded-full" />
+                                <img src={Namdua} alt="Member 5" className="w-100 h-100 rounded-full transform transition-transform hover:scale-105" />
                                 <p className="mt-4">Nguyễn Tuấn Phong</p>
                             </div>
                         </div>
