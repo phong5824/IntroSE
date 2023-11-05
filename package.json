@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "nodemailer": "^6.9.7",
     "prop-types": "^15.8.1",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1"

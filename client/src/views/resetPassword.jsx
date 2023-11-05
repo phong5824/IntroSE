@@ -1,24 +1,25 @@
 import { useState } from "react";
-import { handleRegister } from "../action/accountAction";
+import { handleResetPassword } from "../action/accountAction";
 import { useNavigate } from "react-router-dom";
 import Logo from '../assets/logo-recipe.png';
 
 export default function ResetPassword() {
-  const [email, setEmail] = useState("");
+  const [email,setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
     const userData = {
-      email: email,
-      password: password,
+      "email": email,
+      "password": password,
     };
+
     if (email === "" || password === "") {
       alert("Vui lòng điền đầy đủ thông tin");
       return;
     }
-    if (handleRegister(userData)) {
+    if (handleResetPassword(userData)) {
       navigate("/login");
     }
   };
@@ -43,8 +44,9 @@ export default function ResetPassword() {
             <input
               type="text"
               name="gmail nguoi dung"
-              // onChange={(e) => {
-              // }}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-[100%] bg-white text-center"
               placeholder="Nhập ở đây..."
             />
@@ -54,7 +56,7 @@ export default function ResetPassword() {
               type="password"
               name="password"
               onChange={(e) => {
-                setEmail(e.target.value);
+                setPassword(e.target.value);
               }}
               className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-[100%] bg-white text-center"
               placeholder="Nhập ở đây..."

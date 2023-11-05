@@ -20,9 +20,12 @@ const transporter = nodemailer.createTransport({
 
 router.post("/login", async(req, res) => {
     const {email, password } = req.body;
+    // console.log(email, password);
   
     try {
-      await accountModel.findOne({email:email}).then((result) => {
+        const result = await accountModel.findOne({email:email})
+        // console.log(result,password);
+
         if (!result) {
          
           console.log("Username does not exist!");
@@ -34,7 +37,6 @@ router.post("/login", async(req, res) => {
             console.log("Success");
             
             const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
-
             res.status(200).json({ success: true, message:"Login Success",accessToken});
             
           } else {
@@ -43,7 +45,6 @@ router.post("/login", async(req, res) => {
             .json({ success: false, error: "Incorrect password!" });
           }
         }
-      });
 
     } catch (error) {
 
@@ -109,7 +110,7 @@ router.post('/changePassword',async (req, res) => {
   const email = req.body.email;
   const verificationCode = req.body.verificationCode;
   const newPassword = req.body.newPassword;
-  // console.log(verificationCodes[email], verificationCode)
+  console.log(verificationCodes[email], verificationCode)
   // Kiểm tra mã xác thực
   if (verificationCodes[email] && verificationCodes[email] == verificationCode) {
     const userEmail = await accountModel.findOne({ email: req.body.email });
@@ -120,4 +121,41 @@ router.post('/changePassword',async (req, res) => {
     res.status(400).json({ success: false, message: 'Mã xác thực không hợp lệ' });
   }
 });
+
+router.put("/resetPassword", async (req, res) => {
+  const { email, password } = req.body;
+
+  let result = await accountModel.findOne({ email: email});
+
+ 
+  if (!result) {
+    res
+      .status(400)
+      .json({ success: false, error: "Email does not exists!" });
+  } else {
+
+    try{
+    result.password = password;  
+    result = await accountModel.findOneAndUpdate({"email":email},result,{new:true});
+    console.log(result);
+    if(!result)
+    {
+        return res.status(401).json({success:false,message:'Account not found or user not authorised'});
+    }
+
+    const accessToken = jwt.sign({userid:result._id},process.env.ACCESS_TOKEN_SECRET);
+    res.status(200).
+    json({success:true,message:'Reset password successfully',accessToken});
+    }
+    catch (error) {
+      console.log(error);
+      res.status(500).json({success:false,message:'Internal server error'});
+    }
+    
+
+  }
+});
+
+
+
   module.exports = router;
