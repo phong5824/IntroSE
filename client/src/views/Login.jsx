@@ -90,6 +90,7 @@ export default function Login() {
             <div className="bg-green-300 text-black text-base font-semibold text-left mt-2 mx-auto w-[max-content]">
               --hoặc--</div>
 
+
             <div className="flex justify-center space-x-4">
               <button className="btn w-[50%] py-1.5 rounded-full mt-2 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">
                 <img src={GoogleIcon} alt="Google Icon" className="w-6 h-6" />

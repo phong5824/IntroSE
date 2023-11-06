@@ -21,14 +21,14 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="navbar flex relative items-center justify-between px-6 h-[80px] bg-green-500">
+        <nav className="navbar flex relative items-center justify-between px-6 h-[80px] bg-white border-b">
             <Link to="/home">
                 <LogoIcon className="flex-shrink-0" />
             </Link>
 
             <SearchBar className="flex-grow mx-2" />
 
-            <div className="flex-shrink-0 flex items-center space-x-6 bg-green-500">
+            <div className="flex-shrink-0 flex items-center space-x-6 bg-white">
                 <Avatar onClick={handleAvatarClick} />
                 <Menu onClick={handleMenuClick} />
             </div>

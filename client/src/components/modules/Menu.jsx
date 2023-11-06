@@ -17,7 +17,7 @@ const Menu = () => {
                 src={menuIcon}
                 alt="Menu"
                 onClick={togglePageMenu}
-                className="w-6 h-6 cursor-pointer transition duration-300 ease-in-out bg-green-500"  // chỉnh sửa ở đây
+                className="w-6 h-6 cursor-pointer transition duration-300 ease-in-out bg-white"  // chỉnh sửa ở đây
             />
 
 
