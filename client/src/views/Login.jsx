@@ -23,7 +23,7 @@ export default function Login() {
     const userId = await handleLogin(userData);
     if (userId) {
       alert("Chuẩn bị điều hướng trang");
-      navigate(`/home/${userId}`);
+      navigate(`/users/profile`);
     } else {
       alert("Đã xảy ra lỗi");
     }

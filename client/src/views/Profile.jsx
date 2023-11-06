@@ -1,18 +1,23 @@
-import avatar from "/src/assets/slide_1.png";
+import avatar from "/src/assets/5dua.jpg";
 import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer"; // Đảm bảo rằng bạn nhập Footer từ đường dẫn chính xác
-
-// Dummy data for user profile
-const userProfile = {
-  name: 'Nguyen Van A',
-  gender: 'Nam',
-  dob: '22/10/2003',
-  country: 'Việt Nam',
-  phoneNumber: '0903486756',
-  email: 'tomiola@me.com',
-};
+import { handleGetUser } from "../action/accountAction";
+import { useState, useEffect } from "react";
 
 export default function Profile() {
+
+  const [userProfile, setUserProfile] = useState({});
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const profile = await handleGetUser();
+      setUserProfile(profile);
+    };
+  
+    fetchUserProfile();
+  }, []);
+
+
   return (
     <div className="flex flex-col min-h-screen bg-green-100 ">
       <NavBar />
@@ -48,7 +53,7 @@ export default function Profile() {
                 <div className="mt-5">
                   {/* User contact details */}
                   <p className="text-gray-700"><b>Số điện thoại:</b> {userProfile.phoneNumber}</p>
-                  <p className="text-gray-700"><b>Email:</b> {userProfile.email}</p>
+                  <p className="text-gray-700"><b>Email:</b> {userProfile.account.email}</p>
                 </div>
               </div>
               <div className="w-1/2 ml-5">
@@ -58,10 +63,8 @@ export default function Profile() {
                   <dd>{userProfile.name}</dd>
                   <dt className="font-bold">Giới tính</dt>
                   <dd>{userProfile.gender}</dd>
-                  <dt className="font-bold">Ngày sinh</dt>
-                  <dd>{userProfile.dob}</dd>
-                  <dt className="font-bold">Quốc tịch</dt>
-                  <dd>{userProfile.country}</dd>
+                  <dt className="font-bold">Tuổi</dt>
+                  <dd>{userProfile.age}</dd>
                 </dl>
               </div>
             </div>

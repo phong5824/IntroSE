@@ -6,6 +6,7 @@ export const handleLogin = async (userData) => {
 
     if (result.data.success === true) {
       alert("Login successful!");
+      localStorage.setItem('accessToken', result.data.accessToken);
       return result.data.accessToken;
     } else {
       alert(result.data.error);
@@ -52,3 +53,26 @@ export const handleResetPassword = async (userData) => {
   }
   return false;
 };
+
+// Get user
+export const handleGetUser = async () => {
+  try {
+    const accessToken = await localStorage.getItem('accessToken');
+
+    let result = await axios.get("http://127.0.0.1:8000/users/profile",{ headers: {
+      Authorization: 'Bearer ' + accessToken
+    }});
+
+    if (result.data.success == true) {
+      console.log(result.data.user);
+      return result.data.user;
+    } else {
+      alert(result.data.error);
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+  return false;
+};
+

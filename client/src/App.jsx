@@ -24,6 +24,7 @@ function App() {
           <Route path="/about-us" element={<About_us />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/users/profile" element={<Profile/>}/>
         </Routes>
       </BrowserRouter>
     </div>
