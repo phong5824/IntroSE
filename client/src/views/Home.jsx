@@ -1,7 +1,7 @@
 
 import HeroSection from "../components/modules/HeroSection";
 import NavBar from "../components/modules/Navbar";
-import Footer from "../components/modules/Footer"
+import Footer from "../components/modules/Footer";
 import RecommendedRecipes from '../components/modules/RecommendedRecipes';
 
 
@@ -24,10 +24,8 @@ const Home = () => {
   return (
     <div className="home-wrapper h-screen overflow-y-auto">
       <NavBar />
-      {/* <ImageSlider images={images} /> */}
       <HeroSection />
       <ButtonGroup />
-      {/* <ImageSlider images={images} /> */}
       <RecommendedRecipes />
       <Footer />
     </div>

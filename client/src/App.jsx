@@ -2,6 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About_us from "./views/About-us";
+import Blog from "./views/Blog";
 import Login from "./views/Login";
 import Home from "./views/Home";
 import Register from "./views/Register";
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about-us" element={<About_us />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>

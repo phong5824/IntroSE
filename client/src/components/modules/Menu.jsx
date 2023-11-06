@@ -25,7 +25,7 @@ const Menu = () => {
                 <div className="page-menu absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded shadow-lg z-10 transition duration-300">
                     <button onClick={() => navigate('/about-us')} className="block w-full px-4 py-2 text-left hover:bg-gray-100">About Us</button>
                     <button onClick={() => navigate('/tips-and-tricks')} className="block w-full px-4 py-2 text-left hover:bg-gray-100">Tips and Tricks</button>
-                    {/* Thêm các mục khác nếu bạn muốn */}
+                    <button onClick={() => navigate('/blog')} className="block w-full px-4 py-2 text-left hover:bg-gray-100">Blog</button>
                 </div>
             )}
         </div>
