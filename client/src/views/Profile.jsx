@@ -2,21 +2,32 @@ import avatar from "/src/assets/5dua.jpg";
 import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer"; // Đảm bảo rằng bạn nhập Footer từ đường dẫn chính xác
 import { handleGetUser } from "../action/accountAction";
-import { useState, useEffect } from "react";
+import  { useEffect, useState} from "react";
+import './Profile.css';
 
 export default function Profile() {
-
-  const [userProfile, setUserProfile] = useState({});
+  
+  const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       const profile = await handleGetUser();
       setUserProfile(profile);
     };
-  
+
     fetchUserProfile();
   }, []);
 
+  if (!userProfile) {
+    return (
+      <div className="loading-container">
+        <i className="fas fa-cog fa-spin"></i>
+        <p>Loading...</p>
+      </div>
+
+      
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-green-100 ">
@@ -31,7 +42,7 @@ export default function Profile() {
             </div>
             {/* Sidebar navigation items */}
             <nav className="flex flex-col text-center">
-              <a href="/profile" className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">Thông tin cá nhân</a>
+              <a href="/users/profile" className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">Thông tin cá nhân</a>
               <a href="/recipes" className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">Công thức của bạn</a>
               <a href="/favorites" className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">Công thức ưa thích</a>
               <a href="/blog" className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">Blogs</a>
@@ -50,21 +61,21 @@ export default function Profile() {
                 <button className="mt-5 bg-white text-gray-800 rounded-full hover:font-semibold px-4 py-2 w-full sm:w-auto"> {/* Cho nút mở rộng toàn bộ chiều rộng hoặc chỉ một phần trên màn hình lớn */}
                   Xác nhận danh tính
                 </button>
-                <div className="mt-5">
+                <div className="mt-5 text-teal-500">
                   {/* User contact details */}
-                  <p className="text-gray-700"><b>Số điện thoại:</b> {userProfile.phoneNumber}</p>
-                  <p className="text-gray-700"><b>Email:</b> {userProfile.account.email}</p>
+                  <p className="bg-yellow-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"><b>Số điện thoại:</b> {userProfile.phone}</p>
+                  <p className="bg-yellow-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"><b>Email:</b> {userProfile.account.email}</p>
                 </div>
               </div>
               <div className="w-1/2 ml-5">
                 {/* Additional details */}
-                <dl className="bg-green-200 p-5 rounded shadow space-y-2">
-                  <dt className="font-bold">Họ và tên</dt>
-                  <dd>{userProfile.name}</dd>
-                  <dt className="font-bold">Giới tính</dt>
-                  <dd>{userProfile.gender}</dd>
-                  <dt className="font-bold">Tuổi</dt>
-                  <dd>{userProfile.age}</dd>
+                <dl className="bg-green-200 p-5 rounded shadow space-y-3">
+                  <dt className=" bg-orange-300 font-bold text-black">Họ và tên :</dt>
+                  <dd><strong style={{ color: 'blue' }}>{userProfile.name}</strong></dd>
+                  <dt className=" bg-orange-300 font-bold">Giới tính: </dt>
+                  <dd><strong style={{ color: 'blue' }}>{userProfile.gender === 'male' ? 'Nam' : 'Nữ'}</strong></dd>
+                  <dt className=" bg-orange-300 font-bold">Tuổi: </dt>
+                  <dd><strong style={{ color: 'blue' }}>{userProfile.age}</strong></dd>
                 </dl>
               </div>
             </div>

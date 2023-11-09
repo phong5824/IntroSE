@@ -16,7 +16,7 @@ const verifyToken = require("../middleware/account");
 router.get('/',verifyToken,async(req,res) =>{
 
     try {
-        const accounts = await User.find({account:req.userid}).populate('account',['email','password']);
+        const accounts = await User.findOne({account:req.userid}).populate('account',['email','password']);
         res.json({success:true,accounts});
 
     } catch (error) {
@@ -61,7 +61,7 @@ router.post('/',verifyToken,async(req,res) =>{
 router.get('/profile',verifyToken,async(req,res) =>{
 
     const authHeader =  req.header('Authorization');
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = authHeader.split(' ')[1];
 
     
     if(!token)
