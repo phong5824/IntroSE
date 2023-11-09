@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+
   const onSubmit = async (event) => {
     event.preventDefault();
     const userData = {
@@ -22,7 +23,6 @@ export default function Login() {
     }
     const userId = await handleLogin(userData);
     if (userId) {
-      alert("Chuẩn bị điều hướng trang");
       navigate(`/users/profile`);
     } else {
       alert("Đã xảy ra lỗi");
