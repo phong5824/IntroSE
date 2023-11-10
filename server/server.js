@@ -1,8 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const accountRouter = require("./routes/accountRouter");
+const accountRouter = require("./routes/account");
+const userRouter = require("./routes/user");
 const db = require("./db/index");
 // const { auth, provider } = require("./server/firebase");
 
@@ -12,6 +14,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", accountRouter);
+app.use("/users", userRouter);
 db.on("error", (stream) => {
   console.log("mongodb error");
 });

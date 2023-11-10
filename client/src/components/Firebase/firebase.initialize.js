@@ -6,7 +6,7 @@ import { firebaseConfig } from "./firebase.config";
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
+export const googleprovider = new GoogleAuthProvider();
 
 // // Get a list of cities from your database
 // const db = getFirestore(app);
