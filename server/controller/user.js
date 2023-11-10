@@ -51,4 +51,29 @@ const createUserControl = async (req, res) => {
   }
 };
 
-module.exports = { getAccountControl, createUserControl };
+const getProfileControl = async (req, res) => {
+  const authHeader = req.header("Authorization");
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    res.status(401).json({ success: false, message: "Access token not found" });
+  }
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    const e_user = await User.findOne({ account: decoded.userid }).populate(
+      "account",
+      ["email"]
+    );
+
+    res
+      .status(200)
+      .json({ success: true, message: "Profile of user", user: e_user });
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({ success: false, message: "Invalid token" });
+  }
+};
+
+module.exports = { getAccountControl, createUserControl, getProfileControl };

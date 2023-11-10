@@ -100,7 +100,7 @@ export const handleGetUser = async () => {
     const accessToken = localStorage.getItem("accessToken");
     // const accessToken = getCookie('accessToken');
 
-    const result = await axios.get("http://127.0.0.1:8000/api/users/profile", {
+    const result = await axios.get("http://127.0.0.1:8000/users/profile", {
       headers: {
         Authorization: "Bearer " + accessToken,
       },
