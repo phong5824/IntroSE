@@ -21,12 +21,11 @@ export default function Login() {
       message.warning("Vui lòng điền đầy đủ thông tin");
       return;
     }
-    const isLoggedIn = await handleLogin(userData);
-    if (isLoggedIn) {
-      // message.success("Đăng nhập thành công");
-      navigate(`/home/${isLoggedIn}`);
-      // } else {
-      //   message.error("Đăng nhập thất bại");
+    const userId = await handleLogin(userData);
+    if (userId) {
+      navigate(`/users/profile`);
+    } else {
+      message.error("Đã xảy ra lỗi");
     }
   };
 
@@ -34,10 +33,10 @@ export default function Login() {
     const isLoggedIn = await handleLoginWithGoogle();
     console.log(isLoggedIn);
     if (isLoggedIn) {
-      message.success("Đăng nhập thành công");
-      navigate(`/home/${isLoggedIn}`);
-    } else {
-      message.error("Đăng nhập thất bại");
+      // message.success("Đăng nhập thành công");
+      navigate(`/users/profile`);
+      // } else {
+      //   message.error("Đăng nhập thất bại");
     }
   };
 

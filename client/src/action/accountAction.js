@@ -13,10 +13,11 @@ export const handleLogin = async (userData) => {
       "http://127.0.0.1:8000/api/login",
       userData
     );
-    console.log(result);
-    if (result.data.success == true) {
+
+    if (result.data.success === true) {
       message.success("Login successful!");
-      return true;
+      localStorage.setItem("accessToken", result.data.accessToken);
+      return result.data.accessToken;
     } else {
       message.error(result.data.error);
     }
@@ -93,11 +94,34 @@ export const handleLoginWithGoogle = async () => {
   return false;
 };
 
+// Get user
+export const handleGetUser = async () => {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+    // const accessToken = getCookie('accessToken');
+
+    const result = await axios.get("http://127.0.0.1:8000/api/users/profile", {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+
+    if (result.data.success === true) {
+      return result.data.user;
+    } else {
+      message.error(result.data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return false;
+};
+
 export const handleLogout = () => {
   signOut(auth)
     .then(() => {
       // clear data from UI
-      console.log("logout successful!");
+      message.success("logout successful!");
     })
     .catch((error) => console.log(error));
 
