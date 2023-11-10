@@ -6,7 +6,7 @@ const LogoIcon = () => {
             <div className="w-12 h-12 rounded-full overflow-hidden bg-white">
                 <img src={logoImage} alt="Logo" className="w-full h-full object-contain" />
             </div>
-            <span className="text-2xl font-bold text-green-900 italic">Love Cook</span>
+            <span className="font-extrabold text-2xl text-green-900 ">Love Cook</span>
         </div>
     );
 }

@@ -10,7 +10,7 @@ const slides = [
 ];
 
 const HeroSection = () => {
-    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [isHovered, setIsHovered] = useState(false);
 
     const settings = {
         arrows: false,
@@ -30,17 +30,17 @@ const HeroSection = () => {
                         <div
                             key={index}
                             className="h-full overflow-hidden relative group"
-                            onMouseEnter={() => setHoveredIndex(index)}
-                            onMouseLeave={() => setHoveredIndex(null)}
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
                         >
                             <img
                                 src={slide.imageUrl}
                                 alt={`Slide ${index}`}
-                                className={`w-full object-cover rounded-lg transition-opacity duration-300 group-hover:opacity-70`}
-                                style={{ height: '500px', filter: hoveredIndex === index ? 'brightness(70%)' : 'brightness(100%)' }}
+                                className={`w-full object-cover rounded-lg transition-opacity duration-300 ${isHovered ? 'opacity-70' : 'opacity-100'}`}
+                                style={{ height: '500px', filter: isHovered ? 'brightness(60%)' : 'brightness(100%)' }}
                             />
                             <div className="absolute inset-0 flex items-center justify-center">
-                                {hoveredIndex === index && (
+                                {isHovered && (
                                     <>
                                         <h1 className="text-7xl font-bold text-orange-600 hover:scale-105 transition transform duration-300 ease-in-out mb-1 mr-10">
                                             Đổi gió bữa sáng
