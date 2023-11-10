@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+
   const onSubmit = async (event) => {
     event.preventDefault();
     const userData = {
@@ -22,8 +23,7 @@ export default function Login() {
     }
     const userId = await handleLogin(userData);
     if (userId) {
-      alert("Chuẩn bị điều hướng trang");
-      navigate(`/home/${userId}`);
+      navigate(`/users/profile`);
     } else {
       alert("Đã xảy ra lỗi");
     }
@@ -89,6 +89,7 @@ export default function Login() {
 
             <div className="bg-green-300 text-black text-base font-semibold text-left mt-2 mx-auto w-[max-content]">
               --hoặc--</div>
+
 
             <div className="flex justify-center space-x-4">
               <button className="btn w-[50%] py-1.5 rounded-full mt-2 text-black text-base text-center cursor-pointer bg-white hover:font-semibold hover:shadow-lg transition duration-300 flex items-center justify-center">

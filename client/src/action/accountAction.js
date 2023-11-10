@@ -6,6 +6,7 @@ export const handleLogin = async (userData) => {
 
     if (result.data.success === true) {
       alert("Login successful!");
+      localStorage.setItem('accessToken', result.data.accessToken);
       return result.data.accessToken;
     } else {
       alert(result.data.error);
@@ -22,7 +23,7 @@ export const handleRegister = async (userData) => {
   try {
     const result = await axios.post("http://127.0.0.1:8000/register", userData);
    
-    if (result.data.success == true) {
+    if (result.data.success === true) {
       alert("Register successful!");
       return true;
       
@@ -40,7 +41,7 @@ export const handleResetPassword = async (userData) => {
   try {
    
     const result = await axios.put("http://127.0.0.1:8000/resetPassword", userData);
-    if (result.data.success == true) {
+    if (result.data.success === true) {
       alert("Reset password successful!");
       return true;
       
@@ -52,3 +53,30 @@ export const handleResetPassword = async (userData) => {
   }
   return false;
 };
+
+// Get user
+export const handleGetUser = async () => {
+  try {
+
+    const accessToken = localStorage.getItem('accessToken');
+    // const accessToken = getCookie('accessToken');
+
+    const result = await axios.get("http://127.0.0.1:8000/users/profile", {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    });
+
+    if (result.data.success === true) {
+      return result.data.user;
+    } else {
+      alert(result.data.error);
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+  return false;
+};
+
+
