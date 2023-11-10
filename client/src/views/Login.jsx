@@ -23,10 +23,10 @@ export default function Login() {
     }
     const isLoggedIn = await handleLogin(userData);
     if (isLoggedIn) {
-      message.success("Đăng nhập thành công");
+      // message.success("Đăng nhập thành công");
       navigate(`/home/${isLoggedIn}`);
-    } else {
-      message.error("Đăng nhập thất bại");
+      // } else {
+      //   message.error("Đăng nhập thất bại");
     }
   };
 

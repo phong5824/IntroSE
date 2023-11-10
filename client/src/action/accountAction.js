@@ -4,38 +4,43 @@ import {
   auth,
   googleprovider,
 } from "../components/Firebase/firebase.initialize";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
+
 //Login
 export const handleLogin = async (userData) => {
-  await axios
-    .post("http://127.0.0.1:8000/api/login", userData)
-    .then((result) => {
-      if (result.data.success == true) {
-        message.success("Login successful!");
-        return true;
-      } else {
-        message.error(result.data.error);
-      }
-    })
-    .catch((err) => console.log(err));
-  return false;
+  try {
+    const result = await axios.post(
+      "http://127.0.0.1:8000/api/login",
+      userData
+    );
+    console.log(result);
+    if (result.data.success == true) {
+      message.success("Login successful!");
+      return true;
+    } else {
+      message.error(result.data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 //Register
 export const handleRegister = async (userData) => {
-  await axios
-    .post("http://127.0.0.1:8000/api/register", userData)
-    .then((result) => {
-      if (result.data.success == true) {
-        message.success("Register successful!");
-        return true;
-      } else {
-        message.error(result.data.error);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const result = await axios.post(
+      "http://127.0.0.1:8000/api/register",
+      userData
+    );
+    if (result.data.success == true) {
+      message.success("Register successful!");
+      return true;
+    } else {
+      message.error(result.data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
   return false;
 };
 
@@ -47,10 +52,10 @@ export const handleResetPassword = async (userData) => {
       userData
     );
     if (result.data.success == true) {
-      alert("Reset password successful!");
+      message.success("Reset password successful!");
       return true;
     } else {
-      alert(result.data.error);
+      message.error(result.data.error);
     }
   } catch (err) {
     console.log(err);
@@ -58,22 +63,7 @@ export const handleResetPassword = async (userData) => {
   return false;
 };
 
-// // login with google
-// export const handleLoginWithGoogle = async (userData) => {
-//   await axios
-//     .post("http://127.0.0.1:8000/api/login/google", userData)
-//     .then((result) => {
-//       if (result.data.success == true) {
-//         message.success("Login successful!");
-//         return true;
-//       } else {
-//         message.error(result.data.error);
-//       }
-//     })
-//     .catch((err) => console.log(err));
-//   return false;
-// };
-
+// login with google
 export const handleLoginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleprovider);
@@ -85,7 +75,7 @@ export const handleLoginWithGoogle = async () => {
       image: photoURL,
       lastLoginTime: metadata.lastSignInTime,
     };
-    localStorage.setItem(`google-user`, JSON.stringify(loggedInUser));
+    localStorage.setItem("google-user", JSON.stringify(loggedInUser));
     console.log("user: ", loggedInUser);
 
     return true;
@@ -99,6 +89,22 @@ export const handleLoginWithGoogle = async () => {
       errorMessage,
     };
     setError(errorCollection);
-    return false;
+  }
+  return false;
+};
+
+export const handleLogout = () => {
+  signOut(auth)
+    .then(() => {
+      // clear data from UI
+      console.log("logout successful!");
+    })
+    .catch((error) => console.log(error));
+
+  // clear data from localStorage
+  let getGoogleUser = localStorage.getItem("google-user");
+
+  if (getGoogleUser) {
+    localStorage.removeItem("google-user");
   }
 };
