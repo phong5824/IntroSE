@@ -2,6 +2,7 @@
 import HeroSection from "../components/modules/HeroSection";
 import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer";
+import Chat from "./Chat";
 import RecommendedRecipes from '../components/modules/RecommendedRecipes';
 
 
@@ -27,6 +28,7 @@ const Home = () => {
       <ButtonGroup />
       <RecommendedRecipes />
       <Footer />
+      <Chat />
     </div>
   );
 };
