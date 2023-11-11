@@ -2,6 +2,7 @@ import { useState } from "react";
 import { handleRegister } from "../action/accountAction";
 import { useNavigate } from "react-router-dom";
 import Logo from '../assets/logo-recipe.png';
+import { message } from "antd";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ export default function Register() {
       password: password,
     };
     if (email === "" || password === "") {
-      alert("Vui lòng điền đầy đủ thông tin");
+      message.warning("Vui lòng điền đầy đủ thông tin");
       return;
     }
     if (handleRegister(userData)) {

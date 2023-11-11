@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const handleSendMessage = async (msg) => {
   try {
-    axios.post("http://localhost:8000/send", msg).then((result) => {
+    axios.post("http://localhost:8000/api/send", msg).then((result) => {
       console.log(result);
       if (result.data.success == true) {
         alert("Send message successful!");

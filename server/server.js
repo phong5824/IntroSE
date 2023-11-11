@@ -1,42 +1,25 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
-const accountModel = require("./routes/account");
-const userModel = require("./routes/user");
+const accountRouter = require("./routes/account");
+const userRouter = require("./routes/user");
+const db = require("./db/index");
+// const { auth, provider } = require("./server/firebase");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-async function main() {
-  await mongoose
-    .connect(
-      "mongodb+srv://admin:123@cluster0.kppyxho.mongodb.net/NMCNPM?retryWrites=true&w=majority"
-    )
-    .then(() => {
-      console.log("connected to MongoDB");
-      app.listen(8000, () => {
-        console.log(`Node API app is running on port 8000`);
-      });
-    })
-    .catch((err) => console.log(err));
-}
-
-main();
-
-app.use('/',accountModel);
-app.use('/users',userModel);
-
-
-app.post("/send", (req, res) => {
-  const { name, message } = req.body;
-  console.log(name, message);
-  // axios.post("http://localhost:8000/send", { name, message }).then((result) => {
-  //   console.log(result);
-  //   res.json(result.data);
-  // });
+app.use("/", accountRouter);
+app.use("/users", userRouter);
+db.on("error", (stream) => {
+  console.log("mongodb error");
 });
+
+app.listen(8000, () => {
+  console.log(`Node API app is running on port 8000`);
+});
+// app.use('/',accountModel)
