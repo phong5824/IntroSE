@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import starIcon from "/src/assets/star.png";
+import PropTypes from "prop-types";
 
 const recipes_db = [
   {
@@ -195,6 +196,17 @@ const RecipeRankItem = ({ recipe }) => {
   );
 };
 
+RecipeRankItem.propTypes = {
+  recipe: PropTypes.shape({
+    img_src: PropTypes.string.isRequired,
+    recipe_name: PropTypes.string.isRequired,
+    cook_time: PropTypes.string.isRequired,
+    rating: PropTypes.shape({
+      $numberDouble: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
+
 const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
   const [recipes, setRecipes] = useState(initialRecipes);
   const [sortOrder, setSortOrder] = useState("desc");
@@ -248,17 +260,15 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
         <h2 className="text-2xl font-bold mb-6">Recipes Ranking</h2>
         <div className="flex justify-end mb-4 space-x-4">
           <button
-            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
-              sortBy === "rating" ? "opacity-75" : ""
-            }`}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${sortBy === "rating" ? "opacity-75" : ""
+              }`}
             onClick={handleSortByRating}
           >
             Sort by Rating
           </button>
           <button
-            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
-              sortBy === "cookTime" ? "opacity-75" : ""
-            }`}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${sortBy === "cookTime" ? "opacity-75" : ""
+              }`}
             onClick={handleSortByCookTime}
           >
             Sort by Cook Time
@@ -272,6 +282,19 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
       </div>
     </div>
   );
+};
+
+RecipeRanking.propTypes = {
+  recipes: PropTypes.arrayOf(
+    PropTypes.shape({
+      img_src: PropTypes.string.isRequired,
+      recipe_name: PropTypes.string.isRequired,
+      cook_time: PropTypes.string.isRequired,
+      rating: PropTypes.shape({
+        $numberDouble: PropTypes.number.isRequired,
+      }).isRequired,
+    })
+  ),
 };
 
 export default RecipeRanking;
