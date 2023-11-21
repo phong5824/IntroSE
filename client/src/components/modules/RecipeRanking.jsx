@@ -202,7 +202,7 @@ RecipeRankItem.propTypes = {
     recipe_name: PropTypes.string.isRequired,
     cook_time: PropTypes.string.isRequired,
     rating: PropTypes.shape({
-      $numberDouble: PropTypes.number.isRequired,
+      $numberDouble: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     }).isRequired,
   }).isRequired,
 };
@@ -242,7 +242,7 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
     setRecipes(sortedRecipes);
 
     console.log("Updated recipes_db:", sortedRecipes);
-  }, [recipes, sortOrder]);
+  }, [sortOrder]);
 
   const handleSortByRating = () => {
     setSortOrder("desc");

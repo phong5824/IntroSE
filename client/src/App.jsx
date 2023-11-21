@@ -9,9 +9,12 @@ import Register from "./views/Register";
 import Profile from "./views/Profile";
 import ResetPassword from "./views/resetPassword";
 import Others from "./views/Others";
+import RecipeDetail from "./views/RecipeDetail";
+
 
 function App() {
   // const [count, setCount] = useState(0);
+
 
   return (
     <div className="h-screen w-screen overflow-auto">
@@ -27,6 +30,8 @@ function App() {
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path="/users/profile" element={<Profile />} />
           <Route path="/others" element={<Others />} />
+
+          <Route path="/details" element={<RecipeDetail />} />
         </Routes>
       </BrowserRouter>
     </div>

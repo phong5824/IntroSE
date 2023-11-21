@@ -15,8 +15,8 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
       <img src={avatar} alt="Avatar" onClick={onClick} className="w-10 h-10 object-cover rounded-full cursor-pointer transition duration-300 ease-in-out bg-white" />
 
       {showLoginForm && (
-        <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-32 bg-gray-800 text-white border-gray-300 rounded shadow-lg z-10 transition duration-300">
-          <button onClick={navigateToLogin} className="block w-full px-4 py-2 text-center rounded hover:bg-gray-600">Đăng nhập</button>
+        <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-32 bg-white text-black border-gray-300 rounded shadow-lg z-10 transition duration-300">
+          <button onClick={navigateToLogin} className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200">Đăng nhập</button>
         </div>
       )}
     </div>

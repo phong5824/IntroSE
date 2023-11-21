@@ -1,11 +1,12 @@
 @font-face {
-    font-family: 'Lemonada'; 
-    src: url('./assets/fonts/Lemonada-Medium.ttf') format('truetype'); 
+    font-family: 'RobotoSlab'; 
+    src: url('./assets/fonts/RobotoSlab-Regular.ttf') format('truetype'); 
     font-weight: normal;
     font-style: normal;
 }
 
-.font-lemonada{
-    font-family: "Lemonada", sans-serif;
+.font-roboto-slab{
+    font-family: "RobotoSlab", sans-serif;
     font-weight: 500;
 }
+
