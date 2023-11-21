@@ -108,6 +108,8 @@ const Chat = () => {
       // Gửi tin nhắn mặc định từ bot khi messages rỗng
       setMessages([{ text: 'Chào bạn, bạn cần mình giúp gì?', sender: 'bot' }]);
     }
+
+    setInputMessage('');
   }, [messages]);
 
   useEffect(() => {
