@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import starIcon from "/src/assets/star.png";
 import PropTypes from "prop-types";
 
@@ -172,7 +173,10 @@ const recipes_db = [
 
 const RecipeRankItem = ({ recipe }) => {
   return (
-    <div className="recipe-rank-item bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105">
+    <Link
+      to={`/recipes/${recipe.recipe_id.$numberInt}`}
+      className="recipe-rank-item bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105"
+    >
       <img
         src={recipe.img_src}
         alt={recipe.recipe_name}
@@ -192,7 +196,7 @@ const RecipeRankItem = ({ recipe }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -202,7 +206,8 @@ RecipeRankItem.propTypes = {
     recipe_name: PropTypes.string.isRequired,
     cook_time: PropTypes.string.isRequired,
     rating: PropTypes.shape({
-      $numberDouble: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      $numberDouble: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+        .isRequired,
     }).isRequired,
   }).isRequired,
 };
@@ -260,15 +265,17 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
         <h2 className="text-2xl font-bold mb-6">Recipes Ranking</h2>
         <div className="flex justify-end mb-4 space-x-4">
           <button
-            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${sortBy === "rating" ? "opacity-75" : ""
-              }`}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
+              sortBy === "rating" ? "opacity-75" : ""
+            }`}
             onClick={handleSortByRating}
           >
             Sort by Rating
           </button>
           <button
-            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${sortBy === "cookTime" ? "opacity-75" : ""
-              }`}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-md ${
+              sortBy === "cookTime" ? "opacity-75" : ""
+            }`}
             onClick={handleSortByCookTime}
           >
             Sort by Cook Time
