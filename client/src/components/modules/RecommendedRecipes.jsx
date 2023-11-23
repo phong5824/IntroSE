@@ -11,14 +11,16 @@ const RecommendRecipe = () => {
     useEffect(() => {
         const fetchRecommendedRecipes = async () => {
           list_recipes = await handleRecommendedRecipes();
+          setRecipesToShow(initialRecipesToShow);
          
         };
             fetchRecommendedRecipes();
         }, []);
     
-   
+    
 
     let recipes = list_recipes.slice(0,recipesToShow);
+   
 
     const handleLoadMore = () => {
         setRecipesToShow(20); // Show all recipes

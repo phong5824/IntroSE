@@ -4,12 +4,10 @@ const router = express.Router();
 
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
-
-const Recipes = require("../model/recipeModel");
 const recipesController = require("../controller/recipes");
 
 
-router.get("/", recipesController.getRecommendedRecipesControl);
+router.get("/", recipesController.getRankingRecipesControl);
+router.get("/home", recipesController.getRecommendedRecipesControl);
 
 module.exports = router;
