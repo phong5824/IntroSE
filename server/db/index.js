@@ -6,9 +6,6 @@ mongoose
   )
   .then(() => {
     console.log("connected to MongoDB");
-    // app.listen(8000, () => {
-    //   console.log(`Node API app is running on port 8000`);
-    // });
   })
   .catch((err) => console.log(err));
 

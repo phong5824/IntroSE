@@ -89,6 +89,7 @@ export const handleLoginWithGoogle = async () => {
       errorCode,
       errorMessage,
     };
+    // eslint-disable-next-line no-undef
     setError(errorCollection);
   }
   return false;
