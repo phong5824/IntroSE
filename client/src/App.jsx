@@ -9,6 +9,7 @@ import Register from "./views/Register";
 import Profile from "./views/Profile";
 import ResetPassword from "./views/resetPassword";
 import Others from "./views/Others";
+import RecipeDetail from "./views/RecipeDetail";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -27,6 +28,8 @@ function App() {
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path="/users/profile" element={<Profile />} />
           <Route path="/others" element={<Others />} />
+          <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
+          <Route path="/details" element={<RecipeDetail />} />
         </Routes>
       </BrowserRouter>
     </div>

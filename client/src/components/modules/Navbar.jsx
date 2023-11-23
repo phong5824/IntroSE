@@ -6,6 +6,7 @@ import Avatar from "./Avatar";
 import Menu from "./Menu";
 
 const NavBar = () => {
+
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 

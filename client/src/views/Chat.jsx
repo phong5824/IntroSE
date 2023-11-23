@@ -58,77 +58,136 @@
 //   );
 // }
 
-import { useState } from "react";
-import axios from "axios";
+
+
+import { useState, useEffect, useRef } from 'react';
 import Chatbot from '../assets/chatbot.png';
 
 const Chat = () => {
-  const [collapsed, setCollapsed] = useState(true);
-  const [chat, setChat] = useState([]);
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isChatVisible, setIsChatVisible] = useState(false);
 
-  const toggleChat = () => {
-    setCollapsed(!collapsed);
+  const handleToggleChat = () => {
+    setIsChatVisible(!isChatVisible);
   };
 
+  const messagesContainerRef = useRef(null);
 
-  const onSend = (e) => {
-    e.preventDefault();
-    const messageData = {
-      sender: "user",
-      message: message,
-    };
-    axios.post("/api/chat", messageData).then((res) => {
-      setChat(res.data);
-      setMessage("");
-    });
+
+  const handleSendMessage = async () => {
+    if (inputMessage.trim() === '') return;
+
+    setMessages([...messages, { text: inputMessage, sender: 'user' }]);
+
+    try {
+      // Gửi tin nhắn đến API ChatBot và nhận câu trả lời
+      const response = await fetch('https://api.example.com/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: inputMessage }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMessages([...messages, { text: data.message, sender: 'bot' }]);
+      } else {
+        console.error('Failed to get response from the chatbot API');
+      }
+    } catch (error) {
+      console.error('Error sending message to the chatbot API:', error);
+    }
+
+    setInputMessage('');
+  };
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      // Gửi tin nhắn mặc định từ bot khi messages rỗng
+      setMessages([{ text: 'Chào bạn, bạn cần mình giúp gì?', sender: 'bot' }]);
+    }
+
+    setInputMessage('');
+  }, [messages]);
+
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      // Cuộn xuống phần tử cuối cùng khi danh sách tin nhắn thay đổi
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (isChatVisible) {
+      // Nếu đang mở chat, cuộn xuống phần tử cuối cùng
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [isChatVisible]);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSendMessage();
+    }
   };
 
   return (
-    <div className={`chat-component ${collapsed ? "collapsed" : ""} fixed bottom-10 right-10 z-50`}>
-      <div className="chat-card flex flex-col items-center justify-center">
+    <div className="chat-component fixed bottom-10 right-10 z-50">
+      <div className="flex justify-center items-center">
         <img
           src={Chatbot}
           alt="Chatbot Trigger"
-          className="chatbot-trigger w-16 h-16 cursor-pointer mb-1 mr-3"
-          onClick={toggleChat}
+          className="chatbot-trigger w-16 h-16 cursor-pointer"
+          onClick={handleToggleChat}
         />
-
-        {/* Chat container */}
-        <div className="chat-container flex flex-col items-center">
-          {chat.map((message, index) => (
-            <div key={index} className={`chat-message ${message.sender} mb-2`}>
-              <div className="chat-message">{message.message}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Chat form */}
-        {!collapsed && (
-          <div className="chat-form bg-green-400 rounded-lg p-4 w-96">
+      </div>
+      {isChatVisible && (
+        <div className="chat-card bg-white p-4 rounded-md w-80 shadow">
+          <div
+            ref={messagesContainerRef}
+            className="messages-container mb-4 h-64 w-72 overflow-y-auto">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`mb-2 ${message.sender === 'user' ? 'text-right' : 'text-left'
+                  }`}
+              >
+                <span
+                  className={`inline-block p-2 rounded-md ${message.sender === 'user'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-300 text-black'
+                    }`}
+                >
+                  {message.text}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="flex space-x-2">
             <input
               type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Bạn cần tôi giúp gì?"
-              className="w-full p-2 rounded mb-3 text-center"
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Nhập tại đây..."
+              className="flex-1 p-2 border rounded-md"
             />
-            <div className="flex items-center justify-center">
-              <button
-                type="button"
-                onClick={onSend}
-                className="bg-red-400 text-white rounded-full p-2 w-32"
-              >
-                Gửi
-              </button>
-            </div>
+            <button
+              onClick={handleSendMessage}
+              className="bg-red-400 text-white p-2 rounded-md"
+            >
+              Gửi
+            </button>
           </div>
-        )}
-
-      </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Chat;
+
+
 

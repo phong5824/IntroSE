@@ -4,6 +4,7 @@ import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer";
 import Chat from "./Chat";
 import RecommendedRecipes from '../components/modules/RecommendedRecipes';
+import RecipeRanking from '../components/modules/RecipeRanking';
 
 
 const Home = () => {
@@ -27,6 +28,7 @@ const Home = () => {
       <HeroSection />
       <ButtonGroup />
       <RecommendedRecipes />
+      <RecipeRanking />
       <Footer />
       <Chat />
     </div>
