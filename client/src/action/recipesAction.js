@@ -34,3 +34,21 @@ export const handleRankingRecipes = async () => {
     }
     return false;
 };
+
+export const handleSearchRecipes = async (keywords) => {
+  try {
+
+    console.log(keywords); 
+    const result = await axios.get(`http://127.0.0.1:8000/search/?keywords=${encodeURIComponent(keywords)}`);
+    if (result.data.success === true) {
+      console.log(result.data.recipes);
+      return result.data.recipes;
+    } 
+    else {
+      message.error(result.data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return false;
+};

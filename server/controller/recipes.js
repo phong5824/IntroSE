@@ -37,4 +37,36 @@ const getRecommendedRecipesControl = async (req, res) => {
   }
 };
 
-module.exports = { getRecommendedRecipesControl, getRankingRecipesControl };
+const getRecipesByKeywords = async (req, res) => {
+  try {
+    const keywords  = req.query.keywords.replace(/"/g, '');
+    
+    const keywordsArray = keywords.split(',');
+
+    
+    // Tạo điều kiện tìm kiếm
+    const searchCondition = {
+      $or: keywordsArray.map(keyword => ({
+        $or: [
+          { recipe_name: { $regex: keyword, $options: 'i' } },
+          { ingredients: { $regex: keyword, $options: 'i' } },
+          {nutrition: { $regex: keyword, $options: 'i' }}
+        ]
+      }))
+    };
+
+    // Tìm kiếm các công thức dựa trên từ khóa
+    const recipes = await Recipe.find(searchCondition)
+      .sort({ rating: -1 })
+      .limit(30);
+
+    console.log("Recipes:",recipes);
+    res.json({ success: true, recipes });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+
+module.exports = { getRecommendedRecipesControl, getRankingRecipesControl,getRecipesByKeywords };
