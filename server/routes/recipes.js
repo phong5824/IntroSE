@@ -9,5 +9,6 @@ const recipesController = require("../controller/recipes");
 
 router.get("/", recipesController.getRankingRecipesControl);
 router.get("/home", recipesController.getRecommendedRecipesControl);
+router.get("/search/", recipesController.getRecipesByKeywords);
 
 module.exports = router;

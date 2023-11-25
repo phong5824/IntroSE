@@ -1,7 +1,14 @@
 import loupe from "/src/assets/loupe.png";
+import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+
+
 const SearchBar = () => {
+  const navigate = useNavigate();
+  const [keywords, setKeywords] = useState('');
+  
   const handleSearch = () => {
-    // Hành động tìm kiếm của bạn sẽ được thêm vào đây sau
+    navigate(`/search?keywords=${encodeURIComponent(keywords)}`);
   };
 
   return (
@@ -11,6 +18,8 @@ const SearchBar = () => {
         style={{ borderRadius: "12px" }}
         type="text"
         placeholder="Tìm kiếm công thức..."
+        value={keywords}
+        onChange={(e) => setKeywords(e.target.value)}
       />
       <button
         onClick={handleSearch}
@@ -21,7 +30,6 @@ const SearchBar = () => {
     </div>
   );
 };
-
 
 
 export default SearchBar;

@@ -23,7 +23,7 @@ export default function Login() {
     }
     const userId = await handleLogin(userData);
     if (userId) {
-      navigate(`/users/profile`);
+      navigate(`/home`);
     } else {
       message.error("Đã xảy ra lỗi");
     }
@@ -33,10 +33,9 @@ export default function Login() {
     const isLoggedIn = await handleLoginWithGoogle();
     console.log(isLoggedIn);
     if (isLoggedIn) {
-      // message.success("Đăng nhập thành công");
-      navigate(`/users/profile`);
-      // } else {
-      //   message.error("Đăng nhập thất bại");
+     
+      navigate(`/home`);
+      
     }
   };
 
