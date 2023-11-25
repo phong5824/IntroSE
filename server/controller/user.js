@@ -13,6 +13,7 @@ const getAccountControl = async (req, res) => {
       "email",
       "password",
     ]);
+
     res.json({ success: true, users });
   } catch (error) {
     console.log(error);
@@ -76,4 +77,25 @@ const getProfileControl = async (req, res) => {
   }
 };
 
-module.exports = { getAccountControl, createUserControl, getProfileControl };
+const getFavouriteControl = async (req, res) => {
+  const authHeader = req.header("Authorization");
+  const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    res.status(401).json({ success: false, message: "Access token not found" });
+  }
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    const fauvorite_recipes = await User.find({account: decoded.userid}).populate('favourites');
+
+    res
+      .status(200)
+      .json({ success: true, message: "Favourite recipes of user", fauvorite_recipes});
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({ success: false, message: "Invalid token" });
+  }
+};
+module.exports = { getAccountControl, createUserControl, getProfileControl,getFavouriteControl};

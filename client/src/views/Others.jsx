@@ -18,7 +18,7 @@ const Others = () => {
                         className="bg-yellow-300 hover:bg-yellow-400 text-black py-3 px-48 rounded-full"
                     // onClick={() => handleNavigate('/register-vip')}
                     >
-                        Đăng kí Vip
+                        Đăng kí VIP
                     </button>
                     <button
                         className="bg-yellow-300 hover:bg-yellow-400 text-black py-3 px-48 rounded-full"
