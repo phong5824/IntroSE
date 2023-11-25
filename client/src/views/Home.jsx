@@ -5,42 +5,12 @@ import Chat from "./Chat";
 import RecommendedRecipes from "../components/modules/RecommendedRecipes";
 import RecipeRanking from "../components/modules/RecipeRanking";
 import { useContext, useEffect, useState } from "react";
-// import accountContext from "../context/accountContext";
 import { handleGetUser } from "../action/accountAction";
-import { IsLoggedInContext } from "../context/IsLoggedInContext";
 import Loading from "../components/modules/Loading";
+import { UserContext } from "../context/userContext";
 
 const Home = () => {
-  const isLoggedIn = useContext(IsLoggedInContext);
-  const [user, setUser] = useState(null);
-
-  // this useEffect is triggerd when isLoggedIn changes
-  // first Home was rendered, isLoggedIn is false
-  // then App is rendered, isLoggedIn is true
-  // then Home is re-rendered, isLoggedIn is true
-  useEffect(() => {
-    if (!isLoggedIn) {
-      console.log("Not logged in");
-      return;
-    }
-    const fetchUser = async () => {
-      const currentUser = await handleGetUser();
-      setUser(currentUser);
-    };
-
-    fetchUser();
-
-    // console.log(isLoggedIn);
-    // console.log(user);
-  }, [isLoggedIn]);
-
-  if (isLoggedIn && !user) {
-    return (
-      <div className="absolute top-1/2 left-1/2">
-        <Loading />;
-      </div>
-    );
-  }
+  const user = useContext(UserContext);
 
   console.log(user);
 

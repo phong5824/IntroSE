@@ -12,27 +12,26 @@ import Others from "./views/Others";
 import RecipeDetail from "./views/RecipeDetail";
 import Search from "./views/search";
 import { useEffect, useState } from "react";
-import { IsLoggedInContext } from "./context/IsLoggedInContext";
+import { handleGetUser } from "./action/accountAction";
+import { UserContext } from "./context/userContext";
 
 const HandleLoginStatus = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
     const fetchAccount = async () => {
       const accessToken = localStorage.getItem("accessToken");
       console.log(accessToken);
-      setIsLoggedIn(accessToken !== null);
+      if (!accessToken) {
+        return;
+      }
+      setUser(await handleGetUser());
     };
-
     fetchAccount();
   }, [location]); // Add location to the dependency array
 
-  return (
-    <IsLoggedInContext.Provider value={isLoggedIn}>
-      {children}
-    </IsLoggedInContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
 
 function App() {

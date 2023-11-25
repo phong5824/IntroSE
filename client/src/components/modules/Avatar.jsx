@@ -1,26 +1,25 @@
 import avatar from "/src/assets/avatar.png";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import { IsLoggedInContext } from "../../context/IsLoggedInContext";
 import { useContext, useEffect, useState } from "react";
 import { handleGetUser } from "../../action/accountAction";
+import { UserContext } from "../../context/userContext";
 
 const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
-  const isLoggedIn = useContext(IsLoggedInContext);
-  const [user, setUser] = useState(null);
+  const user = useContext(UserContext);
   // this useEffect is
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!user) {
       console.log("Not logged in");
       return;
     }
-    const fetchUser = async () => {
-      const currentUser = await handleGetUser();
-      setUser(currentUser);
-    };
+    // const fetchUser = async () => {
+    //   const currentUser = await handleGetUser();
+    //   setUser(currentUser);
+    // };
 
-    fetchUser();
-  }, [isLoggedIn]);
+    // fetchUser();
+  }, [user]);
 
   const navigate = useNavigate();
 
@@ -46,7 +45,7 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
 
       {showLoginForm && (
         <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-32 bg-white text-black border-gray-300 rounded shadow-lg z-10 transition duration-300">
-          {isLoggedIn ? (
+          {user ? (
             <button
               onClick={navigateToLogout}
               className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
