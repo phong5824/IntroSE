@@ -3,12 +3,11 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import starIcon from "/src/assets/star.png";
 import PropTypes from "prop-types";
-import { handleRankingRecipes} from "../../action/recipesAction";
+import { handleRankingRecipes } from "../../action/recipesAction";
 
 let recipes_db = [];
 
 const RecipeRankItem = ({ recipe }) => {
-
   return (
     <Link
       to={`$/recipes/{recipe.recipe_id.$numberInt}`}
@@ -37,7 +36,6 @@ const RecipeRankItem = ({ recipe }) => {
   );
 };
 
-
 RecipeRankItem.propTypes = {
   recipe: PropTypes.shape({
     img_src: PropTypes.string.isRequired,
@@ -50,11 +48,10 @@ RecipeRankItem.propTypes = {
   }).isRequired,
 };
 
-
 let recipes_start = [];
 let recipes_time = [];
 // eslint-disable-next-line react/prop-types
-const RecipeRanking = ({recipes: initialRecipes = recipes_db }) => {
+const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
   const [recipes, setRecipes] = useState(initialRecipes);
   const [sortOrder, setSortOrder] = useState("desc");
   const [sortBy, setSortBy] = useState("rating");
@@ -62,44 +59,40 @@ const RecipeRanking = ({recipes: initialRecipes = recipes_db }) => {
   const convertCookTimeToMinutes = (cookTime) => {
     let hoursMatch = cookTime.match(/(\d+)\s*hrs/);
     let minutesMatch = cookTime.match(/(\d+)\s*mins/);
-  
+
     let hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
     let minutes = minutesMatch ? parseInt(minutesMatch[1], 10) : 0;
-  
+
     return hours * 60 + minutes;
   };
 
   const handleSortByRating = () => {
+    setSortBy("rating");
     let sortedRecipes = [...recipes].sort((a, b) => b.rating - a.rating);
     setRecipes(sortedRecipes);
   };
 
   const handleSortByCookTime = () => {
-    let sortRecipes = [...recipes].sort((a, b) => convertCookTimeToMinutes(a.cook_time) - convertCookTimeToMinutes(b.cook_time));
+    setSortBy("cookTime");
+    let sortRecipes = [...recipes].sort(
+      (a, b) =>
+        convertCookTimeToMinutes(a.cook_time) -
+        convertCookTimeToMinutes(b.cook_time)
+    );
     setRecipes(sortRecipes);
   };
 
-
-
   useEffect(() => {
-    
-    
     const fetchRankingRecipes = async () => {
       recipes_db = await handleRankingRecipes();
-      
+
       let list_recipes = recipes_db.slice(0, 10);
       setRecipes(list_recipes);
-      
-     
-      };
-    
+    };
     fetchRankingRecipes();
-    
-
-  }, [sortOrder,recipes]);
-
-  
- 
+    console.log(sortBy);
+    console.log(sortOrder);
+  }, [sortOrder]);
 
   return (
     <div className="recipe-ranking-container container border-t mx-auto px-4 py-7">
@@ -139,6 +132,7 @@ RecipeRankItem.propTypes = {
     recipe_name: PropTypes.string.isRequired,
     cook_time: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired, // Change this line
-  }).isRequired,};
+  }).isRequired,
+};
 
 export default RecipeRanking;

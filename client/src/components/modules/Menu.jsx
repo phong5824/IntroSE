@@ -17,45 +17,35 @@ const Menu = ({ showMenu, setShowMenu, onClick }) => {
         onClick={onClick}
         className="w-6 h-6 cursor-pointer transition duration-300 ease-in-out bg-white"
       />
-      return (
-      <div className="page-menu-actions relative ml-4">
-        <img
-          src={menuIcon}
-          alt="Menu"
-          onClick={onClick}
-          className="w-6 h-6 cursor-pointer transition duration-300 ease-in-out bg-white"
-        />
 
-        {showMenu && (
-          <div className="page-menu absolute right-0 mt-2 w-40 bg-white text-black rounded shadow-lg z-10 transition duration-300">
-            <button
-              onClick={() => navigateToPage("/about-us")}
-              className="block w-full px-4 py-2 text-middle rounded hover:bg-gray-200"
-            >
-              About Us
-            </button>
-            <button
-              onClick={() => navigateToPage("/tips-and-tricks")}
-              className="block w-full px-4 py-2 border-t border-b text-middle hover:bg-gray-200"
-            >
-              Tips and Tricks
-            </button>
-            <button
-              onClick={() => navigateToPage("/blog")}
-              className="block w-full px-4 py-2 text-middle border-b hover:bg-gray-200"
-            >
-              Blog
-            </button>
-            <button
-              onClick={() => navigateToPage("/others")}
-              className="block w-full px-4 py-2 text-middle rounded hover:bg-gray-200"
-            >
-              Khác
-            </button>
-          </div>
-        )}
-      </div>
-      );
+      {showMenu && (
+        <div className="page-menu absolute right-0 mt-2 w-40 bg-white text-black rounded shadow-lg z-10 transition duration-300">
+          <button
+            onClick={() => navigateToPage("/about-us")}
+            className="block w-full px-4 py-2 text-middle rounded hover:bg-gray-200"
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => navigateToPage("/tips-and-tricks")}
+            className="block w-full px-4 py-2 border-t border-b text-middle hover:bg-gray-200"
+          >
+            Tips and Tricks
+          </button>
+          <button
+            onClick={() => navigateToPage("/blog")}
+            className="block w-full px-4 py-2 text-middle border-b hover:bg-gray-200"
+          >
+            Blog
+          </button>
+          <button
+            onClick={() => navigateToPage("/others")}
+            className="block w-full px-4 py-2 text-middle rounded hover:bg-gray-200"
+          >
+            Khác
+          </button>
+        </div>
+      )}
     </div>
   );
 };

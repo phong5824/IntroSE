@@ -1,9 +1,5 @@
+import { Flex, Spin } from "antd";
 import React from "react";
-import ReactDOM from "react-dom";
-import Lottie from "lottie-react";
-import { Alert, Flex, Spin } from "antd";
-import loadingAnimation from "./loadingAnimation.json";
-import data from "./data.json";
 
 export default function Loading() {
   const loadingStyle = {
