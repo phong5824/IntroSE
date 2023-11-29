@@ -72,7 +72,7 @@ const registerControl = async (req, res) => {
         });
         account.save().then(() => {
           const accessToken = jwt.sign(
-            { userid: account._id },
+            { userid: account.user_id },
             process.env.ACCESS_TOKEN_SECRET
           );
           res.json({ success: true, message: "Register Success", accessToken });
