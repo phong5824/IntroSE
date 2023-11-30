@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { handleGetUser } from "./action/accountAction";
 import { UserContext } from "./context/userContext";
 
+// eslint-disable-next-line react/prop-types
 const HandleLoginStatus = ({ children }) => {
   const [user, setUser] = useState(null);
   const location = useLocation();
