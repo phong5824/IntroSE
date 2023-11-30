@@ -99,9 +99,8 @@ const Search = () => {
       </nav>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
-        
         {recipes.map((recipe, index) => (
-          <Link to={`/recipes/${recipe.recipe_id}`} key={recipe.recipe_id.$numberInt}>
+          <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
           <div
             key={index}
             className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105"
@@ -123,7 +122,7 @@ const Search = () => {
               </div>
             </div>
           </div>
-          </Link>
+        </Link>
         ))}
       </div>
       <div className="text-center mt-8">

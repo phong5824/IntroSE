@@ -49,7 +49,6 @@ const getRecipesByKeywords = async (req, res) => {
       $or: keywordsArray.map(keyword => ({
         $or: [
           { recipe_name: { $regex: keyword, $options: 'i' } },
-          { ingredients: { $regex: keyword, $options: 'i' } },
           {nutrition: { $regex: keyword, $options: 'i' }}
         ]
       }))
@@ -59,8 +58,7 @@ const getRecipesByKeywords = async (req, res) => {
     const recipes = await Recipe.find(searchCondition)
       .sort({ rating: -1 })
       .limit(30);
-
-    console.log("Recipes:",recipes);
+    
     res.json({ success: true, recipes });
   } catch (error) {
     console.log(error);
@@ -68,5 +66,22 @@ const getRecipesByKeywords = async (req, res) => {
   }
 };
 
+const getRecipesByID = async (req, res) => {
+  try {
+    const id = parseInt(req.query.ID);
 
-module.exports = { getRecommendedRecipesControl, getRankingRecipesControl,getRecipesByKeywords };
+    // Tìm kiếm công thức dựa trên id
+    const recipe = await Recipe.findOne({"recipe_id":id});
+    
+    if (!recipe) {
+      return res.status(404).json({ success: false, message: "Recipe not found" });
+    }
+
+    res.json({ success: true, recipe });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+module.exports = { getRecommendedRecipesControl, getRankingRecipesControl,getRecipesByKeywords,getRecipesByID};

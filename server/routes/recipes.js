@@ -10,5 +10,6 @@ const recipesController = require("../controller/recipes");
 router.get("/", recipesController.getRankingRecipesControl);
 router.get("/home", recipesController.getRecommendedRecipesControl);
 router.get("/search/", recipesController.getRecipesByKeywords);
+router.get("/recipes/", recipesController.getRecipesByID);
 
 module.exports = router;
