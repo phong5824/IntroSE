@@ -77,7 +77,7 @@ function RecipeDetail() {
         <div className="mb-4">
           <h2 className="text-xl font-bold mb-2">Instructions</h2>
           <ol className="prose prose-blue list-decimal list-inside">
-            {recipe.directions.split(".").map((step, index) => (
+            {recipe.directions.split("\n").map((step, index) => (
               <li key={index} className="mb-2">
                 {step}
               </li>

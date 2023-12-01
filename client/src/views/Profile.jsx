@@ -4,7 +4,6 @@ import Footer from "../components/modules/Footer"; // Đảm bảo rằng bạn 
 import Loading from "../components/modules/Loading";
 import { handleGetUser } from "../action/accountAction";
 import { useEffect, useState } from "react";
-import { Alert, Flex, Spin } from "antd";
 import "./Profile.css";
 
 export default function Profile() {
