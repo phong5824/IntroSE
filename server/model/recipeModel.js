@@ -14,7 +14,6 @@ const recipeSchema = new Schema({
   tagname: String,
   prep_time: String,
   cook_time: String,
-  ingredients: String,
   directions: String,
   rating: {
     type: Number,
@@ -28,6 +27,8 @@ const recipeSchema = new Schema({
   tags: [String], // Một mảng các chuỗi
   nutritions: [String], // Một mảng các chuỗi
   author: String,
+  ingredients_list: [String],
+  ingredients: [Number],
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);

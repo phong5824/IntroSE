@@ -27,6 +27,7 @@ function RecipeDetail() {
 
   // Should return error screen
   if (!recipe) return <div>Loading...</div>;
+  
 
   return (
     <div className="home-wrapper min-h-screen flex flex-col overflow-y-auto">
@@ -48,7 +49,7 @@ function RecipeDetail() {
           <div className="w-4/5 pr-8 bg-green-200 rounded-md py-2">
             <h2 className="ml-2 text-xl font-bold mb-2">Ingredients</h2>
             <ul className="ml-4 list-disc list-inside">
-              {recipe.ingredients.split(",").map((ingredient, index) => (
+              {recipe.ingredients_list.map((ingredient, index) => (
                 <li key={index}>{ingredient.trim()}</li>
               ))}
             </ul>
@@ -72,7 +73,7 @@ function RecipeDetail() {
         <div className="mb-4">
           <h2 className="text-xl font-bold mb-2">Instructions</h2>
           <ol className="prose prose-blue list-decimal list-inside">
-            {recipe.directions.split("\\n").map((step, index) => (
+            {recipe.directions.split(".").map((step, index) => (
               <li key={index} className="mb-2">
                 {step}
               </li>

@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const Recipe = require("../model/recipeModel");
 const User = require("../model/userModel");
+const Ingredient = require("../model/ingredientModel");
 
 // @route GET API
 const getRankingRecipesControl = async (req, res) => {
@@ -43,13 +44,20 @@ const getRecipesByKeywords = async (req, res) => {
     
     const keywordsArray = keywords.split(',');
 
+    const ingredients = await Ingredient.find({
+      name: { $in: keywordsArray }
+    }).select('id');
+
+    const ingredientIds = ingredients.map(ingredient => ingredient.id);
     
     // Tạo điều kiện tìm kiếm
     const searchCondition = {
       $or: keywordsArray.map(keyword => ({
         $or: [
           { recipe_name: { $regex: keyword, $options: 'i' } },
-          {nutrition: { $regex: keyword, $options: 'i' }}
+          {nutrition: { $regex: keyword, $options: 'i' }},
+          {tagname : { $regex: keyword, $options: 'i' }},
+          {ingredients: { $elemMatch: { $in: ingredientIds } }},
         ]
       }))
     };
