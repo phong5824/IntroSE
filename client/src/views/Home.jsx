@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import HeroSection from "../components/modules/HeroSection";
 import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer";

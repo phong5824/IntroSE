@@ -1,7 +1,7 @@
 import  { useEffect, useState} from "react";
 import starIcon from "/src/assets/star.png";
 import { handleRecommendedRecipes } from "../../action/recipesAction";
-
+import { Link} from "react-router-dom";
 const initialRecipesToShow = 10;
 let list_recipes = [];
 
@@ -38,6 +38,7 @@ const RecommendRecipe = () => {
             <h2 className="text-2xl font-bold mb-6">Một số món ăn gợi ý</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
                 {recipes.map((recipe, index) => (
+                    <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
                     <div key={index} className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105">
                         <img src={recipe.img_src} alt={recipe.recipe_name} className="w-full h-52 object-cover round-lg" />
                         <div className="p-4">
@@ -54,6 +55,7 @@ const RecommendRecipe = () => {
                             </div>
                         </div>
                     </div>
+                    </Link>
                 ))}
             </div>
             <div className="text-center mt-8">

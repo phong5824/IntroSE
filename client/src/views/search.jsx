@@ -67,6 +67,7 @@ const Search = () => {
         </Link>
 
         <div className="relative w-1/2 rounded-lg">
+        <form onSubmit={handleSearch}>
           <input
             className="search-input w-full px-4 py-2 border bg-green-500 outline-none placeholder-gray-700 pl-10"
             style={{ borderRadius: "12px" }}
@@ -80,10 +81,12 @@ const Search = () => {
 
           <button
             onClick={handleSearch}
+            type="submit"
             className="absolute top-1/2 right-3 transform -translate-y-1/2"
           >
             <img src={loupe} alt="Search" className="w-4 h-4" />
           </button>
+          </form>
         </div>
 
         <div className="flex-shrink-0 flex items-center space-x-10 bg-white">
@@ -97,6 +100,7 @@ const Search = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
         {recipes.map((recipe, index) => (
+          <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
           <div
             key={index}
             className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105"
@@ -118,6 +122,7 @@ const Search = () => {
               </div>
             </div>
           </div>
+        </Link>
         ))}
       </div>
       <div className="text-center mt-8">

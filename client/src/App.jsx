@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { handleGetUser } from "./action/accountAction";
 import { UserContext } from "./context/userContext";
 
+// eslint-disable-next-line react/prop-types
 const HandleLoginStatus = ({ children }) => {
   const [user, setUser] = useState(null);
   const location = useLocation();
@@ -106,6 +107,7 @@ function App() {
             <Route path="/users/profile" element={<Profile />} />
             <Route path="/others" element={<Others />} />
             <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
+            <Route path="/recipes/" element={<RecipeDetail />} />
             <Route path="/details" element={<RecipeDetail />} />
             <Route path="/search" element={<Search />} />
           </Routes>

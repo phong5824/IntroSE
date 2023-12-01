@@ -3,6 +3,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const User = require("../model/userModel");
+const verifyToken = require("../middleware/account");
 
 // @route GET API
 // @desc GET user
@@ -53,17 +54,10 @@ const createUserControl = async (req, res) => {
 };
 
 const getProfileControl = async (req, res) => {
-  const authHeader = req.header("Authorization");
-  const token = authHeader.split(" ")[1];
-
-  if (!token) {
-    res.status(401).json({ success: false, message: "Access token not found" });
-  }
+ 
+  
   try {
-    // Verify token
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
-    const e_user = await User.findOne({ account: decoded.userid }).populate(
+    const e_user = await User.findOne({ account: req.userid }).populate(
       "account",
       ["email"]
     );
@@ -78,17 +72,11 @@ const getProfileControl = async (req, res) => {
 };
 
 const getFavouriteControl = async (req, res) => {
-  const authHeader = req.header("Authorization");
-  const token = authHeader.split(" ")[1];
-
-  if (!token) {
-    res.status(401).json({ success: false, message: "Access token not found" });
-  }
+ 
   try {
-    // Verify token
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    
 
-    const fauvorite_recipes = await User.find({account: decoded.userid}).populate('favourites');
+    const fauvorite_recipes = await User.find({account: req.userid}).populate('favourites');
 
     res
       .status(200)
