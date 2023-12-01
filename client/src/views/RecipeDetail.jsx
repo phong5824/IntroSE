@@ -4,7 +4,8 @@ import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer";
 import { useLocation } from "react-router-dom";
 import { handleSearchRecipesID } from "./../action/recipesAction";
-
+import Loading from "../components/modules/Loading";
+import "./Profile.css";
 function RecipeDetail() {
   const recipeId = new URLSearchParams(useLocation().search).get("ID");
   const [recipe, setRecipe] = React.useState(null);
@@ -26,8 +27,11 @@ function RecipeDetail() {
   }
 
   // Should return error screen
-  if (!recipe) return <div>Loading...</div>;
-  
+  if (!recipe) {return( 
+  <div className="absolute top-1/2 left-1/2">
+  <Loading />;
+  </div>);
+  }
 
   return (
     <div className="home-wrapper min-h-screen flex flex-col overflow-y-auto">
