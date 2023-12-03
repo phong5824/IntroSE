@@ -42,8 +42,7 @@ const getRecipesByKeywords = async (req, res) => {
   try {
     const keywords  = req.query.keywords.replace(/"/g, '');
     
-    const keywordsArray = keywords.split(',');
-
+    const keywordsArray = keywords.split(',').map(keyword => keyword.trim().toLowerCase());
     const ingredients = await Ingredient.find({
       name: { $in: keywordsArray }
     }).select('id');
@@ -54,7 +53,7 @@ const getRecipesByKeywords = async (req, res) => {
     const searchCondition = {
       $or: keywordsArray.map(keyword => ({
         $or: [
-          { recipe_name: { $regex: keyword, $options: 'i' } },
+          {recipe_name: { $regex: keyword, $options: 'i' } },
           {nutrition: { $regex: keyword, $options: 'i' }},
           {tagname : { $regex: keyword, $options: 'i' }},
           {ingredients: { $elemMatch: { $in: ingredientIds } }},
