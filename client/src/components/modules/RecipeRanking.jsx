@@ -10,7 +10,9 @@ let recipes_db = [];
 
 const RecipeRankItem = ({ recipe }) => {
   return (
-    <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}
+    <Link
+      to={`/recipes/?ID=${recipe.recipe_id}`}
+      key={recipe.recipe_id}
       className="recipe-rank-item bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105"
     >
       <img
@@ -28,7 +30,7 @@ const RecipeRankItem = ({ recipe }) => {
           <div>{/* Placeholder for icons and other details */}</div>
           <div className="flex items-center ml-auto">
             <img src={starIcon} alt="Star" className="h-5 w-5 mr-2" />
-            <span className="font-bold">{recipe.rating.$numberDouble}</span>
+            <span className="font-bold">{recipe.rating}</span>
           </div>
         </div>
       </div>
@@ -119,8 +121,8 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
         {recipes.map((recipe, index) => (
-           <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
-          <RecipeRankItem key={index} recipe={recipe} />
+          <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
+            <RecipeRankItem key={index} recipe={recipe} />
           </Link>
         ))}
       </div>
