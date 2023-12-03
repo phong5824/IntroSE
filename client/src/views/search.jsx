@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import starIcon from "/src/assets/star.png";
 import trashCan from "/src/assets/trash_can.svg";
 import { handleSearchRecipes } from "./../action/recipesAction";
+import { handleGetAllIngredientName } from "./../action/ingredientAction"
 import { message } from "antd";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import LogoIcon from "../components/modules/LogoIcon";
 import Avatar from "../components/modules/Avatar";
 import loupe from "/src/assets/loupe.png";
+
 
 const initialRecipesToShow = 10;
 
@@ -25,7 +27,7 @@ const Search = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const items = ['carrot', 'meat', 'fish', 'Eggs', 'sugar', 'salt', 'walnuts', 'apple'];
+  const [ingredients, setIngredients] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   console.log("keywords", keywords);
@@ -37,6 +39,20 @@ const Search = () => {
     };
     fetchRecommendedRecipes();
   }, [keywords, handleSearchRecipes, initialRecipesToShow, setListRecipes]);
+
+  useEffect(() => {
+    const fetchIngredients = async () => {
+      const result = await handleGetAllIngredientName();
+      if (result !== false) {
+        setIngredients(result);
+        console.log(ingredients)
+      } else {
+        console.error("Failed to fetch ingredients");
+      }
+    };
+
+    fetchIngredients();
+  }, []);
 
   const handleAvatarClick = () => {
     setShowLoginForm(!showLoginForm);
@@ -84,7 +100,7 @@ const Search = () => {
     setSelectedIngredients(updatedIngredients);
   };
   const renderIngredientList = () => {
-    return items
+    return ingredients
       .filter((item) => item.toLowerCase().includes(searchTerm))
       .map((filteredItem, index) => (
         <a
@@ -137,9 +153,9 @@ const Search = () => {
         </div>
       </nav>
       <div className="flex">
-        <div className="w-1/7 p-7">
+        <div className="w-1/7 p-7 ml-3 mr-3">
           <button
-            className=" text-white bg-red-600 w-full justify-center rounded-full mb-4 ml-3 mr-3"
+            className=" text-white bg-red-600 w-full justify-center rounded-full mb-4 "
             onClick={handleSearch}
           >
             Filters
@@ -163,7 +179,7 @@ const Search = () => {
               </div>
               <button
                 id="dropdown-button"
-                className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500 ml-3 mr-3"
+                className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
                 onClick={toggleDropdown}
               >
                 <span className="mr-2">Ingredients</span>
@@ -207,7 +223,7 @@ const Search = () => {
                     className="w-full h-52 object-cover round-lg"
                   />
                   <div className="p-4">
-                    <h3 className="font-bold text-lg h-16">{recipe.recipe_name}</h3>
+                    <h3 className="font-bold text-lg" style={{ minHeight: "100px" }}>{recipe.recipe_name}</h3>
                     <p className="text-gray-700">{recipe.cook_time}</p>
                     <div className="flex items-center justify-between mt-3">
                       <div>{/* Placeholder for icons and other details */}</div>
