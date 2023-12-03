@@ -42,7 +42,7 @@ const getRecipesByKeywords = async (req, res) => {
   try {
     const keywords  = req.query.keywords.replace(/"/g, '');
     
-    const keywordsArray = keywords.split(',').map(keyword => keyword.trim());
+    const keywordsArray = keywords.split(',').map(keyword => keyword.trim().toLowerCase());
     const ingredients = await Ingredient.find({
       name: { $in: keywordsArray }
     }).select('id');
