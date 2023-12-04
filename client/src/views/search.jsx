@@ -159,7 +159,7 @@ const Search = () => {
 
 
       <div className="flex">
-        <div className="w-1/5 p-7 ml-3 mr-3">
+        <div className="w-1/4 p-7 mr-3">
           <button
             onClick={handleSearch}
             className="text-black bg-yellow-500 w-full h-10 justify-center rounded mb-4"
