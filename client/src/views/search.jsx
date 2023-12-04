@@ -211,30 +211,31 @@ const Search = () => {
               </Link>
             ))}
           </div>
+          <div className="text-center justify-center mt-8">
+            {list_recipes.length > initialRecipesToShow && (
+              <>
+                {recipesToShow > initialRecipesToShow ? (
+                  <button
+                    onClick={handleShowLess}
+                    className="bg-red-400 text-white px-6 py-2 rounded-full mb-3"
+                  >
+                    Rút gọn
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleLoadMore}
+                    className="bg-red-400 text-white px-6 py-2 rounded-full mb-3"
+                  >
+                    Xem thêm
+                  </button>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="text-center justify-center mt-8">
-        {list_recipes.length > initialRecipesToShow && (
-          <>
-            {recipesToShow > initialRecipesToShow ? (
-              <button
-                onClick={handleShowLess}
-                className="bg-red-400 text-white px-6 py-2 rounded-full"
-              >
-                Rút gọn
-              </button>
-            ) : (
-              <button
-                onClick={handleLoadMore}
-                className="bg-red-400 text-white px-6 py-2 rounded-full"
-              >
-                Xem thêm
-              </button>
-            )}
-          </>
-        )}
-      </div>
+
 
     </div>
   );
