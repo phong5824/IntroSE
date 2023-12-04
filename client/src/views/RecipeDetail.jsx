@@ -61,7 +61,7 @@ function RecipeDetail() {
           <div className="w-3/4 pr-8">
             <div className="w-full pr-8 bg-green-200 rounded-md ml-20 py-2 shadow-lg">
               <div className="flex items-center mb-2">
-                <h2 className="ml-2 text-2xl font-bold">Nguyên liệu</h2>
+                <h2 className="ml-4 text-2xl font-bold">Nguyên liệu</h2>
                 <img
                   src={Clock}
                   alt='time'
@@ -70,7 +70,7 @@ function RecipeDetail() {
                 <span className="text-gray-700 ml-1 mt-1">{recipe.prep_time}</span>
               </div>
 
-              <ul className="ml-4 list-inside">
+              <ul className="ml-8 list-inside">
                 {recipe.ingredients_list.map((ingredient, index) => {
                   const match = ingredient.match(/^\d+/);
                   if (match) {
@@ -95,7 +95,7 @@ function RecipeDetail() {
 
             <div className="w-full pr-8 bg-green-200 rounded-md ml-20 py-2 mt-4 shadow-lg">
               <div className="flex items-center mb-2">
-                <h2 className="ml-2 text-2xl font-bold">Hướng dẫn nấu nướng</h2>
+                <h2 className="ml-4 text-2xl font-bold">Hướng dẫn nấu nướng</h2>
                 <img
                   src={Clock}
                   alt='time'
@@ -105,7 +105,7 @@ function RecipeDetail() {
               </div>
 
 
-              <div className="ml-4 mb-2">
+              <div className="ml-8 mb-2">
                 <ol className="prose prose-blue list-decimal list-inside">
                   {recipe.directions.split("\n").map((step, index) => (
                     <li key={index} className="mb-2 pb-2 border-b border-gray-800">
