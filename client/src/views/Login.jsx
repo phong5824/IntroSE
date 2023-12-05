@@ -24,7 +24,7 @@ export default function Login() {
     }
     const userId = await handleLogin(userData);
     if (userId) {
-      navigate(location.state.from ||`/home`);
+      navigate(location.state?.from || '/home');
     } else {
       message.error("Đã xảy ra lỗi");
     }
@@ -35,7 +35,7 @@ export default function Login() {
     console.log(isLoggedIn);
     if (isLoggedIn) {
      
-      navigate(location.state.from ||`/home`);
+      navigate(location.state?.from || '/home');
       
     }
   };
