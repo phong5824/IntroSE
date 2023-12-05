@@ -136,7 +136,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="chat-component fixed w-80 bottom-10 right-10 z-50">
+    <div className="chat-component fixed bottom-10 right-10 z-50">
       <div className="flex justify-center items-center">
         <img
           src={Chatbot}
@@ -146,10 +146,10 @@ const Chat = () => {
         />
       </div>
       {isChatVisible && (
-        <div className="chat-card bg-gray-100 rounded-md w-full shadow">
+        <div className="chat-card bg-gray-100 rounded-md w-96 shadow-lg">
           <div
             ref={messagesContainerRef}
-            className="messages-container mb-4 h-80 p-3 w-full overflow-y-auto">
+            className="messages-container h-96 p-3 w-full overflow-y-auto">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -167,18 +167,18 @@ const Chat = () => {
               </div>
             ))}
           </div>
-          <div className="flex bg-white">
+          <div className="flex bg-white p-2">
             <input
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Nhập tại đây..."
-              className="flex-1 p-2 outline-none border-none"
+              className="flex-1 outline-none border-none ml-2"
             />
             <button
               onClick={handleSendMessage}
-              className="text-black p-2 rounded-md "
+              className="text-black rounded-md mr-2"
             >
               <img src={SendIcon} alt="send" className="h-4 w-4" />
             </button>
