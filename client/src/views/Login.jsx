@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import { handleLogin, handleLoginWithGoogle } from "../action/accountAction";
 import Logo from "../assets/logo-recipe.png";
 import GoogleIcon from "../assets/google.png";
@@ -10,6 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -23,7 +24,7 @@ export default function Login() {
     }
     const userId = await handleLogin(userData);
     if (userId) {
-      navigate(`/home`);
+      navigate(location.state.from ||`/home`);
     } else {
       message.error("Đã xảy ra lỗi");
     }
@@ -34,7 +35,7 @@ export default function Login() {
     console.log(isLoggedIn);
     if (isLoggedIn) {
      
-      navigate(`/home`);
+      navigate(location.state.from ||`/home`);
       
     }
   };
