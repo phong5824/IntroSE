@@ -43,6 +43,7 @@ function RecipeDetail() {
       <NavBar />
 
       <div className="container mx-auto p-8 border rounded-lg shadow-lg">
+
         <div className="text-center">
           {/* Added text-center class */}
           <h1 className="text-4xl font-bold mb-4">{recipe.recipe_name}</h1>
