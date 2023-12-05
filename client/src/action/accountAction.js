@@ -99,7 +99,6 @@ export const handleLoginWithGoogle = async () => {
 export const handleGetUser = async () => {
   try {
     const accessToken = localStorage.getItem("accessToken");
-    // const accessToken = getCookie('accessToken');
 
     const result = await axios.get("http://127.0.0.1:8000/users/profile", {
       headers: {

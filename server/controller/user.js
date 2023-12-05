@@ -54,8 +54,6 @@ const createUserControl = async (req, res) => {
 };
 
 const getProfileControl = async (req, res) => {
- 
-  
   try {
     const e_user = await User.findOne({ account: req.userid }).populate(
       "account",
@@ -72,18 +70,52 @@ const getProfileControl = async (req, res) => {
 };
 
 const getFavouriteControl = async (req, res) => {
- 
   try {
-    
-
-    const fauvorite_recipes = await User.find({account: req.userid}).populate('favourites');
+    const fauvorite_recipes = await User.find({ account: req.userid }).populate(
+      "favourites"
+    );
 
     res
       .status(200)
-      .json({ success: true, message: "Favourite recipes of user", fauvorite_recipes});
+      .json({
+        success: true,
+        message: "Favourite recipes of user",
+        fauvorite_recipes,
+      });
   } catch (error) {
     console.log(error);
     res.status(401).json({ success: false, message: "Invalid token" });
   }
 };
-module.exports = { getAccountControl, createUserControl, getProfileControl,getFavouriteControl};
+
+const addFavouriteControl = async (req, res) => {
+  try {
+    let {recipeId}  = req.body; // ID của công thức từ request body
+
+    recipeId = parseInt(recipeId);
+    console.log(recipeId);
+    
+    // Tìm người dùng và thêm ID công thức vào mục yêu thích
+    const user = await User.findOneAndUpdate(
+      { account: req.userid },
+      { $addToSet: { favourites: recipeId } }, // $addToSet thêm một giá trị vào một mảng chỉ khi giá trị đó chưa tồn tại trong mảng
+      { new: true } // Trả về người dùng đã được cập nhật
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Added recipe to favourites',
+      favourites: user.favourites,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({ success: false, message: 'Invalid token' });
+  }
+};
+module.exports = {
+  getAccountControl,
+  createUserControl,
+  getProfileControl,
+  getFavouriteControl,
+  addFavouriteControl,
+};
