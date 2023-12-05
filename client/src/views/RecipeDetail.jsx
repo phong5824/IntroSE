@@ -9,8 +9,26 @@ import Clock from "/src/assets/clock.png";
 import Bookmark from "/src/assets/bookmark.png";
 import Share from "/src/assets/share.png";
 import "./Profile.css";
+import axios from "axios";
+import { message } from "antd";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function RecipeDetail() {
+
+  const notify = () => 
+  {
+    toast.success('🦄 Save recipes successfull!', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
   const recipeId = new URLSearchParams(useLocation().search).get("ID");
   const [recipe, setRecipe] = React.useState(null);
 
@@ -35,8 +53,34 @@ function RecipeDetail() {
     return (
       <div className="absolute top-1/2 left-1/2">
         <Loading />;
-      </div>);
+      </div>
+    );
   }
+
+  const handleUpdateFavoriteRecipes = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      console.log("accessToken : ", accessToken);
+      const result = await axios.post(
+        `http://127.0.0.1:8000/users/favourites`,
+        { recipeId },
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        }
+      );
+
+      if (result.data.success) {
+        console.log(result.data);
+        return result.data;
+      } else {
+        message.error(result.data.error);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="home-wrapper min-h-screen flex flex-col overflow-y-auto">
@@ -54,20 +98,15 @@ function RecipeDetail() {
           {/* Added mx-auto class */}
         </div>
 
-
         <div className="flex justify-center mb-4">
-
-
           <div className="w-3/4 pr-8">
             <div className="w-full pr-8 bg-green-200 rounded-md ml-20 py-2 shadow-lg">
               <div className="flex items-center mb-2">
                 <h2 className="ml-4 text-2xl font-bold">Nguyên liệu</h2>
-                <img
-                  src={Clock}
-                  alt='time'
-                  className="h-5 w-5 ml-6 mt-1"
-                />
-                <span className="text-gray-700 ml-1 mt-1">{recipe.prep_time}</span>
+                <img src={Clock} alt="time" className="h-5 w-5 ml-6 mt-1" />
+                <span className="text-gray-700 ml-1 mt-1">
+                  {recipe.prep_time}
+                </span>
               </div>
 
               <ul className="ml-8 list-inside">
@@ -75,17 +114,23 @@ function RecipeDetail() {
                   const match = ingredient.match(/^\d+/);
                   if (match) {
                     const number = match[0];
-                    const ingredientText = ingredient.replace(number, '');
+                    const ingredientText = ingredient.replace(number, "");
 
                     return (
-                      <li key={index} className="mb-2 pb-2 border-b border-gray-800">
+                      <li
+                        key={index}
+                        className="mb-2 pb-2 border-b border-gray-800"
+                      >
                         <strong>{number}</strong> {ingredientText.trim()}
                       </li>
                     );
                   }
 
                   return (
-                    <li key={index} className="mb-2 pb-2 border-b border-gray-800">
+                    <li
+                      key={index}
+                      className="mb-2 pb-2 border-b border-gray-800"
+                    >
                       {ingredient.trim()}
                     </li>
                   );
@@ -96,19 +141,19 @@ function RecipeDetail() {
             <div className="w-full pr-8 bg-green-200 rounded-md ml-20 py-2 mt-4 shadow-lg">
               <div className="flex items-center mb-2">
                 <h2 className="ml-4 text-2xl font-bold">Hướng dẫn nấu nướng</h2>
-                <img
-                  src={Clock}
-                  alt='time'
-                  className="h-5 w-5 ml-6 mt-1"
-                />
-                <span className="text-gray-700 ml-1 mt-1">{recipe.cook_time}</span>
+                <img src={Clock} alt="time" className="h-5 w-5 ml-6 mt-1" />
+                <span className="text-gray-700 ml-1 mt-1">
+                  {recipe.cook_time}
+                </span>
               </div>
-
 
               <div className="ml-8 mb-2">
                 <ol className="prose prose-blue list-decimal list-inside">
                   {recipe.directions.split("\n").map((step, index) => (
-                    <li key={index} className="mb-2 pb-2 border-b border-gray-800">
+                    <li
+                      key={index}
+                      className="mb-2 pb-2 border-b border-gray-800"
+                    >
                       {step}
                     </li>
                   ))}
@@ -119,10 +164,28 @@ function RecipeDetail() {
 
           <div className="w-1/4 h-screen ml-20 flex flex-col justify-start">
             <div className="w-72 grid grid-cols-1/4  bg-green-200 shadow-black rounded-md p-3 space-y-2 shadow-lg">
-              <button className="text-gray-900 p-1 rounded-md border border-black bg-yellow-200 flex items-center justify-center space-x-2">
+              <button
+                className="text-gray-900 p-1 rounded-md border border-black bg-yellow-200 flex items-center justify-center space-x-2"
+                onClick={() => {
+                  handleUpdateFavoriteRecipes();
+                  notify();
+                }}
+              >
                 <img src={Bookmark} alt="Bookmark Icon" className="h-4 w-4" />
                 <span>Lưu Món</span>
               </button>
+              <ToastContainer
+position="bottom-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
 
               <button className="text-gray-900 p-1 rounded-md border border-black bg-yellow-200 flex items-center justify-center space-x-2">
                 <img src={Share} alt="Share Icon" className="h-4 w-4" />
@@ -130,25 +193,7 @@ function RecipeDetail() {
               </button>
             </div>
           </div>
-
-
         </div>
-
-
-
-
-        {/* <div className="mb-4">
-          <h2 className="text-xl font-bold mb-2">Comments</h2>
-          {comments.map((comment, index) => (
-            <div key={index} className="mb-2">
-              <p className="font-bold">{comment.user}</p>
-              <p>{comment.comment}</p>
-              {comment.rating && (
-                <p className="text-yellow-400">{`Rating: ${comment.rating}/5`}</p>
-              )}
-            </div>
-          ))}
-        </div> */}
       </div>
 
       <Footer />
