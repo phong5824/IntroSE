@@ -44,7 +44,7 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
       />
 
       {showLoginForm && (
-        <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-32 bg-white text-black border-gray-300 rounded shadow-lg z-10 transition duration-300">
+        <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-36 bg-white text-black border-gray-300 rounded shadow-lg z-10 transition duration-300">
           {user ? (
             <button
               onClick={navigateToLogout}
