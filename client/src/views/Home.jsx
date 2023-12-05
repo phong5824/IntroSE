@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import { handleGetUser } from "../action/accountAction";
 import Loading from "../components/modules/Loading";
 import { UserContext } from "../context/userContext";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const user = useContext(UserContext);
@@ -17,12 +18,12 @@ const Home = () => {
 
   const ButtonGroup = () => {
     return (
-      <div className="button-group flex flex-rows items-center justify-between w-full p-4 space-x-20 text-gray-800 ">
+      <div className="button-group flex flex-rows items-center justify-between w-full p-4 space-x-20">
         <button
           onClick={() => {
             /* Logic for "Đăng công thức" */
           }}
-          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full"
+          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
           Đăng công thức
         </button>
@@ -30,7 +31,7 @@ const Home = () => {
           onClick={() => {
             /* Logic for "Tổ chức bữa ăn" */
           }}
-          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full"
+          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
           Tổ chức bữa ăn
         </button>
@@ -38,7 +39,7 @@ const Home = () => {
           onClick={() => {
             /* Logic for "Tip và tricks" */
           }}
-          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full"
+          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
           Tip và tricks
         </button>
@@ -46,9 +47,11 @@ const Home = () => {
           onClick={() => {
             /* Logic for "Blog" */
           }}
-          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full"
+          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
-          Blog
+          <Link to="/blog" className="text-black font-medium">
+            Blog
+          </Link>
         </button>
       </div>
     );
