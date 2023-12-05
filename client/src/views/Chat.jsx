@@ -62,6 +62,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Chatbot from '../assets/chatbot.png';
+import SendIcon from '../assets/send.png';
+
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -134,7 +136,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="chat-component fixed bottom-10 right-10 z-50">
+    <div className="chat-component fixed w-80 bottom-10 right-10 z-50">
       <div className="flex justify-center items-center">
         <img
           src={Chatbot}
@@ -144,10 +146,10 @@ const Chat = () => {
         />
       </div>
       {isChatVisible && (
-        <div className="chat-card bg-white p-4 rounded-md w-80 shadow">
+        <div className="chat-card bg-gray-100 rounded-md w-full shadow">
           <div
             ref={messagesContainerRef}
-            className="messages-container mb-4 h-64 w-72 overflow-y-auto">
+            className="messages-container mb-4 h-80 p-3 w-full overflow-y-auto">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -157,7 +159,7 @@ const Chat = () => {
                 <span
                   className={`inline-block p-2 rounded-md ${message.sender === 'user'
                     ? 'bg-blue-500 text-white'
-                    : 'bg-gray-300 text-black'
+                    : 'bg-white text-black'
                     }`}
                 >
                   {message.text}
@@ -165,20 +167,20 @@ const Chat = () => {
               </div>
             ))}
           </div>
-          <div className="flex space-x-2">
+          <div className="flex bg-white">
             <input
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Nhập tại đây..."
-              className="flex-1 p-2 border rounded-md"
+              className="flex-1 p-2 outline-none border-none"
             />
             <button
               onClick={handleSendMessage}
-              className="bg-red-400 text-white p-2 rounded-md"
+              className="text-black p-2 rounded-md "
             >
-              Gửi
+              <img src={SendIcon} alt="send" className="h-4 w-4" />
             </button>
           </div>
         </div>
