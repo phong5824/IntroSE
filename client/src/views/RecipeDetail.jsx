@@ -82,7 +82,7 @@ function RecipeDetail() {
   };
 
   return (
-    <div className="home-wrapper min-h-screen flex flex-col overflow-y-auto">
+    <div className="home-wrapper min-h-screen bg-green-200 flex flex-col overflow-y-auto">
       <NavBar />
 
       <div className="container bg-green-200 mx-auto p-8">
