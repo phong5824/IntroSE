@@ -2,7 +2,7 @@
 import React from "react";
 import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { handleSearchRecipesID } from "./../action/recipesAction";
 import Loading from "../components/modules/Loading";
 import Clock from "/src/assets/clock.png";
@@ -12,6 +12,7 @@ import "./Profile.css";
 import axios from "axios";
 import { message } from "antd";
 import { ToastContainer, toast } from 'react-toastify';
+import { UserContext } from "../context/userContext";
 import 'react-toastify/dist/ReactToastify.css';
 
 export const RecipeDetail = () => {
@@ -59,14 +60,14 @@ export const RecipeDetail = () => {
     );
   }
 
-  
+
   const handleUpdateFavoriteRecipes = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
 
-      if(!accessToken) {
+      if (!accessToken) {
         message.error("Bạn cần đăng nhập để lưu công thức này.");
-        navigate('/login',{ state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
+        navigate('/login', { state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
         return;
       }
 
@@ -182,6 +183,20 @@ export const RecipeDetail = () => {
             </div>
           </div>
         </div>
+
+        {/* <div className="mb-4">
+          <h2 className="text-xl font-bold mb-2">Comments</h2>
+          {comments.map((comment, index) => (
+            <div key={index} className="mb-2">
+              <p className="font-bold">{comment.user}</p>
+              <p>{comment.comment}</p>
+              {comment.rating && (
+                <p className="text-yellow-400">{`Rating: ${comment.rating}/5`}</p>
+              )}
+            </div>
+          ))}
+        </div> */}
+
       </div>
 
       <Footer />
