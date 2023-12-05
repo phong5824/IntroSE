@@ -159,7 +159,7 @@ const Search = () => {
 
 
       <div className="flex">
-        <div className="w-1/4 p-7 mr-3">
+        <div className="w-1/4 p-7 mr-2">
           <button
             onClick={handleSearch}
             className="text-black bg-yellow-500 w-full h-10 justify-center rounded mb-4"
@@ -176,7 +176,7 @@ const Search = () => {
         </div>
 
 
-        <div className="w-6/7 mt-3">
+        <div className="w-3/4 mt-3 mr-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
             {recipes.map((recipe, index) => (
               <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
