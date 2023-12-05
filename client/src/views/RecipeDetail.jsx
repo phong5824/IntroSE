@@ -2,7 +2,7 @@
 import React from "react";
 import NavBar from "../components/modules/Navbar";
 import Footer from "../components/modules/Footer";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { handleSearchRecipesID } from "./../action/recipesAction";
 import Loading from "../components/modules/Loading";
 import Clock from "/src/assets/clock.png";
@@ -14,7 +14,10 @@ import { message } from "antd";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function RecipeDetail() {
+export const RecipeDetail = () => {
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const notify = () => 
   {
@@ -57,9 +60,17 @@ function RecipeDetail() {
     );
   }
 
+  
   const handleUpdateFavoriteRecipes = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
+
+      if(!accessToken) {
+        message.error("Bạn cần đăng nhập để lưu công thức này.");
+        navigate('/login',{ state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
+        return;
+      }
+
       console.log("accessToken : ", accessToken);
       const result = await axios.post(
         `http://127.0.0.1:8000/users/favourites`,
