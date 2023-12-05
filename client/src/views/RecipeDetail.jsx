@@ -14,6 +14,7 @@ import { message } from "antd";
 import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from "../context/userContext";
 import 'react-toastify/dist/ReactToastify.css';
+import StarRatings from 'react-star-ratings';
 
 export const RecipeDetail = () => {
 
@@ -104,12 +105,26 @@ export const RecipeDetail = () => {
           <img
             src={recipe.img_src}
             alt={recipe.recipe_name}
-            className="mb-4 rounded-lg mx-auto max-w-md"
+            className="mb-3 rounded-lg mx-auto max-w-md"
           />
+          <div className="flex items-center justify-center">
+            <div className="mr-2">
+              <StarRatings
+                rating={recipe.rating}
+                starRatedColor="orange"
+                numberOfStars={5}
+                name='rating'
+                starDimension="20px"
+                starSpacing="2px"
+              />
+            </div>
+            <span className="text-sm font-bold">{recipe.rating}</span>
+          </div>
+
           {/* Added mx-auto class */}
         </div>
 
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-4 mt-3">
           <div className="w-3/4 pr-8">
             <div className="w-full pr-8 bg-white rounded-md ml-20 py-2 shadow-lg">
               <div className="flex items-center mb-2">
