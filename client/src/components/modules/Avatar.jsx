@@ -1,4 +1,4 @@
-import avatar from "/src/assets/avatar.png";
+import avatar from "/src/assets/user.png";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
