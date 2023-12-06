@@ -20,7 +20,7 @@ const schema = new Schema({
     default: "other",
   },
 
-  isadmin: {
+  is_admin: {
     type: Boolean,
     enum: [true, false],
     default: false,
@@ -32,17 +32,11 @@ const schema = new Schema({
     default: 0,
   },
 
-  user_recipes: {
-    type: Array,
-  },
+  user_recipes: [Number],
 
-  favourites: {
-    type: Array,
-  },
+  favourites: [Number],
 
-  followers: {
-    type: Array,
-  },
+  followers: [Number],
 
   account: {
     type: Schema.Types.ObjectId,

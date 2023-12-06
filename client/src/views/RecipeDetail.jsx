@@ -33,11 +33,13 @@ export const RecipeDetail = () => {
   }
   const recipeId = new URLSearchParams(useLocation().search).get("ID");
   const [recipe, setRecipe] = React.useState(null);
+  const [loading,setLoading] = React.useState(false);
 
   const fetchRecipes = async () => {
-    handleSearchRecipesID(recipeId)
+    await handleSearchRecipesID(recipeId)
       .then((dataGetRecipe) => {
         setRecipe(dataGetRecipe);
+        setLoading(true);
       })
       .catch((err) => {
         // toast message (err)
@@ -51,7 +53,7 @@ export const RecipeDetail = () => {
   }
 
   // Should return error screen
-  if (!recipe) {
+  if (!loading) {
     return (
       <div className="absolute top-1/2 left-1/2">
         <Loading />;
