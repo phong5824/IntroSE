@@ -81,9 +81,9 @@ export default function Profile() {
             <div className="flex justify-center">
               {/* Profile details here */}
               <div className="w-1/2 bg-green-200 p-5 rounded shadow flex flex-col items-center">
-                <div className="w-1/2 bg-white p-5 rounded shadow flex flex-col items-center transform transition-transform hover:scale-105">
+                <div className="w-1/2 bg-white rounded shadow flex flex-col items-center transform transition-transform hover:scale-105">
                   <img
-                    className="rounded h-30 w-30 "
+                    className="rounded h-full w-full object-cover"
                     src={avatar}
                     alt="User Avatar"
                   />{" "}

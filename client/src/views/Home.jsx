@@ -18,7 +18,7 @@ const Home = () => {
 
   const ButtonGroup = () => {
     return (
-      <div className="button-group flex flex-rows items-center justify-between w-full p-4 space-x-20">
+      <div className="button-group flex flex-cols items-center justify-between w-full p-4 space-x-20">
         <button
           onClick={() => {
             /* Logic for "Đăng công thức" */
