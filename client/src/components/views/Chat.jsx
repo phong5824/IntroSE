@@ -58,16 +58,13 @@
 //   );
 // }
 
-
-
-import { useState, useEffect, useRef } from 'react';
-import Chatbot from '../assets/chatbot.png';
-import SendIcon from '../assets/send.png';
-
+import { useState, useEffect, useRef } from "react";
+import Chatbot from "../../assets/chatbot.png";
+import SendIcon from "../../assets/send.png";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState("");
   const [isChatVisible, setIsChatVisible] = useState(false);
 
   const handleToggleChat = () => {
@@ -76,60 +73,61 @@ const Chat = () => {
 
   const messagesContainerRef = useRef(null);
 
-
   const handleSendMessage = async () => {
-    if (inputMessage.trim() === '') return;
+    if (inputMessage.trim() === "") return;
 
-    setMessages([...messages, { text: inputMessage, sender: 'user' }]);
+    setMessages([...messages, { text: inputMessage, sender: "user" }]);
 
     try {
       // Gửi tin nhắn đến API ChatBot và nhận câu trả lời
-      const response = await fetch('https://api.example.com/chatbot', {
-        method: 'POST',
+      const response = await fetch("https://api.example.com/chatbot", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ message: inputMessage }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setMessages([...messages, { text: data.message, sender: 'bot' }]);
+        setMessages([...messages, { text: data.message, sender: "bot" }]);
       } else {
-        console.error('Failed to get response from the chatbot API');
+        console.error("Failed to get response from the chatbot API");
       }
     } catch (error) {
-      console.error('Error sending message to the chatbot API:', error);
+      console.error("Error sending message to the chatbot API:", error);
     }
 
-    setInputMessage('');
+    setInputMessage("");
   };
 
   useEffect(() => {
     if (messages.length === 0) {
       // Gửi tin nhắn mặc định từ bot khi messages rỗng
-      setMessages([{ text: 'Chào bạn, bạn cần mình giúp gì?', sender: 'bot' }]);
+      setMessages([{ text: "Chào bạn, bạn cần mình giúp gì?", sender: "bot" }]);
     }
 
-    setInputMessage('');
+    setInputMessage("");
   }, [messages]);
 
   useEffect(() => {
     if (messagesContainerRef.current) {
       // Cuộn xuống phần tử cuối cùng khi danh sách tin nhắn thay đổi
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
   useEffect(() => {
     if (isChatVisible) {
       // Nếu đang mở chat, cuộn xuống phần tử cuối cùng
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
     }
   }, [isChatVisible]);
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSendMessage();
     }
@@ -149,18 +147,21 @@ const Chat = () => {
         <div className="chat-card bg-gray-100 rounded-md w-96 shadow-lg">
           <div
             ref={messagesContainerRef}
-            className="messages-container h-96 p-3 w-full overflow-y-auto">
+            className="messages-container h-96 p-3 w-full overflow-y-auto"
+          >
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`mb-2 ${message.sender === 'user' ? 'text-right' : 'text-left'
-                  }`}
+                className={`mb-2 ${
+                  message.sender === "user" ? "text-right" : "text-left"
+                }`}
               >
                 <span
-                  className={`inline-block p-2 rounded-md ${message.sender === 'user'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white text-black'
-                    }`}
+                  className={`inline-block p-2 rounded-md ${
+                    message.sender === "user"
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-black"
+                  }`}
                 >
                   {message.text}
                 </span>
@@ -190,6 +191,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-
-

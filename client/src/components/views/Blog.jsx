@@ -1,7 +1,7 @@
-import Navbar from "../components/modules/Navbar";
-import Footer from "../components/modules/Footer";
-import slide_2 from "../assets/slide_2.png";
-import BlogPostCard from "../components/modules/BlogPostCard";
+import Navbar from "../modules/Navbar";
+import Footer from "../modules/Footer";
+import slide_2 from "../../assets/slide_2.png";
+import BlogPostCard from "../modules/BlogPostCard";
 import { Pagination } from "antd";
 
 const blogPosts = Array.from({ length: 10 }, (_, index) => ({
