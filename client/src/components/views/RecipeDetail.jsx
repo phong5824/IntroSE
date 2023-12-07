@@ -8,16 +8,20 @@ import Loading from "../components/modules/Loading";
 import "./Profile.css";
 function RecipeDetail() {
   const recipeId = new URLSearchParams(useLocation().search).get("ID");
+  const [loading, setLoading] = useState(null);
   const [recipe, setRecipe] = React.useState(null);
 
   const fetchRecipes = async () => {
-    handleSearchRecipesID(recipeId)
+    setLoading(true);
+    await handleSearchRecipesID(recipeId)
       .then((dataGetRecipe) => {
+        setLoading(false);
         setRecipe(dataGetRecipe);
       })
       .catch((err) => {
         // toast message (err)
         // console.log(err)
+        setLoading(false);
         setRecipe(null);
       });
   };
@@ -27,10 +31,12 @@ function RecipeDetail() {
   }
 
   // Should return error screen
-  if (!recipe) {return( 
-  <div className="absolute top-1/2 left-1/2">
-  <Loading />;
-  </div>);
+  if (loading) {
+    return (
+      <div className="absolute top-1/2 left-1/2">
+        <Loading />;
+      </div>
+    );
   }
 
   return (
@@ -70,7 +76,7 @@ function RecipeDetail() {
         </div>
 
         <div className="mb-4">
-          <h2 className="text-xl font-bold mb-2">Cool Time</h2>
+          <h2 className="text-xl font-bold mb-2">Cook Time</h2>
           <p>{recipe.cook_time}</p>
         </div>
 

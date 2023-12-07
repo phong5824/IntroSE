@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import starIcon from "/src/assets/star.png";
-import { handleSearchRecipes } from "./../action/recipesAction";
+import { handleSearchRecipes } from "../../action/recipesAction";
 import { message } from "antd";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import LogoIcon from "../components/modules/LogoIcon";
-import Avatar from "../components/modules/Avatar";
+import LogoIcon from "../modules/LogoIcon";
+import Avatar from "../modules/Avatar";
 import loupe from "/src/assets/loupe.png";
 
 const initialRecipesToShow = 10;
@@ -42,7 +42,7 @@ const Search = () => {
       message.warning("Vui lòng điền thông tin tìm kiếm");
       return;
     }
-  
+
     navigate(`/search?keywords=${encodeURIComponent(name)}`);
   };
 
@@ -67,25 +67,25 @@ const Search = () => {
         </Link>
 
         <div className="relative w-1/2 rounded-lg">
-        <form onSubmit={handleSearch}>
-          <input
-            className="search-input w-full px-4 py-2 border bg-green-500 outline-none placeholder-gray-700 pl-10"
-            style={{ borderRadius: "12px" }}
-            type="text"
-            placeholder="Tìm kiếm công thức..."
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
+          <form onSubmit={handleSearch}>
+            <input
+              className="search-input w-full px-4 py-2 border bg-green-500 outline-none placeholder-gray-700 pl-10"
+              style={{ borderRadius: "12px" }}
+              type="text"
+              placeholder="Tìm kiếm công thức..."
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
 
-          <button
-            onClick={handleSearch}
-            type="submit"
-            className="absolute top-1/2 right-3 transform -translate-y-1/2"
-          >
-            <img src={loupe} alt="Search" className="w-4 h-4" />
-          </button>
+            <button
+              onClick={handleSearch}
+              type="submit"
+              className="absolute top-1/2 right-3 transform -translate-y-1/2"
+            >
+              <img src={loupe} alt="Search" className="w-4 h-4" />
+            </button>
           </form>
         </div>
 
@@ -101,28 +101,28 @@ const Search = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
         {recipes.map((recipe, index) => (
           <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105"
-          >
-            <img
-              src={recipe.img_src}
-              alt={recipe.recipe_name}
-              className="w-full h-52 object-cover round-lg"
-            />
-            <div className="p-4">
-              <h3 className="font-bold text-lg">{recipe.recipe_name}</h3>
-              <p className="text-gray-700">{recipe.cook_time}</p>
-              <div className="flex items-center justify-between mt-3">
-                <div>{/* Placeholder for icons and other details */}</div>
-                <div className="flex items-center">
-                  <img src={starIcon} alt="Star" className="h-5 w-5 mr-2" />
-                  <span className="font-bold">{recipe.rating}</span>
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105"
+            >
+              <img
+                src={recipe.img_src}
+                alt={recipe.recipe_name}
+                className="w-full h-52 object-cover round-lg"
+              />
+              <div className="p-4">
+                <h3 className="font-bold text-lg">{recipe.recipe_name}</h3>
+                <p className="text-gray-700">{recipe.cook_time}</p>
+                <div className="flex items-center justify-between mt-3">
+                  <div>{/* Placeholder for icons and other details */}</div>
+                  <div className="flex items-center">
+                    <img src={starIcon} alt="Star" className="h-5 w-5 mr-2" />
+                    <span className="font-bold">{recipe.rating}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Link>
+          </Link>
         ))}
       </div>
       <div className="text-center mt-8">
