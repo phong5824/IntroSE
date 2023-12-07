@@ -1,8 +1,8 @@
 import avatar from "/src/assets/5dua.jpg";
-import NavBar from "../components/modules/Navbar";
-import Footer from "../components/modules/Footer"; // Đảm bảo rằng bạn nhập Footer từ đường dẫn chính xác
-import Loading from "../components/modules/Loading";
-import { handleGetUser } from "../action/accountAction";
+import NavBar from "../modules/Navbar";
+import Footer from "../modules/Footer"; // Đảm bảo rằng bạn nhập Footer từ đường dẫn chính xác
+import Loading from "../modules/Loading";
+import { handleGetUser } from "../../action/accountAction";
 import { useEffect, useState } from "react";
 import "./Profile.css";
 

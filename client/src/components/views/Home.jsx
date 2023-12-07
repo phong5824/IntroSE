@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
-import HeroSection from "../components/modules/HeroSection";
-import NavBar from "../components/modules/Navbar";
-import Footer from "../components/modules/Footer";
+import HeroSection from "../modules/HeroSection";
+import NavBar from "../modules/Navbar";
+import Footer from "../modules/Footer";
 import Chat from "./Chat";
-import RecommendedRecipes from "../components/modules/RecommendedRecipes";
-import RecipeRanking from "../components/modules/RecipeRanking";
+import RecommendedRecipes from "../modules/RecommendedRecipes";
+import RecipeRanking from "../modules/RecipeRanking";
 import { useContext, useEffect, useState } from "react";
-import { handleGetUser } from "../action/accountAction";
-import Loading from "../components/modules/Loading";
-import { UserContext } from "../context/userContext";
-import { Link } from 'react-router-dom';
+import { handleGetUser } from "../../action/accountAction";
+import Loading from "../modules/Loading";
+import { UserContext } from "../../context/userContext";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const user = useContext(UserContext);

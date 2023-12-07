@@ -64,3 +64,17 @@ export const handleSearchRecipesID = async (ID) => {
   return false;
 };
 
+export const handlePostRecipes = async (recipe) => {
+  try {
+    const result = await axios.post("http://127.0.0.1:8000/recipes/", recipe);
+    if (result.data.success === true) {
+      message.success("Post successfully!");
+      return true;
+    } else {
+      message.error(result.data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return false;
+};

@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import starIcon from "/src/assets/star.png";
 import trashCan from "/src/assets/trash_can.svg";
-import { handleSearchRecipes } from "./../action/recipesAction";
-import { handleGetAllIngredientName } from "./../action/ingredientAction"
+import { handleSearchRecipes } from "../../action/recipesAction";
+import { handleGetAllIngredientName } from "../../action/ingredientAction";
 import { message } from "antd";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import LogoIcon from "../components/modules/LogoIcon";
-import Avatar from "../components/modules/Avatar";
+import LogoIcon from "../modules/LogoIcon";
+import Avatar from "../modules/Avatar";
 import loupe from "/src/assets/loupe.png";
 import commentIcon from "/src/assets/chat.png";
 import likeIcon from "/src/assets/heart.png";
@@ -24,7 +24,7 @@ const Search = () => {
   const keywords = new URLSearchParams(location.search).get("keywords");
   const [isOpen, setIsOpen] = useState(false);
   const [ingredients, setIngredients] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   console.log("keywords", keywords);
   useEffect(() => {
@@ -41,7 +41,7 @@ const Search = () => {
       const result = await handleGetAllIngredientName();
       if (result !== false) {
         setIngredients(result);
-        console.log(ingredients)
+        console.log(ingredients);
       } else {
         console.error("Failed to fetch ingredients");
       }
@@ -58,7 +58,7 @@ const Search = () => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    const keyWordSearch = name + ' ' + selectedIngredients.join(' ');
+    const keyWordSearch = name + " " + selectedIngredients.join(" ");
     if (keyWordSearch === "") {
       message.warning("Vui lòng điền thông tin tìm kiếm");
       return;
@@ -89,7 +89,9 @@ const Search = () => {
     if (!selectedIngredients.includes(ingredient)) {
       setSelectedIngredients([...selectedIngredients, ingredient]);
     } else {
-      const updatedIngredients = selectedIngredients.filter(item => item !== ingredient);
+      const updatedIngredients = selectedIngredients.filter(
+        (item) => item !== ingredient
+      );
       setSelectedIngredients(updatedIngredients);
     }
   };
@@ -156,8 +158,6 @@ const Search = () => {
         </div>
       </nav>
 
-
-
       <div className="flex">
         <div className="w-1/4 p-7 mr-2">
           <button
@@ -175,16 +175,29 @@ const Search = () => {
           </div>
         </div>
 
-
         <div className="w-3/4 mt-3 mr-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
             {recipes.map((recipe, index) => (
-              <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
-                <div key={index} className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105 h-full">
-                  <img src={recipe.img_src} alt={recipe.recipe_name} className="w-full h-44 object-cover rounded-t-lg" />
+              <Link
+                to={`/recipes/?ID=${recipe.recipe_id}`}
+                key={recipe.recipe_id}
+              >
+                <div
+                  key={index}
+                  className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105 h-full"
+                >
+                  <img
+                    src={recipe.img_src}
+                    alt={recipe.recipe_name}
+                    className="w-full h-44 object-cover rounded-t-lg"
+                  />
                   <div className="p-4 flex flex-col h-full">
-                    <h3 className="font-bold text-lg overflow-hidden overflow-ellipsis whitespace-nowrap">{recipe.recipe_name}</h3>
-                    <p className="text-gray-700 overflow-hidden overflow-ellipsis whitespace-nowrap">{recipe.cook_time}</p>
+                    <h3 className="font-bold text-lg overflow-hidden overflow-ellipsis whitespace-nowrap">
+                      {recipe.recipe_name}
+                    </h3>
+                    <p className="text-gray-700 overflow-hidden overflow-ellipsis whitespace-nowrap">
+                      {recipe.cook_time}
+                    </p>
                     <div className="flex flex-row items-center justify-between mt-2">
                       <div className="flex items-center">
                         {/* Like Icon */}
@@ -194,14 +207,22 @@ const Search = () => {
 
                         {/* Comment Icon */}
                         <div className="flex items-center">
-                          <img src={commentIcon} alt="comment" className="h-5 w-5 mr-2" />
+                          <img
+                            src={commentIcon}
+                            alt="comment"
+                            className="h-5 w-5 mr-2"
+                          />
                         </div>
                       </div>
 
                       <div className="flex items-center">
                         {/* Star (Rating) Icon */}
                         <div className="flex items-center">
-                          <img src={starIcon} alt="Star" className="h-5 w-5 mr-2" />
+                          <img
+                            src={starIcon}
+                            alt="Star"
+                            className="h-5 w-5 mr-2"
+                          />
                           <span className="font-bold">{recipe.rating}</span>
                         </div>
                       </div>
@@ -234,9 +255,6 @@ const Search = () => {
           </div>
         </div>
       </div>
-
-
-
     </div>
   );
 };

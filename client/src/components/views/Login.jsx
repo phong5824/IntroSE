@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate,useLocation } from "react-router-dom";
-import { handleLogin, handleLoginWithGoogle } from "../action/accountAction";
-import Logo from "../assets/logo-recipe.png";
-import GoogleIcon from "../assets/google.png";
-import FacebookIcon from "../assets/facebook.png";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { handleLogin, handleLoginWithGoogle } from "../../action/accountAction";
+import Logo from "../../assets/logo-recipe.png";
+import GoogleIcon from "../../assets/google.png";
+import FacebookIcon from "../../assets/facebook.png";
 import { message } from "antd";
 
 export default function Login() {
@@ -24,7 +24,7 @@ export default function Login() {
     }
     const userId = await handleLogin(userData);
     if (userId) {
-      navigate(location.state?.from || '/home');
+      navigate(location.state?.from || "/home");
     } else {
       message.error("Đã xảy ra lỗi");
     }
@@ -34,9 +34,7 @@ export default function Login() {
     const isLoggedIn = await handleLoginWithGoogle();
     console.log(isLoggedIn);
     if (isLoggedIn) {
-     
-      navigate(location.state?.from || '/home');
-      
+      navigate(location.state?.from || "/home");
     }
   };
 
