@@ -78,3 +78,44 @@ export const handlePostRecipes = async (recipe) => {
   }
   return false;
 };
+
+
+export const handleGetCommentsByRecipeId = async (recipeId) => {
+  try {
+    const response = await axios.get(`http://127.0.0.1:8000/recipes/${recipeId}/comment`);
+
+    if (response.data.success) {
+      return { success: true, comments: response.data.comments };
+    } else {
+      console.error('Server returned error:', response.data.message);
+      message.error(response.data.message);
+      return { success: false, message: response.data.message };
+    }
+  } catch (err) {
+    console.error('Failed to make the request:', err.message);
+    message.error('Failed to get comments');
+    return { success: false, message: 'Failed to get comments' };
+  }
+};
+
+
+export const handleGetRelatedRecipes = async (recipeId) => {
+  try {
+    const response = await axios.get(`http://127.0.0.1:8000/recipes/${recipeId}/related`);
+
+    if (response.data.success) {
+      return { success: true, relatedRecipes: response.data.relatedRecipes };
+    } else {
+      console.error('Server returned error:', response.data.message);
+      // Thực hiện xử lý lỗi nếu cần
+      return { success: false, message: response.data.message };
+    }
+  } catch (err) {
+    console.error('Failed to make the request:', err.message);
+    // Thực hiện xử lý lỗi nếu cần
+    return { success: false, message: 'Failed to get related recipes' };
+  }
+};
+
+
+

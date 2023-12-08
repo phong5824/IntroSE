@@ -17,36 +17,38 @@ import { message } from "antd";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import StarRatings from 'react-star-ratings';
+import Comment from "../modules/Comment.jsx";
+import RelatedRecipes from "../modules/RelatedRecipes.jsx";
 
 export const RecipeDetail = () => {
 
-  const comments = [
-    {
-      user: "Cô Ba",
-      comment: "Ngon vãi luôn ý, chồng em ăn cứ tấm tắt khen ngon mấy chị ơi 💕🌞⚘❣👏",
-      rating: 5,
-    },
-    {
-      user: "Anh đẹp trai",
-      comment: "Vừa nấu món này cho cô người yêu ăn, cổ khen quá trời, cảm ơn sốp đã chia sẻ công thức nhiều nhen  🥰🥰💖💖🙌🏻",
-      rating: 4,
-    },
-    {
-      user: "Chị Tư bán hủ tiếu",
-      comment: "Ê ngon thiệt bây ơi, tao ăn còn ghiền nữa nói chi mấy đứa nhỏ, riết tụi nó kêu tao bỏ bán hủ tiếu chuyển qua bán cái này không đó",
-      rating: 4.5,
-    },
-    {
-      user: "Ông năm khó tính",
-      comment: "Tạm, khẩu vị của tôi cần gì đó đặc biệt hơn thế này, nói chung là vậy.",
-      rating: 2,
-    },
-    {
-      user: "Nói chung là slay",
-      comment: "Xin lỗi chị, xin lỗi mọi người,... em lại như vậy nữa rồi... Em lại nấu ngon nữa rồi!!! Ngon vaicut mấy chị gái ơi 👉👈 kakaka",
-      rating: 5,
-    },
-  ];
+  // const comments = [
+  //   {
+  //     user: "Cô Ba",
+  //     comment: "Ngon vãi luôn ý, chồng em ăn cứ tấm tắt khen ngon mấy chị ơi 💕🌞⚘❣👏",
+  //     rating: 5,
+  //   },
+  //   {
+  //     user: "Anh đẹp trai",
+  //     comment: "Vừa nấu món này cho cô người yêu ăn, cổ khen quá trời, cảm ơn sốp đã chia sẻ công thức nhiều nhen  🥰🥰💖💖🙌🏻",
+  //     rating: 4,
+  //   },
+  //   {
+  //     user: "Chị Tư bán hủ tiếu",
+  //     comment: "Ê ngon thiệt bây ơi, tao ăn còn ghiền nữa nói chi mấy đứa nhỏ, riết tụi nó kêu tao bỏ bán hủ tiếu chuyển qua bán cái này không đó",
+  //     rating: 4.5,
+  //   },
+  //   {
+  //     user: "Ông năm khó tính",
+  //     comment: "Tạm, khẩu vị của tôi cần gì đó đặc biệt hơn thế này, nói chung là vậy.",
+  //     rating: 2,
+  //   },
+  //   {
+  //     user: "Nói chung là slay",
+  //     comment: "Xin lỗi chị, xin lỗi mọi người,... em lại như vậy nữa rồi... Em lại nấu ngon nữa rồi!!! Ngon vaicut mấy chị gái ơi 👉👈 kakaka",
+  //     rating: 5,
+  //   },
+  // ];
 
 
 
@@ -130,7 +132,7 @@ export const RecipeDetail = () => {
     <div className="home-wrapper min-h-screen bg-green-200 flex flex-col overflow-y-auto">
       <NavBar />
 
-      <div className="container bg-green-200 mx-auto p-8">
+      <div className="container bg-green-200 p-8">
         <div className="text-center">
           {/* Added text-center class */}
           <h1 className="text-4xl font-bold mb-4">{recipe.recipe_name}</h1>
@@ -206,7 +208,7 @@ export const RecipeDetail = () => {
                 <h2 className="ml-4 text-2xl font-bold">Bình luận</h2>
               </div>
               <div className="ml-8 flex-col items-center">
-                {comments.map((comment, index) => (
+                {/* {comments.map((comment, index) => (
                   <div key={index} className="mb-2 flex">
                     <img
                       src={avatarIcon}
@@ -221,7 +223,8 @@ export const RecipeDetail = () => {
                       )}
                     </div>
                   </div>
-                ))}
+                ))} */}
+                <Comment recipeId={recipeId} />
               </div>
 
               <div className="ml-3 flex bg-white p-2 mt-2 mb-1 border border-gray-700 rounded-full">
@@ -244,6 +247,7 @@ export const RecipeDetail = () => {
             </div>
 
 
+
             {/* <div className="mb-4">
           <h2 className="text-xl font-bold mb-2">Comments</h2>
           {comments.map((comment, index) => (
@@ -260,6 +264,7 @@ export const RecipeDetail = () => {
 
 
           </div>
+
 
           <div className="w-1/4 h-screen ml-20 flex flex-col justify-start">
             <div className="w-72 grid grid-cols-1/4  bg-white border shadow-black rounded-md p-3 space-y-2 shadow-lg">
@@ -297,10 +302,9 @@ export const RecipeDetail = () => {
 
 
       </div>
-
-      <div className="container mx-auto px-4">
+      <div className="container px-4">
         <h2 className="text-2xl font-bold mb-6 ml-4">Một số món ăn liên quan</h2>
-
+        <RelatedRecipes recipeId={recipeId} />
       </div>
 
       <Footer />
