@@ -50,8 +50,7 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
       setRecipes(list_recipes);
     };
     fetchRankingRecipes();
-    console.log(sortBy);
-    console.log(sortOrder);
+    
   }, [sortOrder]);
 
   return (

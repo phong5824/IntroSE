@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const user = useContext(UserContext);
 
-  console.log(user);
 
   const ButtonGroup = () => {
     return (

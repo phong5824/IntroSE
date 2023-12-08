@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import React from "react";
-import NavBar from '../modules/Navbar.jsx';
+import NavBar from "../modules/Navbar.jsx";
 import Footer from "../modules/Footer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { handleSearchRecipesID } from "../../action/recipesAction";
@@ -8,53 +9,26 @@ import Loading from "../modules/Loading";
 import Clock from "/src/assets/clock.png";
 import chatIcon from "/src/assets/chat.png";
 import avatarIcon from "/src/assets/avatar.png";
-import SendIcon from '/src/assets/send.png';
+import SendIcon from "/src/assets/send.png";
 import Bookmark from "/src/assets/bookmark.png";
 import Share from "/src/assets/share.png";
 import "./Profile.css";
 import axios from "axios";
 import { message } from "antd";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import StarRatings from 'react-star-ratings';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import StarRatings from "react-star-ratings";
+import Comment from "../modules/Comment.jsx";
+import RelatedRecipes from "../modules/RelatedRecipes.jsx";
+import { handleGetRelatedRecipes } from "../../action/recipesAction";
 
 export const RecipeDetail = () => {
-
-  const comments = [
-    {
-      user: "Cô Ba",
-      comment: "Ngon vãi luôn ý, chồng em ăn cứ tấm tắt khen ngon mấy chị ơi 💕🌞⚘❣👏",
-      rating: 5,
-    },
-    {
-      user: "Anh đẹp trai",
-      comment: "Vừa nấu món này cho cô người yêu ăn, cổ khen quá trời, cảm ơn sốp đã chia sẻ công thức nhiều nhen  🥰🥰💖💖🙌🏻",
-      rating: 4,
-    },
-    {
-      user: "Chị Tư bán hủ tiếu",
-      comment: "Ê ngon thiệt bây ơi, tao ăn còn ghiền nữa nói chi mấy đứa nhỏ, riết tụi nó kêu tao bỏ bán hủ tiếu chuyển qua bán cái này không đó",
-      rating: 4.5,
-    },
-    {
-      user: "Ông năm khó tính",
-      comment: "Tạm, khẩu vị của tôi cần gì đó đặc biệt hơn thế này, nói chung là vậy.",
-      rating: 2,
-    },
-    {
-      user: "Nói chung là slay",
-      comment: "Xin lỗi chị, xin lỗi mọi người,... em lại như vậy nữa rồi... Em lại nấu ngon nữa rồi!!! Ngon vaicut mấy chị gái ơi 👉👈 kakaka",
-      rating: 5,
-    },
-  ];
-
-
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const notify = () => {
-    toast.success('🦄 Save recipes successfull!', {
+    toast.success("🦄 Save recipes successfull!", {
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -64,35 +38,44 @@ export const RecipeDetail = () => {
       progress: undefined,
       theme: "light",
     });
-  }
+  };
   const recipeId = new URLSearchParams(useLocation().search).get("ID");
   const [recipe, setRecipe] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
+  const [relatedRecipes, setRelatedRecipes] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
-  const fetchRecipes = async () => {
-    await handleSearchRecipesID(recipeId)
+  const fetchRelatedRecipes = async () => {
+    try {
+      const result = await handleGetRelatedRecipes(recipeId);
+      if (result.success) {
+        setRelatedRecipes(result.relatedRecipes);
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error("Error fetching related recipes:", error.message);
+    }
+  };
+  const fetchRecipes = () => {
+    setLoading(true);
+    handleSearchRecipesID(recipeId)
       .then((dataGetRecipe) => {
         setRecipe(dataGetRecipe);
-        setLoading(true);
       })
       .catch((err) => {
         setRecipe(null);
       });
+
+    (async () => await fetchRelatedRecipes())();
+    setLoading(false);
   };
 
-  if (recipeId) {
+  if (!recipeId) {
+    return <></>;
+  }
+  React.useEffect(() => {
     fetchRecipes();
-  }
-
-  // Should return error screen
-  if (!loading) {
-    return (
-      <div className="absolute top-1/2 left-1/2">
-        <Loading />;
-      </div>
-    );
-  }
-
+  }, [recipeId]);
 
   const handleUpdateFavoriteRecipes = async () => {
     try {
@@ -100,11 +83,11 @@ export const RecipeDetail = () => {
 
       if (!accessToken) {
         message.error("Bạn cần đăng nhập để lưu công thức này.");
-        navigate('/login', { state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
+        navigate("/login", { state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
         return;
       }
 
-      console.log("accessToken : ", accessToken);
+      
       const result = await axios.post(
         `http://127.0.0.1:8000/users/favourites`,
         { recipeId },
@@ -116,7 +99,6 @@ export const RecipeDetail = () => {
       );
 
       if (result.data.success) {
-        console.log(result.data);
         return result.data;
       } else {
         message.error(result.data.error);
@@ -126,11 +108,22 @@ export const RecipeDetail = () => {
     }
   };
 
+  // Should return error screen
+  if (loading) {
+    return (
+      <div className="absolute top-1/2 left-1/2">
+        <Loading />;
+      </div>
+    );
+  }
+  if (!recipe) {
+    return <></>;
+  }
   return (
     <div className="home-wrapper min-h-screen bg-green-200 flex flex-col overflow-y-auto">
       <NavBar />
 
-      <div className="container bg-green-200 mx-auto p-8">
+      <div className="container bg-green-200 p-8">
         <div className="text-center">
           {/* Added text-center class */}
           <h1 className="text-4xl font-bold mb-4">{recipe.recipe_name}</h1>
@@ -145,7 +138,7 @@ export const RecipeDetail = () => {
                 rating={recipe.rating}
                 starRatedColor="orange"
                 numberOfStars={5}
-                name='rating'
+                name="rating"
                 starDimension="20px"
                 starSpacing="2px"
               />
@@ -158,7 +151,6 @@ export const RecipeDetail = () => {
 
         <div className="flex justify-center mb-4 mt-3">
           <div className="w-3/4 pr-8">
-
             <div className="w-full bg-white rounded-md ml-20 py-2 shadow-lg">
               <div className="flex items-center mb-2">
                 <h2 className="ml-4 text-2xl font-bold">Nguyên liệu</h2>
@@ -190,15 +182,13 @@ export const RecipeDetail = () => {
                 <ol className="prose prose-blue list-inside">
                   {recipe.directions.split("\n").map((step, index) => (
                     <li key={index} className="mb-2 pb-2">
-                      <span className="font-bold">Bước {index + 1}:</span> {step}
+                      <span className="font-bold">Bước {index + 1}:</span>{" "}
+                      {step}
                     </li>
                   ))}
                 </ol>
               </div>
-
             </div>
-
-
 
             <div className="w-3/4 pr-3 bg-white rounded-md ml-20 py-2 mt-4 shadow-lg">
               <div className="flex items-center mb-3">
@@ -206,7 +196,7 @@ export const RecipeDetail = () => {
                 <h2 className="ml-4 text-2xl font-bold">Bình luận</h2>
               </div>
               <div className="ml-8 flex-col items-center">
-                {comments.map((comment, index) => (
+                {/* {comments.map((comment, index) => (
                   <div key={index} className="mb-2 flex">
                     <img
                       src={avatarIcon}
@@ -221,7 +211,8 @@ export const RecipeDetail = () => {
                       )}
                     </div>
                   </div>
-                ))}
+                ))} */}
+                <Comment recipeId={recipeId} />
               </div>
 
               <div className="ml-3 flex bg-white p-2 mt-2 mb-1 border border-gray-700 rounded-full">
@@ -240,9 +231,7 @@ export const RecipeDetail = () => {
                   <img src={SendIcon} alt="send" className="h-4 w-4" />
                 </button>
               </div>
-
             </div>
-
 
             {/* <div className="mb-4">
           <h2 className="text-xl font-bold mb-2">Comments</h2>
@@ -256,9 +245,6 @@ export const RecipeDetail = () => {
             </div>
           ))}
         </div> */}
-
-
-
           </div>
 
           <div className="w-1/4 h-screen ml-20 flex flex-col justify-start">
@@ -293,19 +279,19 @@ export const RecipeDetail = () => {
             </div>
           </div>
         </div>
-
-
-
       </div>
-
-      <div className="container mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6 ml-4">Một số món ăn liên quan</h2>
-
-      </div>
+      {relatedRecipes && relatedRecipes.length > 0 && (
+        <div className="container px-4">
+          <h2 className="text-2xl font-bold mb-6 ml-4">
+            Một số món ăn liên quan
+          </h2>
+          <RelatedRecipes relatedRecipes={relatedRecipes} />
+        </div>
+      )}
 
       <Footer />
     </div>
   );
-}
+};
 
 export default RecipeDetail;
