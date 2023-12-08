@@ -68,7 +68,7 @@ export const handleResetPassword = async (userData) => {
 export const handleLoginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleprovider);
-    console.log(result);
+   
     const { displayName, email, metadata, photoURL } = result.user;
     const loggedInUser = {
       name: displayName,
@@ -77,8 +77,7 @@ export const handleLoginWithGoogle = async () => {
       lastLoginTime: metadata.lastSignInTime,
     };
     localStorage.setItem("google-user", JSON.stringify(loggedInUser));
-    console.log("user: ", loggedInUser);
-
+   
     return true;
   } catch (error) {
     const errorCode = error.code;

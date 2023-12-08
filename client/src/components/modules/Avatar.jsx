@@ -1,24 +1,18 @@
-import avatar from "/src/assets/user.png";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
-import { handleGetUser } from "../../action/accountAction";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import avatar from "/src/assets/user.png";
 
 const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
   const user = useContext(UserContext);
   // this useEffect is
   useEffect(() => {
     if (!user) {
-      console.log("Not logged in");
+      
       return;
     }
-    // const fetchUser = async () => {
-    //   const currentUser = await handleGetUser();
-    //   setUser(currentUser);
-    // };
-
-    // fetchUser();
   }, [user]);
 
   const navigate = useNavigate();

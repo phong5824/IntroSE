@@ -26,7 +26,6 @@ const Search = () => {
   const [ingredients, setIngredients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  console.log("keywords", keywords);
   useEffect(() => {
     const fetchRecommendedRecipes = async () => {
       const newRecipes = await handleSearchRecipes(keywords);
@@ -41,7 +40,6 @@ const Search = () => {
       const result = await handleGetAllIngredientName();
       if (result !== false) {
         setIngredients(result);
-        console.log(ingredients);
       } else {
         console.error("Failed to fetch ingredients");
       }
