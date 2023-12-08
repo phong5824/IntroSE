@@ -26,12 +26,9 @@ const recipeSchema = new Schema({
   user_contribution: String,
   tags: [String], // Một mảng các chuỗi
   nutritions: [String], // Một mảng các chuỗi
-  author: {
-    type : Number,
-  },
   ingredients_list: [String],
   ingredients: [Number],
-  time : Date,
+  created_time : Date,
 
 });
 
