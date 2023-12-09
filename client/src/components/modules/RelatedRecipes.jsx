@@ -12,13 +12,14 @@ const RelatedRecipes = ({ relatedRecipes }) => {
   };
 
 
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
       {(relatedRecipes || []).map((recipe, index) => (
         <div
           key={index}
           className="bg-white rounded-lg shadow overflow-hidden transform transition duration-500 hover:scale-105 h-full"
-          onClick={()=> onCardClick(recipe.recipe_id)}
+          onClick={() => onCardClick(recipe.recipe_id)}
         >
           <img
             src={recipe.img_src}
