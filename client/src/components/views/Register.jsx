@@ -21,6 +21,12 @@ export default function Register() {
       message.warning("Vui lòng điền đầy đủ thông tin");
       return;
     }
+
+    if(password.length< 6){
+      message.warning("Mật khẩu phải có ít nhất 6 kí tự");
+    return;
+  }
+
     if (handleRegister(userData)) {
       navigate("/login");
     }
