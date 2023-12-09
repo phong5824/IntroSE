@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const Recipe = require("../model/recipeModel");
 const User = require("../model/userModel");
 const Ingredient = require("../model/ingredientModel");
+const Comment = require("../model/commentModel");
 
 // @route GET API
 const getRankingRecipesControl = async (req, res) => {
@@ -151,9 +152,53 @@ const postRecipeControl = async (req, res) => {
   }
 };
 
+const getCommentsByRecipeId = async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+
+    const comments = await Comment.find({ recipe_id: recipeId }).limit(5);
+
+    res.json({ success: true, comments });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+const getRelatedRecipes = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // Tìm kiếm công thức dựa trên id
+    const recipe = await Recipe.findOne({ recipe_id: id });
+
+    if (!recipe) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Recipe not found" });
+    }
+
+    // Lấy các tag của công thức đang xem
+    const tags = recipe.tags || [];
+
+    // Tìm kiếm các công thức có ít nhất một tag giống với công thức đang xem
+    const relatedRecipes = await Recipe.find({
+      tags: { $in: tags }, // Tìm các công thức có ít nhất một tag giống với tags của công thức đang xem
+      recipe_id: { $ne: id }, // Loại bỏ công thức đang xem khỏi kết quả
+    }).limit(5); // Giới hạn số lượng công thức trả về
+
+    res.json({ success: true, relatedRecipes });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
 module.exports = {
   getRecommendedRecipesControl,
   getRankingRecipesControl,
   getRecipesByKeywords,
   getRecipesByID,
+  getCommentsByRecipeId,
+  getRelatedRecipes,
 };

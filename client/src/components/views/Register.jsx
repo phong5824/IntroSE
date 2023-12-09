@@ -7,18 +7,26 @@ import { message } from "antd";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name,setName] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
     const userData = {
+      name:name,
       email: email,
       password: password,
     };
-    if (email === "" || password === "") {
+    if (email === "" || password === "" || name === "") {
       message.warning("Vui lòng điền đầy đủ thông tin");
       return;
     }
+
+    if(password.length< 6){
+      message.warning("Mật khẩu phải có ít nhất 6 kí tự");
+    return;
+  }
+
     if (handleRegister(userData)) {
       navigate("/login");
     }
@@ -46,8 +54,9 @@ export default function Register() {
             <input
               type="text"
               name="ten nguoi dung"
-              // onChange={(e) => {
-              // }}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
               className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-[100%] bg-white text-center"
               placeholder="Nhập ở đây..."
             />

@@ -1,24 +1,18 @@
-import avatar from "/src/assets/user.png";
-import { useNavigate } from "react-router-dom";
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
-import { handleGetUser } from "../../action/accountAction";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import avatar from "/src/assets/user.png";
 
 const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
   const user = useContext(UserContext);
   // this useEffect is
   useEffect(() => {
     if (!user) {
-      console.log("Not logged in");
+
       return;
     }
-    // const fetchUser = async () => {
-    //   const currentUser = await handleGetUser();
-    //   setUser(currentUser);
-    // };
-
-    // fetchUser();
   }, [user]);
 
   const navigate = useNavigate();
@@ -34,6 +28,14 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
     navigate("/login");
   };
 
+  const navigateToAdmin = () => {
+    navigate("/users/admin");
+  }
+
+  const navigateToProfile = () => {
+    navigate("/users/profile");
+  }
+
   return (
     <div className="auth-actions relative rounded-full">
       <img
@@ -46,25 +48,43 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
       {showLoginForm && (
         <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-36 bg-white text-black border-gray-300 rounded shadow-lg z-10 transition duration-300">
           {user ? (
-            <button
-              onClick={navigateToLogout}
-              className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
-            >
-              Đăng xuất
-            </button>
+            <>
+              {user.is_admin ? (
+                <button
+                  onClick={navigateToAdmin}
+                  className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                >
+                  Admin
+                </button>
+              ) : (
+                <button
+                  onClick={navigateToProfile}
+                  className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                >
+                  Profile
+                </button>
+              )}
+              <button
+                onClick={navigateToLogout}
+                className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <button
               onClick={navigateToLogin}
               className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
             >
-              Đăng nhập
+              Login
             </button>
           )}
         </div>
       )}
     </div>
-  );
+  )
 };
+
 
 Avatar.propTypes = {
   showLoginForm: PropTypes.bool.isRequired,

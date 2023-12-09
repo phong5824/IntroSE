@@ -11,6 +11,7 @@ import ResetPassword from "./components/views/resetPassword";
 import Others from "./components/views/Others";
 import RecipeDetail from "./components/views/RecipeDetail";
 import Search from "./components/views/search";
+import Admin from "./components/views/Admin";
 import { useEffect, useState } from "react";
 import { handleGetUser } from "./action/accountAction";
 import { UserContext } from "./context/userContext";
@@ -24,7 +25,6 @@ const HandleLoginStatus = ({ children }) => {
   useEffect(() => {
     const fetchAccount = async () => {
       const accessToken = localStorage.getItem("accessToken");
-      console.log(accessToken);
       if (!accessToken) {
         return;
       }
@@ -101,7 +101,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="home" element={<Home />} />
               <Route path="create-recipe" element={<CreateRecipe />} />
-              {/* <Route path="home/:username" element={<Profile />} /> */}
+              <Route path="home/:username" element={<Profile />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="about-us" element={<AboutUs />} />
@@ -113,6 +113,7 @@ function App() {
               <Route path="recipes/" element={<RecipeDetail />} />
               <Route path="details" element={<RecipeDetail />} />
               <Route path="search" element={<Search />} />
+              <Route path="users/admin" element={<Admin />} />
             </Route>
           </Routes>
         </HandleLoginStatus>
