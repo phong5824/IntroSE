@@ -84,7 +84,7 @@ export const RecipeDetail = () => {
         return;
       }
 
-      
+
       const result = await axios.post(
         `http://127.0.0.1:8000/users/favourites`,
         { recipeId },
@@ -150,7 +150,7 @@ export const RecipeDetail = () => {
           <div className="w-3/4 pr-8">
             <div className="w-full bg-white rounded-md ml-20 py-2 shadow-lg">
               <div className="flex items-center mb-2">
-                <h2 className="ml-4 text-2xl font-bold">Nguyên liệu</h2>
+                <h2 className="ml-4 text-2xl font-bold">Ingredient</h2>
                 <img src={Clock} alt="time" className="h-5 w-5 ml-6 mt-1" />
                 <span className="text-gray-700 ml-1 mt-1">
                   {recipe.prep_time}
@@ -168,7 +168,7 @@ export const RecipeDetail = () => {
 
             <div className="w-full pr-5 bg-white rounded-md ml-20 py-2 mt-4 shadow-lg">
               <div className="flex items-center mb-2">
-                <h2 className="ml-4 text-2xl font-bold">Hướng dẫn nấu nướng</h2>
+                <h2 className="ml-4 text-2xl font-bold">Cooking instructions</h2>
                 <img src={Clock} alt="time" className="h-5 w-5 ml-6 mt-1" />
                 <span className="text-gray-700 ml-1 mt-1">
                   {recipe.cook_time}
@@ -179,7 +179,7 @@ export const RecipeDetail = () => {
                 <ol className="prose prose-blue list-inside">
                   {recipe.directions.split("\n").map((step, index) => (
                     <li key={index} className="mb-2 pb-2">
-                      <span className="font-bold">Bước {index + 1}:</span>{" "}
+                      <span className="font-bold">Step {index + 1}:</span>{" "}
                       {step}
                     </li>
                   ))}
@@ -190,25 +190,9 @@ export const RecipeDetail = () => {
             <div className="w-3/4 pr-3 bg-white rounded-md ml-20 py-2 mt-4 shadow-lg">
               <div className="flex items-center mb-3">
                 <img src={chatIcon} alt="comment" className="h-6 w-6 ml-6" />
-                <h2 className="ml-4 text-2xl font-bold">Bình luận</h2>
+                <h2 className="ml-4 text-2xl font-bold">Comment</h2>
               </div>
               <div className="ml-8 flex-col items-center">
-                {/* {comments.map((comment, index) => (
-                  <div key={index} className="mb-2 flex">
-                    <img
-                      src={avatarIcon}
-                      alt="Avatar"
-                      className="h-8 w-8 rounded-full mr-3 mt-1"
-                    />
-                    <div>
-                      <p className="font-bold">{comment.user}</p>
-                      <p>{comment.comment}</p>
-                      {comment.rating && (
-                        <p className="text-yellow-600">{`Rating: ${comment.rating}/5`}</p>
-                      )}
-                    </div>
-                  </div>
-                ))} */}
                 <Comment recipeId={recipeId} />
               </div>
 
@@ -218,7 +202,7 @@ export const RecipeDetail = () => {
                   // value={inputMessage}
                   // onChange={(e) => setInputMessage(e.target.value)}
                   // onKeyDown={handleKeyDown}
-                  placeholder="Thêm bình luận của bạn tại đây nha..."
+                  placeholder="Type your comments here..."
                   className="flex-1 outline-none border-none ml-2"
                 />
                 <button
@@ -229,22 +213,9 @@ export const RecipeDetail = () => {
                 </button>
               </div>
             </div>
-
-            {/* <div className="mb-4">
-          <h2 className="text-xl font-bold mb-2">Comments</h2>
-          {comments.map((comment, index) => (
-            <div key={index} className="mb-2">
-              <p className="font-bold">{comment.user}</p>
-              <p>{comment.comment}</p>
-              {comment.rating && (
-                <p className="text-yellow-400">{`Rating: ${comment.rating}/5`}</p>
-              )}
-            </div>
-          ))}
-        </div> */}
           </div>
 
-          <div className="w-1/4 h-screen ml-20 flex flex-col justify-start">
+          <div className="w-1/4 ml-20 flex flex-col justify-start">
             <div className="w-72 grid grid-cols-1/4  bg-white border shadow-black rounded-md p-3 space-y-2 shadow-lg">
               <button
                 className="text-gray-900 p-1 rounded-md border border-black flex items-center justify-center space-x-2"
@@ -254,7 +225,7 @@ export const RecipeDetail = () => {
                 }}
               >
                 <img src={Bookmark} alt="Bookmark Icon" className="h-4 w-4" />
-                <span>Lưu Món</span>
+                <span>Save recipe</span>
               </button>
               <ToastContainer
                 position="bottom-right"
@@ -277,10 +248,11 @@ export const RecipeDetail = () => {
           </div>
         </div>
       </div>
+
       {relatedRecipes && relatedRecipes.length > 0 && (
         <div className="container px-4">
           <h2 className="text-2xl font-bold mb-6 ml-4">
-            Một số món ăn liên quan
+            Related Recipes
           </h2>
           <RelatedRecipes relatedRecipes={relatedRecipes} />
         </div>

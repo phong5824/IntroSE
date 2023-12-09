@@ -54,7 +54,7 @@ const loginControl = async (req, res) => {
 };
 
 const registerControl = async (req, res) => {
-  const { email, password } = req.body;
+  const {name,email, password } = req.body;
   await accountModel
     .findOne({ email: email })
     .then(async (result) => {
@@ -70,11 +70,22 @@ const registerControl = async (req, res) => {
           email: email,
           password: password,
         });
+
+        const user = new User({
+          user_id : account.user_id,
+          name : name,
+          account: account._id,
+
+        });
+
+        await user.save();
+
         account.save().then(() => {
           const accessToken = jwt.sign(
             { userid: account.user_id },
             process.env.ACCESS_TOKEN_SECRET
           );
+        
           res.json({ success: true, message: "Register Success", accessToken });
         });
       }

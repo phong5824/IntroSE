@@ -3,11 +3,38 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const User = require("../model/userModel");
+const Account = require("../model/accountModel");
 const verifyToken = require("../middleware/account");
+const mongoose = require('mongoose');
 
 // @route GET API
 // @desc GET user
 // @access private
+
+const getAllUsersControl = async (req, res) => {
+  try {
+    const currentUser = await User.findOne({ account: req.userid });
+    if (!currentUser) {
+      return res.status(403).json({ success: false, message: "User not found" });
+    }
+    if (!currentUser.is_admin) {
+      return res.status(403).json({ success: false, message: "Forbidden" });
+    }
+
+    // Lấy tất cả người dùng
+    const allUsers = await User.find({}).populate("account", [
+      "email",
+      "password",
+    ]).sort({ user_id: 1 });
+
+    res.status(200).json({ success: true, users: allUsers });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+
 const getAccountControl = async (req, res) => {
   try {
     const users = await User.find({ account: req.userid }).populate("account", [
@@ -112,40 +139,11 @@ const addFavouriteControl = async (req, res) => {
     res.status(401).json({ success: false, message: 'Invalid token' });
   }
 };
-
-const editProfileUserControl = async (req, res) => {
-  const updateData = req.body;
-  const user_id = updateData.user_id;
-  delete updateData.user_id;
-
-  try {
-    // Sử dụng findOneAndUpdate để tìm và cập nhật một document theo điều kiện
-    const updatedUser = await User.findOneAndUpdate(
-      { user_id: user_id },
-      { $set: updateData },
-      { new: true } // Trả về document đã được cập nhật
-    ).populate(
-      "account",
-      ["email"]
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
-    res.json({ success: true, message: "User updated successfully", user: updatedUser });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-};
-
-
 module.exports = {
+  getAllUsersControl,
   getAccountControl,
   createUserControl,
   getProfileControl,
   getFavouriteControl,
   addFavouriteControl,
-  editProfileUserControl,
 };
