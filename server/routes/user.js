@@ -38,4 +38,9 @@ router.post("/favourites", verifyToken, userController.addFavouriteControl);
 // @access private
 router.post("/admin/changepassword", verifyToken, userController.changePassword);
 
+// @route POST API/deleteUser
+// @desc Delete User
+// @access private
+router.post("/admin/deleteUser", verifyToken, userController.deleteUser);
+
 module.exports = router;

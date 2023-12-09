@@ -173,6 +173,32 @@ const changePassword = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    // Find the user by user_id in the user collection
+    const user = await User.findOne({ user_id: userId });
+    // Kiểm tra nếu người dùng không tồn tại
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found aaaaaa' });
+    }
+
+    // Xóa người dùng từ collection
+    await User.deleteOne({ user_id: userId });
+
+
+    const account = await Account.findByIdAndDelete(user.account);
+
+    return res.status(200).json({ success: true, message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error.message);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+
+
 
 
 module.exports = {
@@ -183,4 +209,5 @@ module.exports = {
   getFavouriteControl,
   addFavouriteControl,
   changePassword,
+  deleteUser,
 };

@@ -81,6 +81,36 @@ const Admin = () => {
         }
     };
 
+    const handleBanClick = async (userId) => {
+        try {
+            // Get the authentication token from localStorage or wherever you store it
+            const token = localStorage.getItem('accessToken');
+
+            // Gọi API để cập nhật trạng thái "ban" của người dùng
+            const response = await axios.post(
+                'http://127.0.0.1:8000/users/admin/deleteUser',
+                {
+                    userId: userId,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            // Xử lý phản hồi từ server
+            if (response.data.success) {
+                console.log('User deleted successfully!');
+                // Cập nhật trạng thái của người dùng trong state hoặc component
+            } else {
+                console.error('Error deleting user:', response.data.message);
+            }
+        } catch (error) {
+            console.error('Error deleting user:', error.message);
+        }
+    };
+
     return (
         <div>
             <NavBar />
@@ -137,8 +167,8 @@ const Admin = () => {
                                         <img
                                             src={banIcon}
                                             alt="Ban Icon"
-                                            className="w-8 h-8 mx-auto"
-                                        // onClick={}
+                                            className="w-8 h-8 mx-auto cursor-pointer hover:opacity-80 transition duration-300"
+                                            onClick={() => handleBanClick(user.user_id)}
                                         />
                                     </td>
                                 </tr>
