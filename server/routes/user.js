@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const   router = express.Router();
+const router = express.Router();
 const accountModel = require("../model/accountModel");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
@@ -27,4 +27,11 @@ router.post("/", verifyToken, userController.createUserControl);
 router.get("/profile", verifyToken, userController.getProfileControl);
 
 router.post("/favourites", verifyToken, userController.addFavouriteControl);
+
+router.put("/edit", verifyToken, userController.editProfileUserControl);
+
+router
+
+
+
 module.exports = router;
