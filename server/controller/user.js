@@ -90,11 +90,11 @@ const getFavouriteControl = async (req, res) => {
 
 const addFavouriteControl = async (req, res) => {
   try {
-    let {recipeId}  = req.body; // ID của công thức từ request body
+    let { recipeId } = req.body; // ID của công thức từ request body
 
     recipeId = parseInt(recipeId);
     console.log(recipeId);
-    
+
     // Tìm người dùng và thêm ID công thức vào mục yêu thích
     const user = await User.findOneAndUpdate(
       { account: req.userid },
@@ -112,10 +112,40 @@ const addFavouriteControl = async (req, res) => {
     res.status(401).json({ success: false, message: 'Invalid token' });
   }
 };
+
+const editProfileUserControl = async (req, res) => {
+  const updateData = req.body;
+  const user_id = updateData.user_id;
+  delete updateData.user_id;
+
+  try {
+    // Sử dụng findOneAndUpdate để tìm và cập nhật một document theo điều kiện
+    const updatedUser = await User.findOneAndUpdate(
+      { user_id: user_id },
+      { $set: updateData },
+      { new: true } // Trả về document đã được cập nhật
+    ).populate(
+      "account",
+      ["email"]
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.json({ success: true, message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+
 module.exports = {
   getAccountControl,
   createUserControl,
   getProfileControl,
   getFavouriteControl,
   addFavouriteControl,
+  editProfileUserControl,
 };
