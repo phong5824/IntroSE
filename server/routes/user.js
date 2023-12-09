@@ -33,6 +33,8 @@ router.get("/profile", verifyToken, userController.getProfileControl);
 
 router.post("/favourites", verifyToken, userController.addFavouriteControl);
 
+// router.put("/edit", verifyToken, userController.editProfileUserControl);
+
 // @route POST API/changepassword
 // @desc Change user password
 // @access private

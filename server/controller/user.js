@@ -140,39 +140,6 @@ const addFavouriteControl = async (req, res) => {
   }
 };
 
-const changePassword = async (req, res) => {
-  const { userId, newPassword } = req.body;
-
-  try {
-    // Find the user by user_id in the user collection
-    const user = await User.findOne({ user_id: userId });
-
-    // Kiểm tra nếu người dùng không tồn tại
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
-
-    // Find the account by _id in the account collection
-    const account = await Account.findById(user.account);
-
-    // Update the account's password directly without hashing
-    if (newPassword && newPassword.trim() !== "") {
-      // Update the account's password directly without hashing
-      account.password = newPassword;
-
-      // Save the updated account document
-      await account.save();
-
-      return res.status(200).json({ success: true, message: 'Password changed successfully' });
-    } else {
-      return res.status(400).json({ success: false, message: 'New password is empty or undefined' });
-    }
-  } catch (error) {
-    console.error('Error changing password:', error.message);
-    return res.status(500).json({ success: false, message: 'Internal server error' });
-  }
-};
-
 const deleteUser = async (req, res) => {
   const { userId } = req.body;
 
@@ -196,10 +163,33 @@ const deleteUser = async (req, res) => {
     return res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
+const changePassword = async (req, res) => {
+  const { userId, newPassword } = req.body;
 
+  try {
+    // Find the user by user_id in the user collection
+    const user = await User.findOne({ user_id: userId });
 
+    // Kiểm tra nếu người dùng không tồn tại
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
 
+    // Find the account by _id in the account collection
+    const account = await Account.findById(user.account);
 
+    // Update the account's password directly without hashing
+    account.password = newPassword;
+
+    // Save the updated account document
+    await account.save();
+
+    return res.status(200).json({ success: true, message: 'Password changed successfully' });
+  } catch (error) {
+    console.error('Error changing password:', error.message);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
 
 module.exports = {
   getAllUsersControl,
@@ -208,6 +198,6 @@ module.exports = {
   getProfileControl,
   getFavouriteControl,
   addFavouriteControl,
-  changePassword,
   deleteUser,
+  changePassword,
 };

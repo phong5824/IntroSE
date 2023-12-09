@@ -1,25 +1,22 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import React from "react";
+import StarRatings from "react-star-ratings";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
 import NavBar from "../modules/Navbar.jsx";
 import Footer from "../modules/Footer";
-import { useLocation, useNavigate } from "react-router-dom";
 import { handleSearchRecipesID } from "../../action/recipesAction";
 import Loading from "../modules/Loading";
-import Clock from "/src/assets/clock.png";
-import chatIcon from "/src/assets/chat.png";
-import avatarIcon from "/src/assets/avatar.png";
-import SendIcon from "/src/assets/send.png";
-import Bookmark from "/src/assets/bookmark.png";
-import Share from "/src/assets/share.png";
+import Comment from "../modules/Comment.jsx";
+import RelatedRecipes from "../modules/RelatedRecipes.jsx";
+
+import { Bookmark, Clock, SendIcon, Share, chatIcon } from "../../assets"
+import "react-toastify/dist/ReactToastify.css";
 import "./Profile.css";
 import axios from "axios";
 import { message } from "antd";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import StarRatings from "react-star-ratings";
-import Comment from "../modules/Comment.jsx";
-import RelatedRecipes from "../modules/RelatedRecipes.jsx";
 import { handleGetRelatedRecipes } from "../../action/recipesAction";
 
 export const RecipeDetail = () => {
