@@ -3,6 +3,8 @@ import NavBar from "../modules/Navbar.jsx";
 import Footer from "../modules/Footer";
 import { handleGetAllUsers } from "../../action/userAction";
 import axios from 'axios';
+import { message } from "antd";
+import banIcon from "/src/assets/ban.png";
 
 const Admin = () => {
     const [users, setUsers] = useState([]);
@@ -39,6 +41,10 @@ const Admin = () => {
             // Get the authentication token from localStorage or wherever you store it
             const token = localStorage.getItem('accessToken');
 
+            if (!newPassword) {
+                message.error("Bạn cần đăng nhập để lưu công thức này.");
+                return;
+            }
             // Gửi yêu cầu đổi mật khẩu trực tiếp
             const response = await axios.post(
                 'http://127.0.0.1:8000/users/admin/changepassword',
@@ -82,7 +88,7 @@ const Admin = () => {
             {users && users.length > 0 ? (
                 <div className="w-full overflow-x-auto p-5">
                     <table className="w-full text-center table-auto">
-                        <thead>
+                        <thead className="bg-green-200">
                             <tr>
                                 <th className="border px-4 py-2">ID</th>
                                 <th className="border px-4 py-2">Email</th>
@@ -90,6 +96,7 @@ const Admin = () => {
                                 <th className="border px-4 py-2">Role</th>
                                 <th className="border px-4 py-2">Password</th>
                                 <th className="border px-4 py-2">Change password</th>
+                                <th className="border px-4 py-2">Ban</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,12 +109,12 @@ const Admin = () => {
                                     <td className="border px-4 py-2">{user.account.password}</td>
                                     <td className="border px-4 py-2">
                                         {showChangePassword && selectedUserId === user.user_id ? (
-                                            <div className="flex items-center">
+                                            <div className="flex justify-center items-center">
                                                 <input
                                                     type="password"
                                                     value={newPassword}
                                                     onChange={(e) => setNewPassword(e.target.value)}
-                                                    className="border p-1 mr-2"
+                                                    className="border p-1 mr-2 rounded"
                                                     placeholder="New password"
                                                 />
                                                 <button
@@ -125,6 +132,14 @@ const Admin = () => {
                                                 Change password
                                             </button>
                                         )}
+                                    </td>
+                                    <td className="border px-4 py-2">
+                                        <img
+                                            src={banIcon}
+                                            alt="Ban Icon"
+                                            className="w-8 h-8 mx-auto"
+                                        // onClick={}
+                                        />
                                     </td>
                                 </tr>
                             ))}

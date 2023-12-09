@@ -10,7 +10,7 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
   // this useEffect is
   useEffect(() => {
     if (!user) {
-      
+
       return;
     }
   }, [user]);
@@ -28,6 +28,14 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
     navigate("/login");
   };
 
+  const navigateToAdmin = () => {
+    navigate("/users/admin");
+  }
+
+  const navigateToProfile = () => {
+    navigate("/users/profile");
+  }
+
   return (
     <div className="auth-actions relative rounded-full">
       <img
@@ -40,25 +48,43 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
       {showLoginForm && (
         <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-36 bg-white text-black border-gray-300 rounded shadow-lg z-10 transition duration-300">
           {user ? (
-            <button
-              onClick={navigateToLogout}
-              className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
-            >
-              Đăng xuất
-            </button>
+            <>
+              {user.is_admin ? (
+                <button
+                  onClick={navigateToAdmin}
+                  className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                >
+                  Admin
+                </button>
+              ) : (
+                <button
+                  onClick={navigateToProfile}
+                  className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                >
+                  Profile
+                </button>
+              )}
+              <button
+                onClick={navigateToLogout}
+                className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <button
               onClick={navigateToLogin}
               className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
             >
-              Đăng nhập
+              Login
             </button>
           )}
         </div>
       )}
     </div>
-  );
+  )
 };
+
 
 Avatar.propTypes = {
   showLoginForm: PropTypes.bool.isRequired,

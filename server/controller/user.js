@@ -156,12 +156,17 @@ const changePassword = async (req, res) => {
     const account = await Account.findById(user.account);
 
     // Update the account's password directly without hashing
-    account.password = newPassword;
+    if (newPassword && newPassword.trim() !== "") {
+      // Update the account's password directly without hashing
+      account.password = newPassword;
 
-    // Save the updated account document
-    await account.save();
+      // Save the updated account document
+      await account.save();
 
-    return res.status(200).json({ success: true, message: 'Password changed successfully' });
+      return res.status(200).json({ success: true, message: 'Password changed successfully' });
+    } else {
+      return res.status(400).json({ success: false, message: 'New password is empty or undefined' });
+    }
   } catch (error) {
     console.error('Error changing password:', error.message);
     return res.status(500).json({ success: false, message: 'Internal server error' });
