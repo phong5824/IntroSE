@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const   router = express.Router();
+const router = express.Router();
 const accountModel = require("../model/accountModel");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
@@ -9,6 +9,11 @@ const ObjectId = mongoose.Types.ObjectId;
 const User = require("../model/userModel");
 const userController = require("../controller/user");
 const verifyToken = require("../middleware/account");
+
+
+
+router.get("/admin", verifyToken, userController.getAllUsersControl);
+
 
 // @route GET API
 // @desc GET user
@@ -27,4 +32,10 @@ router.post("/", verifyToken, userController.createUserControl);
 router.get("/profile", verifyToken, userController.getProfileControl);
 
 router.post("/favourites", verifyToken, userController.addFavouriteControl);
+
+// @route POST API/changepassword
+// @desc Change user password
+// @access private
+router.post("/admin/changepassword", verifyToken, userController.changePassword);
+
 module.exports = router;
