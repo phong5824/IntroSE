@@ -1,5 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
+import { Cookies } from "js-cookie";
 
 // Get recomended recipes
 export const handleRecommendedRecipes = async () => {
@@ -64,9 +65,13 @@ export const handleSearchRecipesID = async (ID) => {
   return false;
 };
 
-export const handlePostRecipes = async (recipe) => {
+export const handleCreateRecipes = async (recipe) => {
+  // const accessToken = Cookies.get("accessToken");
   try {
-    const result = await axios.post("http://127.0.0.1:8000/recipes/", recipe);
+    const result = await axios.post(
+      "http://127.0.0.1:8000/recipes/create",
+      recipe
+    );
     if (result.data.success === true) {
       message.success("Post successfully!");
       return true;
