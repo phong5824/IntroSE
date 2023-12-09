@@ -32,11 +32,21 @@ const schema = new Schema({
     default: 0,
   },
 
-  user_recipes: [Number],
+  user_recipes: 
+  {
+    type: [Number],
+    default: [],
+  },
 
-  favourites: [Number],
+  favourites:  {
+    type: [Number],
+    default: [],
+  },
 
-  followers: [Number],
+  followers:  {
+    type: [Number],
+    default: [],
+  },
 
   account: {
     type: Schema.Types.ObjectId,

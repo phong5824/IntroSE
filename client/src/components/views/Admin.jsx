@@ -29,7 +29,7 @@ const Admin = () => {
         };
 
         fetchUsers();
-    }, []);
+    }, [users]);
 
     const handleShowChangePassword = (userId) => {
         setShowChangePassword(true);

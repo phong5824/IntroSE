@@ -25,7 +25,7 @@ const getAllUsersControl = async (req, res) => {
     const allUsers = await User.find({}).populate("account", [
       "email",
       "password",
-    ]);
+    ]).sort({ user_id: 1 });
 
     res.status(200).json({ success: true, users: allUsers });
   } catch (error) {
