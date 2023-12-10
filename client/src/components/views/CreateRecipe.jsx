@@ -203,10 +203,10 @@ const Step = ({
   handleRemove,
 }) => {
   return (
-    <div className="flex flex-row items-center space-x-4 bg-white p-4 rounded-lg shadow-lg">
+    <div className="flex flex-row items-center space-x-4 bg-white p-4 rounded-lg shadow-lg w-full">
       <h1 className="text-xl font-bold">Step {index + 1}</h1>
       <input
-        className="text-xl border-2 border-gray-300 p-2 rounded"
+        className="text-xl border-2 border-gray-300 p-2 rounded "
         type="text"
         id={index}
         onChange={handleChangeStep}
