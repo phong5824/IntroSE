@@ -6,8 +6,6 @@ import Chat from "./Chat";
 import RecommendedRecipes from "../modules/RecommendedRecipes";
 import RecipeRanking from "../modules/RecipeRanking";
 import { useContext, useEffect, useState } from "react";
-import { handleGetUser } from "../../action/accountAction";
-import Loading from "../modules/Loading";
 import { UserContext } from "../../context/userContext";
 import { Link } from "react-router-dom";
 

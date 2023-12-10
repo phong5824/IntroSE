@@ -5,6 +5,7 @@ import {
   googleprovider,
 } from "../components/Firebase/firebase.initialize";
 import { signInWithPopup, signOut } from "firebase/auth";
+import { Cookies } from "react-cookie";
 
 //Login
 export const handleLogin = async (userData) => {
@@ -68,7 +69,7 @@ export const handleResetPassword = async (userData) => {
 export const handleLoginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleprovider);
-   
+
     const { displayName, email, metadata, photoURL } = result.user;
     const loggedInUser = {
       name: displayName,
@@ -77,7 +78,7 @@ export const handleLoginWithGoogle = async () => {
       lastLoginTime: metadata.lastSignInTime,
     };
     localStorage.setItem("google-user", JSON.stringify(loggedInUser));
-   
+
     return true;
   } catch (error) {
     const errorCode = error.code;

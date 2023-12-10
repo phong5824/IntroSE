@@ -16,11 +16,13 @@ import { useEffect, useState } from "react";
 import { handleGetUser } from "./action/accountAction";
 import { UserContext } from "./context/userContext";
 import CreateRecipe from "./components/views/CreateRecipe";
+import { CookiesProvider, useCookies } from "react-cookie";
 
 // eslint-disable-next-line react/prop-types
 const HandleLoginStatus = ({ children }) => {
   const [user, setUser] = useState(null);
   const location = useLocation();
+  const [cookies, setCookie] = useCookies(["user"]);
 
   useEffect(() => {
     const fetchAccount = async () => {

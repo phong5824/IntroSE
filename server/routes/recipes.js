@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const router = express.Router();
+const verifyToken = require("../middleware/account");
 
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
@@ -13,6 +14,6 @@ router.get("/recipes/", recipesController.getRecipesByID);
 router.get("/recipes/:id/comment", recipesController.getCommentsByRecipeId);
 router.get("/recipes/:id/related", recipesController.getRelatedRecipes);
 
-// router.post("/recipe/", recipesController.postRecipeControl);
+router.post("/recipe/create", verifyToken, recipesController.postRecipeControl);
 
 module.exports = router;

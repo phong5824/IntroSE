@@ -27,8 +27,6 @@ export default function Profile() {
     );
   }
 
-
-
   return (
     <div className="flex flex-col min-h-screen bg-green-100 ">
       <NavBar />
@@ -114,9 +112,6 @@ export default function Profile() {
                   >
                     Đổi mật khẩu
                   </button> */}
-
-
-
                 </div>
               </div>
               <div className="w-1/2 ml-5">

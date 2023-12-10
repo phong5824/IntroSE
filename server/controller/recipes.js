@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
-const Recipe = require("../model/recipeModel");
+const RecipeModel = require("../model/recipeModel");
 const User = require("../model/userModel");
 const Ingredient = require("../model/ingredientModel");
 const Comment = require("../model/commentModel");
@@ -100,21 +100,25 @@ const getRecipesByID = async (req, res) => {
 
 const postRecipeControl = async (req, res) => {
   try {
-    const { token } = req.cookies;
+    // const { token } = req.cookies;
+    console.log("req.body: ", req.body);
+    const recipe = req.body.recipe;
+    const { recipe_name, nutrition, ingredients_list, tagname, rating } =
+      recipe;
 
-    const { recipe_id, recipe_name, nutrition, ingredients, tagname, rating } =
-      req.body;
+    // if (!token) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: "You are not authorized to access this route",
+    //   });
+    // }
 
-    if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: "You are not authorized to access this route",
-      });
-    }
+    const user = await User.findOne({ account: req.userid }).populate(
+      "account",
+      ["email"]
+    );
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    const user = await User.findById(decoded.id);
+    console.log("Found user: ", user);
 
     if (!user) {
       return res
@@ -122,33 +126,35 @@ const postRecipeControl = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const recipe = await Recipe.findOne({ recipe_id });
+    const maxRecipeId = await RecipeModel.estimatedDocumentCount();
+    const recipe_id = maxRecipeId + 1;
+    // const recipe = await Recipe.findOne({ recipe_id });
 
-    if (recipe) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Recipe already exists" });
-    }
-
-    const newRecipe = new Recipe({
-      recipe_id,
-      recipe_name,
-      nutrition,
-      ingredients,
-      tagname,
-      rating,
+    // console.log("Found recipe: ", recipe);
+    // if (recipe) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "Recipe already exists" });
+    // }
+    const newRecipe = new RecipeModel({
+      recipe_id: recipe_id,
+      recipe_name: recipe_name,
+      nutrition: nutrition,
+      ingredients_list: ingredients_list,
+      tagname: tagname,
+      rating: rating,
     });
 
     await newRecipe.save();
 
-    user.favourites.push(recipe_id);
+    user.user_recipes.push(recipe_id);
 
     await user.save();
 
     res.json({ success: true, message: "Recipe created successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({ success: false, error: "Internal server error" });
   }
 };
 
@@ -199,6 +205,7 @@ module.exports = {
   getRankingRecipesControl,
   getRecipesByKeywords,
   getRecipesByID,
+  postRecipeControl,
   getCommentsByRecipeId,
   getRelatedRecipes,
 };

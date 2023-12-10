@@ -28,8 +28,7 @@ const recipeSchema = new Schema({
   nutritions: [String], // Một mảng các chuỗi
   ingredients_list: [String],
   ingredients: [Number],
-  created_time : Date,
-
+  created_time: Date,
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);

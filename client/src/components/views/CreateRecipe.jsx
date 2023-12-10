@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../modules/Navbar";
 import Footer from "../modules/Footer";
 import { UserContext } from "../../context/userContext";
-import { handleCreateRecipes } from "../../action/recipesAction";
+import { handleCreateRecipe } from "../../action/recipesAction";
 
 const Ingredient = ({
   index,
@@ -35,9 +36,13 @@ const Ingredient = ({
   );
 };
 
-const IngredientList = () => {
+const IngredientsList = ({
+  ingredients,
+  setIngredients,
+  ingredientsList,
+  setIngredientsList,
+}) => {
   const [isAddingIngredient, setIsAddingIngredient] = useState(false);
-  const [ingredients, setIngredients] = useState([]);
   const handleAddIngredient = () => {
     setIsAddingIngredient(true);
     // setIngredientElements([
@@ -47,26 +52,26 @@ const IngredientList = () => {
     //     <button className="text-xl">Remove</button>
     //   </div>,
     // ]);
-    setIngredients([...ingredients, ""]);
-    console.log(ingredients);
+    setIngredientsList([...ingredientsList, ""]);
+    console.log(ingredientsList);
     console.log("Add ingredient");
   };
 
   const handleChangeIngredient = (event) => {
     const index = event.target.id;
     console.log("id: ", index);
-    const newIngredients = [...ingredients];
-    newIngredients[index] = event.target.value;
-    setIngredients(newIngredients);
-    console.log(ingredients);
+    const newIngredientsList = [...ingredientsList];
+    newIngredientsList[index] = event.target.value;
+    setIngredientsList(newIngredientsList);
+    console.log(ingredientsList);
     console.log("Change ingredient");
   };
 
   const handleRemove = (index) => {
-    const newIngredients = [...ingredients];
-    newIngredients.splice(index, 1);
-    setIngredients(newIngredients);
-    console.log(ingredients);
+    const newIngredientsList = [...ingredientsList];
+    newIngredientsList.splice(index, 1);
+    setIngredientsList(newIngredientsList);
+    console.log(ingredientsList);
     console.log("Remove");
   };
 
@@ -79,20 +84,20 @@ const IngredientList = () => {
     // setIngredients(newIngredients);
     // setIngredients([...ingredients, ""]);
 
-    console.log(ingredients);
+    console.log(ingredientsList);
     console.log("Add");
   };
 
   const handleCancel = () => {
     setIsAddingIngredient(false);
-    setIngredients(ingredients.slice(0, -1));
+    setIngredientsList(ingredientsList.slice(0, -1));
     console.log("Cancel");
   };
   return (
     <div className="flex flex-col bg-orange-300 p-2 m-2">
       <h1 className="text-3xl font-bold">Ingredient</h1>
       <div className="flex flex-col">
-        {ingredients.map((ingredient, index) => (
+        {ingredientsList.map((ingredient, index) => (
           <Ingredient
             key={index}
             index={index}
@@ -127,10 +132,18 @@ const IngredientList = () => {
   );
 };
 
-const GeneralInfo = () => {
-  const [recipeName, setRecipeName] = useState("");
-  const [prepTime, setPrepTime] = useState("");
-  const [cookTime, setCookTime] = useState("");
+const GeneralInfo = ({
+  recipeName,
+  setRecipeName,
+  prepTime,
+  setPrepTime,
+  cookTime,
+  setCookTime,
+  ingredients,
+  setIngredients,
+  ingredientsList,
+  setIngredientsList,
+}) => {
   return (
     <div className="general-info-wrapper flex flex-row items-center justify-around">
       <div className="general-info-title flex">
@@ -145,6 +158,9 @@ const GeneralInfo = () => {
             className="general-info-form-recipe-name-input text-xl"
             type="text"
             placeholder="Recipe Name"
+            onChange={(e) => {
+              setRecipeName(e.target.value);
+            }}
           />
         </div>
 
@@ -155,6 +171,9 @@ const GeneralInfo = () => {
           <input
             className="general-info-form-prep-time-input text-xl"
             type="text"
+            onChange={(e) => {
+              setPrepTime(e.target.value);
+            }}
           />
         </div>
 
@@ -165,10 +184,18 @@ const GeneralInfo = () => {
           <input
             className="general-info-form-prep-cook-title text-xl"
             type="text"
+            onChange={(e) => {
+              setCookTime(e.target.value);
+            }}
           />
         </div>
 
-        <IngredientList />
+        <IngredientsList
+          ingredients={ingredients}
+          setIngredients={setIngredients}
+          ingredientsList={ingredientsList}
+          setIngredientsList={setIngredientsList}
+        />
       </div>
     </div>
   );
@@ -206,8 +233,8 @@ const Step = ({
   );
 };
 
-const InstructionInfo = () => {
-  const [steps, setSteps] = useState([]);
+const InstructionInfo = ({ steps, setSteps }) => {
+  // const [steps, setSteps] = useState([]);
   // const [nutritions, setNutritions] = useState([]); // [calories, fat, protein, carbs
   const [isAddingStep, setIsAddingStep] = useState(false);
 
@@ -300,27 +327,30 @@ const SubmitForm = ({ onSubmit }) => {
   );
 };
 
-const CreateRecipeForm = ({ user }) => {
+const CreateRecipeForm = () => {
   const [recipeName, setRecipeName] = useState("");
   const [prepTime, setPrepTime] = useState("");
   const [cookTime, setCookTime] = useState("");
-  const [ingredients, setIngredients] = useState([]);
+  // const [ingredients, setIngredients] = useState([]); // [1, 2, ...]
+  const [ingredientsList, setIngredientsList] = useState([]); // ["100g flour", "100ml water" ...
   const [steps, setSteps] = useState([]);
+  const [nutritions, setNutritions] = useState([]); // ["Fat 10g  20%", "Protein 20g  40%", ...
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const recipe = {
-      recipeName: recipeName,
-      prepTime: prepTime,
-      cookTime: cookTime,
-      ingredients: ingredients,
+      recipe_name: recipeName,
+      prep_time: prepTime,
+      cook_time: cookTime,
+      ingredients_list: ingredientsList,
       steps: steps,
+      nutritions: [],
     };
     console.log(recipe);
     if (recipeName === "" || prepTime === "" || cookTime === "") {
-      console.log("Vui lòng điền đầy đủ thông tin");
+      console.log("Please fill in all fields");
       return;
     }
-    if (handleCreateRecipes(user, recipe)) {
+    if (await handleCreateRecipe(recipe)) {
       console.log("Create recipe successfully");
     }
 
@@ -329,8 +359,19 @@ const CreateRecipeForm = ({ user }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <GeneralInfo />
-      <InstructionInfo />
+      <GeneralInfo
+        recipeName={recipeName}
+        setRecipeName={setRecipeName}
+        prepTime={prepTime}
+        setPrepTime={setPrepTime}
+        cookTime={cookTime}
+        setCookTime={setCookTime}
+        // ingredients={ingredients}
+        // setIngredients={setIngredients}
+        ingredientsList={ingredientsList}
+        setIngredientsList={setIngredientsList}
+      />
+      <InstructionInfo steps={steps} setSteps={setSteps} />
       <SubmitForm onSubmit={onSubmit} />
     </div>
   );
@@ -345,7 +386,7 @@ export default function CreateRecipe() {
   return (
     <div className="home-wrapper h-screen overflow-y-auto bg-slate-200">
       <NavBar />
-      <CreateRecipeForm user={user} />
+      <CreateRecipeForm />
       <Footer />
     </div>
   );
