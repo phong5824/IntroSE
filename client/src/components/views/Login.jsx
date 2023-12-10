@@ -6,7 +6,7 @@ import GoogleIcon from "../../assets/google.png";
 import FacebookIcon from "../../assets/facebook.png";
 import { message } from "antd";
 
-export default function Login() {
+export default function Login({ setCookie }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Login() {
       message.warning("Vui lòng điền đầy đủ thông tin");
       return;
     }
-    const userId = await handleLogin(userData);
+    const userId = await handleLogin(userData, setCookie);
     if (userId) {
       navigate(location.state?.from || "/home");
     } else {

@@ -17,20 +17,24 @@ import { handleGetUser } from "./action/accountAction";
 import { UserContext } from "./context/userContext";
 import CreateRecipe from "./components/views/CreateRecipe";
 import { CookiesProvider, useCookies } from "react-cookie";
+import NoPage from "./components/views/NoPage";
 
 // eslint-disable-next-line react/prop-types
-const HandleLoginStatus = ({ children }) => {
+const HandleLoginStatus = ({ children, cookies }) => {
   const [user, setUser] = useState(null);
   const location = useLocation();
-  const [cookies, setCookie] = useCookies(["user"]);
+  // const [cookies, setCookie] = useCookies(["accessToken"]);
 
   useEffect(() => {
     const fetchAccount = async () => {
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = cookies.accessToken;
+      console.log("accessToken", accessToken);
+      // const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
         return;
       }
-      setUser(await handleGetUser());
+      setUser(await handleGetUser(accessToken));
+      console.log("user", user);
     };
     fetchAccount();
   }, [location]); // Add location to the dependency array
@@ -39,87 +43,39 @@ const HandleLoginStatus = ({ children }) => {
 };
 
 function App() {
-  // const [accountToken, setAccountToken] = useState(null);
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     if (localStorage.getItem("accessToken") === null) {
-  //       return;
-  //     }
-  //     const accessToken = localStorage.getItem("accessToken");
-  //     setAccountToken(accessToken);
-  //   };
-
-  //   fetchAccount();
-  // }, []);
-
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const location = useLocation();
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     if (localStorage.getItem("accessToken") === null) {
-  //       return;
-  //     }
-  //     const accessToken = localStorage.getItem("accessToken");
-  //     setIsLoggedIn(true);
-  //   };
-
-  //   fetchAccount();
-  // }, [location]);
-
-  //   return (
-  //     // <AccountContext.Provider value={accountToken}>
-  //     <IsLoggedInContext.Provider value={isLoggedIn}>
-  //       <div className="h-screen w-screen overflow-auto">
-  //         <BrowserRouter>
-  //           <Routes>
-  //             <Route path="/" element={<Home />} />
-  //             <Route path="/home" element={<Home />} />
-  //             <Route path="/home/:username" element={<Profile />} />
-  //             <Route path="/login" element={<Login />} />
-  //             <Route path="/register" element={<Register />} />
-  //             <Route path="/about-us" element={<About_us />} />
-  //             <Route path="/blog" element={<Blog />} />
-  //             <Route path="/resetPassword" element={<ResetPassword />} />
-  //             <Route path="/users/profile" element={<Profile />} />
-  //             <Route path="/others" element={<Others />} />
-  //             <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
-  //             <Route path="/details" element={<RecipeDetail />} />
-  //             <Route path="/search" element={<Search />} />
-  //           </Routes>
-  //         </BrowserRouter>
-  //       </div>
-  //     </IsLoggedInContext.Provider>
-
-  //     // {/* </AccountContext.Provider> */}
-  //   );
-  // }
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
 
   return (
     <div className="h-screen w-screen overflow-auto">
-      <BrowserRouter>
-        <HandleLoginStatus>
-          <Routes>
-            <Route path="/">
-              <Route index element={<Home />} />
-              <Route path="home" element={<Home />} />
-              <Route path="create-recipe" element={<CreateRecipe />} />
-              <Route path="home/:username" element={<Profile />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="about-us" element={<AboutUs />} />
-              <Route path="blog" element={<Blog />} />
-              <Route path="reset-password" element={<ResetPassword />} />
-              <Route path="users/profile" element={<Profile />} />
-              <Route path="others" element={<Others />} />
-              <Route path="recipes/:recipeId" element={<RecipeDetail />} />
-              <Route path="recipes/" element={<RecipeDetail />} />
-              <Route path="details" element={<RecipeDetail />} />
-              <Route path="search" element={<Search />} />
-              <Route path="users/admin" element={<Admin />} />
-            </Route>
-          </Routes>
-        </HandleLoginStatus>
-      </BrowserRouter>
+      <CookiesProvider>
+        <BrowserRouter>
+          <HandleLoginStatus cookies={cookies}>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Home />} />
+                <Route
+                  path="home"
+                  element={<Home removeCookie={removeCookie} />}
+                />
+                <Route path="create-recipe" element={<CreateRecipe />} />
+                <Route path="login" element={<Login setCookie={setCookie} />} />
+                <Route path="register" element={<Register />} />
+                <Route path="about-us" element={<AboutUs />} />
+                <Route path="blog" element={<Blog />} />
+                <Route path="reset-password" element={<ResetPassword />} />
+                <Route path="users/profile" element={<Profile />} />
+                <Route path="others" element={<Others />} />
+                <Route path="recipes/:recipeId" element={<RecipeDetail />} />
+                <Route path="recipes/" element={<RecipeDetail />} />
+                <Route path="details" element={<RecipeDetail />} />
+                <Route path="search" element={<Search />} />
+                <Route path="users/admin" element={<Admin />} />
+                <Route path="*" element={<NoPage />} />
+              </Route>
+            </Routes>
+          </HandleLoginStatus>
+        </BrowserRouter>
+      </CookiesProvider>
     </div>
   );
 }

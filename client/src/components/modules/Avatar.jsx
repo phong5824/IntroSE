@@ -4,13 +4,13 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import avatar from "/src/assets/user.png";
+import { handleLogout } from "../../action/accountAction";
 
 const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
   const user = useContext(UserContext);
   // this useEffect is
   useEffect(() => {
     if (!user) {
-
       return;
     }
   }, [user]);
@@ -18,8 +18,7 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
   const navigate = useNavigate();
 
   const navigateToLogout = () => {
-    // setShowLoginForm(true);
-    localStorage.clear();
+    handleLogout();
     navigate("/login");
   };
 
@@ -30,11 +29,11 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
 
   const navigateToAdmin = () => {
     navigate("/users/admin");
-  }
+  };
 
   const navigateToProfile = () => {
     navigate("/users/profile");
-  }
+  };
 
   return (
     <div className="auth-actions relative rounded-full">
@@ -82,9 +81,8 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
         </div>
       )}
     </div>
-  )
+  );
 };
-
 
 Avatar.propTypes = {
   showLoginForm: PropTypes.bool.isRequired,

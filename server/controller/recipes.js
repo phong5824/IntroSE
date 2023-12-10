@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
-const RecipeModel = require("../model/recipeModel");
+const Recipe = require("../model/RecipeModel");
 const User = require("../model/userModel");
 const Ingredient = require("../model/ingredientModel");
 const Comment = require("../model/commentModel");
@@ -126,7 +126,7 @@ const postRecipeControl = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const maxRecipeId = await RecipeModel.estimatedDocumentCount();
+    const maxRecipeId = await Recipe.estimatedDocumentCount();
     const recipe_id = maxRecipeId + 1;
     // const recipe = await Recipe.findOne({ recipe_id });
 
@@ -136,7 +136,7 @@ const postRecipeControl = async (req, res) => {
     //     .status(400)
     //     .json({ success: false, message: "Recipe already exists" });
     // }
-    const newRecipe = new RecipeModel({
+    const newRecipe = new Recipe({
       recipe_id: recipe_id,
       recipe_name: recipe_name,
       nutrition: nutrition,

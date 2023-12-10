@@ -8,7 +8,7 @@ import { signInWithPopup, signOut } from "firebase/auth";
 import { Cookies } from "react-cookie";
 
 //Login
-export const handleLogin = async (userData) => {
+export const handleLogin = async (userData, setCookie) => {
   try {
     const result = await axios.post(
       "http://127.0.0.1:8000/api/login",
@@ -17,7 +17,13 @@ export const handleLogin = async (userData) => {
 
     if (result.data.success === true) {
       message.success("Login successful!");
-      localStorage.setItem("accessToken", result.data.accessToken);
+      setCookie("accessToken", result.data.accessToken, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7, // Expires after 1week
+        sameSite: true,
+      });
+
+      // localStorage.setItem("accessToken", result.data.accessToken);
       return result.data.accessToken;
     } else {
       message.error(result.data.error);
@@ -96,9 +102,9 @@ export const handleLoginWithGoogle = async () => {
 };
 
 // Get user
-export const handleGetUser = async () => {
+export const handleGetUser = async (accessToken) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
+    // const accessToken = localStorage.getItem("accessToken");
 
     const result = await axios.get("http://127.0.0.1:8000/users/profile", {
       headers: {
@@ -114,10 +120,11 @@ export const handleGetUser = async () => {
   } catch (err) {
     console.log(err);
   }
-  return false;
+  return null;
 };
 
 export const handleLogout = () => {
+  localStorage.removeItem("accessToken");
   signOut(auth)
     .then(() => {
       // clear data from UI
