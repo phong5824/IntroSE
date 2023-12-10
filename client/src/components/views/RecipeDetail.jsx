@@ -3,7 +3,6 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 
 import NavBar from "../modules/Navbar.jsx";
 import Footer from "../modules/Footer";
@@ -13,29 +12,18 @@ import Comment from "../modules/Comment.jsx";
 import RelatedRecipes from "../modules/RelatedRecipes.jsx";
 
 import { Bookmark, Clock, SendIcon, Share, chatIcon } from "../../assets"
-import "react-toastify/dist/ReactToastify.css";
 import "./Profile.css";
 import axios from "axios";
 import { message } from "antd";
 import { handleGetRelatedRecipes } from "../../action/recipesAction";
+
+import { notify_success,Toast_Container } from "../../toast";
 
 export const RecipeDetail = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const notify = () => {
-    toast.success("🦄 Save recipes successfull!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
   const recipeId = new URLSearchParams(useLocation().search).get("ID");
   const [recipe, setRecipe] = React.useState(null);
   const [relatedRecipes, setRelatedRecipes] = React.useState([]);
@@ -221,24 +209,14 @@ export const RecipeDetail = () => {
                 className="text-gray-900 p-1 rounded-md border border-black flex items-center justify-center space-x-2"
                 onClick={() => {
                   handleUpdateFavoriteRecipes();
-                  notify();
+                  notify_success("Save recipes successfull!");
                 }}
               >
                 <img src={Bookmark} alt="Bookmark Icon" className="h-4 w-4" />
                 <span>Save recipe</span>
               </button>
-              <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
+
+              <Toast_Container/>
 
               <button className="text-gray-900 p-1 rounded-md border border-black bg-white flex items-center justify-center space-x-2">
                 <img src={Share} alt="Share Icon" className="h-4 w-4" />

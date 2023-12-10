@@ -5,6 +5,7 @@ import { handleGetAllUsers } from "../../action/userAction";
 import axios from 'axios';
 import { message } from "antd";
 import banIcon from "/src/assets/ban.png";
+import { notify_success,notify_fail,Toast_Container } from "../../toast";
 
 const Admin = () => {
     const [users, setUsers] = useState([]);
@@ -34,7 +35,7 @@ const Admin = () => {
     const handleShowChangePassword = (userId) => {
         setShowChangePassword(true);
         setSelectedUserId(userId);
-    };
+    };  
 
     const handleChangePasswordClick = async () => {
         try {
@@ -42,7 +43,7 @@ const Admin = () => {
             const token = localStorage.getItem('accessToken');
 
             if (!newPassword) {
-                message.error("Bạn cần đăng nhập để lưu công thức này.");
+                message.error("Password is invalid.");
                 return;
             }
             // Gửi yêu cầu đổi mật khẩu trực tiếp
@@ -73,6 +74,8 @@ const Admin = () => {
                 setShowChangePassword(false);
                 setSelectedUserId(null);
                 setNewPassword('');
+
+                notify_success("Password changed successfully!");
             } else {
                 console.error('Error changing password:', response.data.message);
             }
@@ -102,6 +105,7 @@ const Admin = () => {
             // Xử lý phản hồi từ server
             if (response.data.success) {
                 console.log('User deleted successfully!');
+                notify_success("User deleted successfully!");
                 // Cập nhật trạng thái của người dùng trong state hoặc component
             } else {
                 console.error('Error deleting user:', response.data.message);
@@ -126,7 +130,7 @@ const Admin = () => {
                                 <th className="border px-4 py-2">Role</th>
                                 <th className="border px-4 py-2">Password</th>
                                 <th className="border px-4 py-2">Change password</th>
-                                <th className="border px-4 py-2">Ban</th>
+                                <th className="border px-4 py-2">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,7 +152,7 @@ const Admin = () => {
                                                     placeholder="New password"
                                                 />
                                                 <button
-                                                    onClick={() => handleChangePasswordClick(user.user_id)}
+                                                    onClick={() => {handleChangePasswordClick(user.user_id)}}
                                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                                 >
                                                     Save
@@ -158,17 +162,20 @@ const Admin = () => {
                                             <button
                                                 onClick={() => handleShowChangePassword(user.user_id)}
                                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                               
                                             >
                                                 Change password
                                             </button>
                                         )}
+                                        <Toast_Container/>
                                     </td>
                                     <td className="border px-4 py-2">
                                         <img
                                             src={banIcon}
                                             alt="Ban Icon"
                                             className="w-8 h-8 mx-auto cursor-pointer hover:opacity-80 transition duration-300"
-                                            onClick={() => handleBanClick(user.user_id)}
+                                            onClick={() => {handleBanClick(user.user_id);}
+                                        }
                                         />
                                     </td>
                                 </tr>
