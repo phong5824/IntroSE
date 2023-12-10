@@ -1,13 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+
+const mongoose = require("mongoose");
 const accountRouter = require("./routes/account");
 const userRouter = require("./routes/user");
 const recipesRouter = require("./routes/recipes");
-const ingredientRouter = require("./routes/ingredient.js")
-const commentRouter = require("./routes/comment.js")
+const ingredientRouter = require("./routes/ingredient.js");
+const commentRouter = require("./routes/comment.js");
 const db = require("./db/index");
 // const { auth, provider } = require("./server/firebase");
 
@@ -15,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use("/", accountRouter);
 app.use("/", recipesRouter);

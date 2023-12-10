@@ -2,7 +2,7 @@ import NavBar from "../modules/Navbar";
 import Namdua from "../../assets/5dua.jpg";
 import Footer from "../modules/Footer";
 
-const About_us = () => {
+const AboutUs = () => {
   return (
     <div className="home-wrapper h-screen overflow-y-auto">
       <NavBar />
@@ -88,4 +88,4 @@ const About_us = () => {
   );
 };
 
-export default About_us;
+export default AboutUs;
