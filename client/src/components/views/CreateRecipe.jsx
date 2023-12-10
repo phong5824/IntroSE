@@ -13,9 +13,9 @@ const Ingredient = ({
   handleRemove,
 }) => {
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row items-center space-x-4 bg-white p-2 rounded-lg shadow">
       <input
-        className="text-xl"
+        className="text-xl flex-grow border-2 border-gray-300 p-2 rounded"
         type="text"
         id={index}
         onChange={handleChangeIngredient}
@@ -24,7 +24,7 @@ const Ingredient = ({
       />
       {!isAddingIngredient ? (
         <button
-          className="text-xl"
+          className="text-xl bg-red-500 text-white py-2 px-4 rounded"
           onClick={() => {
             handleRemove(index);
           }}
@@ -45,13 +45,7 @@ const IngredientsList = ({
   const [isAddingIngredient, setIsAddingIngredient] = useState(false);
   const handleAddIngredient = () => {
     setIsAddingIngredient(true);
-    // setIngredientElements([
-    //   ...ingredients,
-    //   <div key={ingredientElements.length} className="flex flex-row">
-    //     <input className="text-xl" type="text" placeholder="100g flour" />
-    //     <button className="text-xl">Remove</button>
-    //   </div>,
-    // ]);
+
     setIngredientsList([...ingredientsList, ""]);
     console.log(ingredientsList);
     console.log("Add ingredient");
@@ -77,12 +71,6 @@ const IngredientsList = ({
 
   const handleAdd = () => {
     setIsAddingIngredient(false);
-    // const newIngredients = [...ingredients];
-    // const newIngredients = ingredients.filter(
-    //   (ingredient) => ingredient !== ""
-    // );
-    // setIngredients(newIngredients);
-    // setIngredients([...ingredients, ""]);
 
     console.log(ingredientsList);
     console.log("Add");
@@ -94,9 +82,9 @@ const IngredientsList = ({
     console.log("Cancel");
   };
   return (
-    <div className="flex flex-col bg-orange-300 p-2 m-2">
-      <h1 className="text-3xl font-bold">Ingredient</h1>
-      <div className="flex flex-col">
+    <div className="general-info-form-prep-cook-title text-xl border-2 border-gray-300 p-2 rounded flex-1 bg-orange-300 h-[70px]">
+      <h1 className="text-3xl font-bold mb-4">Ingredient</h1>
+      <div className="flex flex-col space-y-2">
         {ingredientsList.map((ingredient, index) => (
           <Ingredient
             key={index}
@@ -107,22 +95,27 @@ const IngredientsList = ({
             handleRemove={handleRemove}
           />
         ))}
-        {/* <input className="text-xl" type="text" placeholder="100g flour" /> */}
         {!isAddingIngredient ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-4">
             <button
               onClick={handleAddIngredient}
-              className="text-2xl font-bold"
+              className="text-2xl font-bold bg-green-500 text-white py-2 px-4 rounded"
             >
               Add ingredient
             </button>
           </div>
         ) : (
-          <div className="flex flex-col">
-            <button onClick={handleAdd} className="text-2xl font-bold">
+          <div className="flex flex-col mt-4 space-y-2">
+            <button
+              onClick={handleAdd}
+              className="text-2xl font-bold bg-green-500 text-white py-2 px-4 rounded"
+            >
               Add
             </button>
-            <button onClick={handleCancel} className="text-2xl font-bold">
+            <button
+              onClick={handleCancel}
+              className="text-2xl font-bold bg-red-500 text-white py-2 px-4 rounded"
+            >
               Cancel
             </button>
           </div>
@@ -145,17 +138,17 @@ const GeneralInfo = ({
   setIngredientsList,
 }) => {
   return (
-    <div className="general-info-wrapper flex flex-row items-center justify-around">
-      <div className="general-info-title flex">
-        <h1 className="text-3xl font-bold">General Information</h1>
+    <div className="general-info-wrapper flex flex-col items-center space-y-4 bg-blue-300 p-4 rounded-lg shadow-lg w-1/2 h-screen/3 mx-auto">
+      <div className="general-info-title w-full text-center">
+        <h1 className="text-3xl font-bold mb-4">General Information</h1>
       </div>
-      <div className="general-info-form flex flex-col">
-        <div className="general-info-form-child general-info-form-recipe-name flex flex-col bg-orange-300 p-2 m-2">
-          <h1 className="general-info-form-recipe-name-title text-xl">
+      <div className="general-info-form flex flex-col space-y-4 w-full">
+        <div className="general-info-form-child general-info-form-recipe-name items-center flex flex-row justify-between bg-orange-300 p-4 rounded-lg shadow h-[70px]">
+          <h1 className="general-info-form-recipe-name-title text-xl font-bold flex-1 items-center">
             Recipe Name
           </h1>
           <input
-            className="general-info-form-recipe-name-input text-xl"
+            className="general-info-form-recipe-name-input text-xl border-2 items-center border-gray-300 p-2 rounded flex-1 h-[60px]"
             type="text"
             placeholder="Recipe Name"
             onChange={(e) => {
@@ -164,12 +157,12 @@ const GeneralInfo = ({
           />
         </div>
 
-        <div className="general-info-form-child general-info-form-prep-time flex flex-row justify-around bg-orange-300 p-2 m-2">
-          <h1 className="general-info-form-prep-time-title text-xl">
+        <div className="general-info-form-child general-info-form-prep-time flex flex-row justify-between bg-orange-300 p-4 rounded-lg shadow h-[70px] items-center">
+          <h1 className="general-info-form-prep-time-title text-xl font-bold flex-1 items-center">
             Prep-time
           </h1>
           <input
-            className="general-info-form-prep-time-input text-xl"
+            className="general-info-form-prep-time-input text-xl border-2 items-center border-gray-300 p-2 rounded flex-1 h-[60px]"
             type="text"
             onChange={(e) => {
               setPrepTime(e.target.value);
@@ -177,12 +170,12 @@ const GeneralInfo = ({
           />
         </div>
 
-        <div className="general-info-form-child general-info-form-cook-time flex flex-row justify-around bg-orange-300 p-2 m-2">
-          <h1 className="general-info-form-cook-time-title text-2xl font-bold">
+        <div className="general-info-form-child general-info-form-cook-time flex flex-row justify-between items-center bg-orange-300 p-4 rounded-lg shadow h-[70px]">
+          <h1 className="general-info-form-cook-time-title text-2xl font-bold flex-1">
             Cook-time
           </h1>
           <input
-            className="general-info-form-prep-cook-title text-xl"
+            className="general-info-form-prep-cook-title text-xl border-2 items-center border-gray-300 p-2 rounded flex-1 "
             type="text"
             onChange={(e) => {
               setCookTime(e.target.value);
@@ -195,6 +188,7 @@ const GeneralInfo = ({
           setIngredients={setIngredients}
           ingredientsList={ingredientsList}
           setIngredientsList={setIngredientsList}
+          className="flex-1 h-[60px]"
         />
       </div>
     </div>
@@ -209,10 +203,10 @@ const Step = ({
   handleRemove,
 }) => {
   return (
-    <div className="flex flex-row">
-      <h1 className="text-xl m-2">Step {index + 1}</h1>
+    <div className="flex flex-row items-center space-x-4 bg-white p-4 rounded-lg shadow-lg">
+      <h1 className="text-xl font-bold">Step {index + 1}</h1>
       <input
-        className="text-xl"
+        className="text-xl border-2 border-gray-300 p-2 rounded"
         type="text"
         id={index}
         onChange={handleChangeStep}
@@ -221,7 +215,7 @@ const Step = ({
       />
       {!isAddingStep ? (
         <button
-          className="text-xl"
+          className="text-xl bg-red-500 text-white p-2 rounded hover:bg-red-700"
           onClick={() => {
             handleRemove(index);
           }}
@@ -229,13 +223,12 @@ const Step = ({
           Remove
         </button>
       ) : null}
-    </div>
+    </div>  
   );
 };
 
 const InstructionInfo = ({ steps, setSteps }) => {
-  // const [steps, setSteps] = useState([]);
-  // const [nutritions, setNutritions] = useState([]); // [calories, fat, protein, carbs
+ 
   const [isAddingStep, setIsAddingStep] = useState(false);
 
   const handleAddStep = () => {
@@ -276,44 +269,44 @@ const InstructionInfo = ({ steps, setSteps }) => {
   };
 
   return (
-    <div className="flex flex-row justify-around">
-      <div className="instruction-info-title flex">
-        <h1 className="text-3xl font-bold">Instruction Information</h1>
-      </div>
-      <div className="instruction-info-form flex flex-col">
-        <div className="instruction-info-form-child instruction-info-form-steps flex flex-col bg-orange-300 p-2 m-2">
-          <h1 className="instruction-info-form-steps-title text-xl">Steps</h1>
-          <div className="flex flex-col">
-            {steps.map((step, index) => (
-              <Step
-                key={index}
-                index={index}
-                step={step}
-                isAddingStep={isAddingStep}
-                handleChangeStep={handleChangeStep}
-                handleRemove={handleRemove}
-              />
-            ))}
-            {!isAddingStep ? (
-              <div className="flex flex-col">
-                <button onClick={handleAddStep} className="text-2xl font-bold">
-                  Add step
-                </button>
-              </div>
-            ) : (
-              <div className="flex flex-col">
-                <button onClick={handleAdd} className="text-2xl font-bold">
-                  Add
-                </button>
-                <button onClick={handleCancel} className="text-2xl font-bold">
-                  Cancel
-                </button>
-              </div>
-            )}
-          </div>
+    <div className="instruction-info-wrapper flex flex-col items-center space-y-4 bg-blue-300 p-4 rounded-lg shadow-lg w-1/2 mx-auto">
+    <div className="instruction-info-title w-full text-center flex">
+      <h1 className="text-3xl font-bold">Instruction Information</h1>
+    </div>
+    <div className="instruction-info-form flex flex-col">
+      <div className="instruction-info-form-child instruction-info-form-steps flex flex-col bg-orange-300 p-2 m-2">
+        <h1 className="instruction-info-form-steps-title text-xl">Steps</h1>
+        <div className="flex flex-col">
+          {steps.map((step, index) => (
+            <Step
+              key={index}
+              index={index}
+              step={step}
+              isAddingStep={isAddingStep}
+              handleChangeStep={handleChangeStep}
+              handleRemove={handleRemove}
+            />
+          ))}
+          {!isAddingStep ? (
+            <div className="flex flex-col">
+              <button onClick={handleAddStep} className="text-2xl font-bold">
+                Add step
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <button onClick={handleAdd} className="text-2xl font-bold">
+                Add
+              </button>
+              <button onClick={handleCancel} className="text-2xl font-bold">
+                Cancel
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
@@ -366,8 +359,7 @@ const CreateRecipeForm = () => {
         setPrepTime={setPrepTime}
         cookTime={cookTime}
         setCookTime={setCookTime}
-        // ingredients={ingredients}
-        // setIngredients={setIngredients}
+       
         ingredientsList={ingredientsList}
         setIngredientsList={setIngredientsList}
       />
@@ -381,7 +373,7 @@ export default function CreateRecipe() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   if (!user) {
-    navigate("/login");
+    navigate("/home");
   }
   return (
     <div className="home-wrapper h-screen overflow-y-auto bg-slate-200">
