@@ -52,7 +52,7 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
                 onClick={navigateToAdmin}
                 className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
               >
-                Admin
+              Admin
               </button>
 
               <button
