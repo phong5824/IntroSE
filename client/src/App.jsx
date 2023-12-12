@@ -39,61 +39,6 @@ const HandleLoginStatus = ({ children }) => {
 };
 
 function App() {
-  // const [accountToken, setAccountToken] = useState(null);
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     if (localStorage.getItem("accessToken") === null) {
-  //       return;
-  //     }
-  //     const accessToken = localStorage.getItem("accessToken");
-  //     setAccountToken(accessToken);
-  //   };
-
-  //   fetchAccount();
-  // }, []);
-
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const location = useLocation();
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     if (localStorage.getItem("accessToken") === null) {
-  //       return;
-  //     }
-  //     const accessToken = localStorage.getItem("accessToken");
-  //     setIsLoggedIn(true);
-  //   };
-
-  //   fetchAccount();
-  // }, [location]);
-
-  //   return (
-  //     // <AccountContext.Provider value={accountToken}>
-  //     <IsLoggedInContext.Provider value={isLoggedIn}>
-  //       <div className="h-screen w-screen overflow-auto">
-  //         <BrowserRouter>
-  //           <Routes>
-  //             <Route path="/" element={<Home />} />
-  //             <Route path="/home" element={<Home />} />
-  //             <Route path="/home/:username" element={<Profile />} />
-  //             <Route path="/login" element={<Login />} />
-  //             <Route path="/register" element={<Register />} />
-  //             <Route path="/about-us" element={<About_us />} />
-  //             <Route path="/blog" element={<Blog />} />
-  //             <Route path="/resetPassword" element={<ResetPassword />} />
-  //             <Route path="/users/profile" element={<Profile />} />
-  //             <Route path="/others" element={<Others />} />
-  //             <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
-  //             <Route path="/details" element={<RecipeDetail />} />
-  //             <Route path="/search" element={<Search />} />
-  //           </Routes>
-  //         </BrowserRouter>
-  //       </div>
-  //     </IsLoggedInContext.Provider>
-
-  //     // {/* </AccountContext.Provider> */}
-  //   );
-  // }
-
   return (
     <div className="h-screen w-screen overflow-auto">
       <BrowserRouter>

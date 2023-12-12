@@ -14,7 +14,7 @@ const notify_success = (message) => {
     });
   };
 
-  const notify_fail = (message) => {
+const notify_fail = (message) => {
     toast.error(`🦄 ${message}`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -26,7 +26,7 @@ const notify_success = (message) => {
         theme: "light",
         });
     
-    };
+  };
 
   const Toast_Container = () => {
     return (

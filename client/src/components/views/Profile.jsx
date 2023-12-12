@@ -48,19 +48,19 @@ export default function Profile() {
                 href="/users/profile"
                 className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
               >
-                Thông tin cá nhân
+                Profile
               </a>
               <a
                 href="/recipes"
                 className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
               >
-                Công thức của bạn
+                My recipes
               </a>
               <a
                 href="/favorites"
                 className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
               >
-                Công thức ưa thích
+                My favorite recipes
               </a>
               <a
                 href="/blog"
@@ -72,7 +72,7 @@ export default function Profile() {
                 href="/notifications"
                 className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
               >
-                Thông báo hệ thống
+                Notifications
               </a>
             </nav>
           </div>
@@ -93,13 +93,13 @@ export default function Profile() {
                 <button className="mt-5 bg-white text-gray-800 rounded-full hover:font-semibold px-4 py-2 w-full sm:w-auto">
                   {" "}
                   {/* Cho nút mở rộng toàn bộ chiều rộng hoặc chỉ một phần trên màn hình lớn */}
-                  Xác nhận danh tính
+                  Verify
                 </button>
 
                 <div className="mt-5 text-teal-500">
                   {/* User contact details */}
                   <p className="bg-yellow-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">
-                    <b>Số điện thoại:</b> {userProfile.phone}
+                    <b>Telephone:</b> {userProfile.phone}
                   </p>
                   <p className="bg-yellow-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">
                     <b>Email:</b> {userProfile.account.email}
@@ -117,24 +117,26 @@ export default function Profile() {
               <div className="w-1/2 ml-5">
                 {/* Additional details */}
                 <dl className="bg-green-200 p-5 rounded shadow space-y-3">
-                  <dt className=" bg-orange-300 font-bold text-black">
-                    Họ và tên :
-                  </dt>
-                  <dd>
-                    <strong style={{ color: "blue" }}>
+                  <p className="flex items-center bg-yellow-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">
+                    <b className="mr-2">Full Name:</b>
+                    <strong className="text-blue-500 font-semibold">
                       {userProfile.name}
                     </strong>
-                  </dd>
-                  <dt className=" bg-orange-300 font-bold">Giới tính: </dt>
-                  <dd>
-                    <strong style={{ color: "blue" }}>
-                      {userProfile.gender === "male" ? "Nam" : "Nữ"}
+                  </p>
+
+                  <p className="flex items-center bg-yellow-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">
+                    <b className="mr-2">Gender :</b>
+                    <strong className="text-blue-500 font-semibold">
+                      {userProfile.gender == "male" ? "Male" : "Female"}
                     </strong>
-                  </dd>
-                  <dt className=" bg-orange-300 font-bold">Tuổi: </dt>
-                  <dd>
-                    <strong style={{ color: "blue" }}>{userProfile.age}</strong>
-                  </dd>
+                  </p>
+
+                  <p className="flex items-center bg-yellow-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500">
+                    <b className="mr-2">Age :</b>
+                    <strong className="text-blue-500 font-semibold">
+                      {userProfile.age}
+                    </strong>
+                  </p>
                 </dl>
               </div>
             </div>

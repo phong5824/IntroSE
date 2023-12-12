@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import NavBar from "../modules/Navbar";
 import Footer from "../modules/Footer";
 import { UserContext } from "../../context/userContext";
 import { handleCreateRecipe } from "../../action/recipesAction";
-import cookingICon from "../../assets/cooking.png"
-import cookingBookICon from "../../assets/cook-book.png"
-import deleteICon from "../../assets/trash_can.svg"
-
+import cookingICon from "../../assets/cooking.png";
+import cookingBookICon from "../../assets/cook-book.png";
+import deleteICon from "../../assets/trash_can.svg";
+import { checkAuth } from "../../action/accountAction";
+import { notify_fail, notify_success, Toast_Container } from "../../toast";
+import { message } from "antd";
 
 const Ingredient = ({
   index,
@@ -37,8 +39,6 @@ const Ingredient = ({
         />
       ) : null}
     </div>
-
-
   );
 };
 
@@ -127,10 +127,6 @@ const IngredientsList = ({
         )}
       </div>
     </div>
-
-
-
-
   );
 };
 
@@ -149,7 +145,11 @@ const GeneralInfo = ({
   return (
     <div className="grid grid-cols-8 gap-4 bg-green-300 rounded-2xl p-14 ml-16 mr-16 mt-4">
       <div className="col-span-2 mr-16 flex flex-col items-center justify-center text-2xl font-bold">
-        <img src={cookingBookICon} alt="Cooking Book Icon" className="w-8 h-8 mb-2" />
+        <img
+          src={cookingBookICon}
+          alt="Cooking Book Icon"
+          className="w-8 h-8 mb-2"
+        />
         General Information
       </div>
 
@@ -179,9 +179,7 @@ const GeneralInfo = ({
         </div>
 
         <div className="flex items-center">
-          <h1 className="font-bold w-1/6 mr-4">
-            Cook-time
-          </h1>
+          <h1 className="font-bold w-1/6 mr-4">Cook-time</h1>
           <input
             className="general-info-form-prep-cook-title w-5/6 border border-gray-300 rounded-2xl p-2"
             type="text"
@@ -200,7 +198,7 @@ const GeneralInfo = ({
           className="flex-grow"
         />
       </div>
-    </div >
+    </div>
   );
 };
 
@@ -213,7 +211,6 @@ const Step = ({
 }) => {
   return (
     <div className="flex flex-row items-center space-x-4 p-3 rounded-lg w-full">
-
       <h1 className="w-1/12 font-bold text-xl">Step {index + 1}</h1>
 
       <input
@@ -236,12 +233,10 @@ const Step = ({
         />
       ) : null}
     </div>
-
   );
 };
 
 const InstructionInfo = ({ steps, setSteps }) => {
-
   const [isAddingStep, setIsAddingStep] = useState(false);
 
   const handleAddStep = () => {
@@ -282,18 +277,17 @@ const InstructionInfo = ({ steps, setSteps }) => {
   };
 
   return (
-
-
     <div className="grid grid-cols-8 gap-4 bg-blue-300 rounded-2xl p-14 ml-16 mr-16 mt-4">
       <div className="col-span-2 mr-16 flex flex-col items-center justify-center text-center text-2xl font-bold">
         <img src={cookingICon} alt="Cooking Icon" className="w-8 h-8 mb-2" />
         Instruction Information
       </div>
 
-
       <div className="instruction-info-form col-span-6 space-y-3">
         <div className="flex flex-col items-center">
-          <h1 className="instruction-info-form-steps-title font-bold text-3xl mb-3">Steps</h1>
+          <h1 className="instruction-info-form-steps-title font-bold text-3xl mb-3">
+            Steps
+          </h1>
 
           <div className="flex flex-col w-full">
             {steps.map((step, index) => (
@@ -308,16 +302,25 @@ const InstructionInfo = ({ steps, setSteps }) => {
             ))}
             {!isAddingStep ? (
               <div className="flex justify-center items-center space-x-4 mt-3">
-                <button onClick={handleAddStep} className="font-bold bg-green-500 text-white py-2 px-4 rounded-full">
+                <button
+                  onClick={handleAddStep}
+                  className="font-bold bg-green-500 text-white py-2 px-4 rounded-full"
+                >
                   Add step
                 </button>
               </div>
             ) : (
               <div className="flex justify-center items-center space-x-4 mt-3">
-                <button onClick={handleAdd} className="font-bold bg-green-500 text-white py-2 px-4 rounded-full">
+                <button
+                  onClick={handleAdd}
+                  className="font-bold bg-green-500 text-white py-2 px-4 rounded-full"
+                >
                   Add
                 </button>
-                <button onClick={handleCancel} className="font-bold bg-red-500 text-white py-2 px-4 rounded-full">
+                <button
+                  onClick={handleCancel}
+                  className="font-bold bg-red-500 text-white py-2 px-4 rounded-full"
+                >
                   Cancel
                 </button>
               </div>
@@ -332,7 +335,10 @@ const InstructionInfo = ({ steps, setSteps }) => {
 const SubmitForm = ({ onSubmit }) => {
   return (
     <div className="flex flex-row justify-around">
-      <button onClick={onSubmit} className="text-2xl bg-red-300 px-4 py-2 mt-4 rounded-full font-bold">
+      <button
+        onClick={() => onSubmit}
+        className="text-2xl bg-red-300 px-4 py-2 mt-4 rounded-full font-bold"
+      >
         Submit
       </button>
     </div>
@@ -359,11 +365,11 @@ const CreateRecipeForm = () => {
     };
     console.log(recipe);
     if (recipeName === "" || prepTime === "" || cookTime === "") {
-      console.log("Please fill in all fields");
+      notify_fail("Please fill in all fields");
       return;
     }
     if (await handleCreateRecipe(recipe)) {
-      console.log("Create recipe successfully");
+      notify_success("Create recipe successfully");
     }
 
     console.log("Submit");
@@ -379,12 +385,12 @@ const CreateRecipeForm = () => {
         setPrepTime={setPrepTime}
         cookTime={cookTime}
         setCookTime={setCookTime}
-
         ingredientsList={ingredientsList}
         setIngredientsList={setIngredientsList}
       />
       <InstructionInfo steps={steps} setSteps={setSteps} />
       <SubmitForm onSubmit={onSubmit} />
+      <Toast_Container />
     </div>
   );
 };
@@ -392,9 +398,15 @@ const CreateRecipeForm = () => {
 export default function CreateRecipe() {
   const user = useContext(UserContext);
   const navigate = useNavigate();
-  if (!user) {
-    // navigate("/home");
-  }
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!checkAuth()) {
+      navigate("/login", { state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
+      message.error("Please login to create recipe!");
+    }
+  }, [user]);
+
   return (
     <div className="home-wrapper h-screen overflow-y-auto bg-white">
       <NavBar />
