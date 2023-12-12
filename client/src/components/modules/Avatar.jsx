@@ -10,7 +10,6 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
   // this useEffect is
   useEffect(() => {
     if (!user) {
-
       return;
     }
   }, [user]);
@@ -30,11 +29,11 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
 
   const navigateToAdmin = () => {
     navigate("/users/admin");
-  }
+  };
 
   const navigateToProfile = () => {
     navigate("/users/profile");
-  }
+  };
 
   return (
     <div className="auth-actions relative rounded-full">
@@ -50,12 +49,35 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
           {user ? (
             <>
               {user.is_admin ? (
-                <button
-                  onClick={navigateToAdmin}
-                  className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
-                >
-                  Admin
-                </button>
+                <>
+                  <button
+                    onClick={navigateToAdmin}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    User Management
+                  </button>
+
+                  <button
+                    onClick={navigateToAdmin}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    Recipes Management
+                  </button>
+
+                  <button
+                    onClick={navigateToAdmin}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    Blogs Management
+                  </button>
+
+                  <button
+                    onClick={navigateToProfile}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    Profile
+                  </button>
+                </>
               ) : (
                 <button
                   onClick={navigateToProfile}
@@ -64,6 +86,7 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
                   Profile
                 </button>
               )}
+
               <button
                 onClick={navigateToLogout}
                 className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
@@ -82,9 +105,8 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
         </div>
       )}
     </div>
-  )
+  );
 };
-
 
 Avatar.propTypes = {
   showLoginForm: PropTypes.bool.isRequired,

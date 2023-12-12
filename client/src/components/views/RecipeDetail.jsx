@@ -3,7 +3,6 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 
 import NavBar from "../modules/Navbar.jsx";
 import Footer from "../modules/Footer";
@@ -12,30 +11,19 @@ import Loading from "../modules/Loading";
 import Comment from "../modules/Comment.jsx";
 import RelatedRecipes from "../modules/RelatedRecipes.jsx";
 
-import { Bookmark, Clock, SendIcon, Share, chatIcon } from "../../assets"
-import "react-toastify/dist/ReactToastify.css";
+import { Bookmark, Clock, SendIcon, Share, chatIcon } from "../../assets";
 import "./Profile.css";
 import axios from "axios";
 import { message } from "antd";
 import { handleGetRelatedRecipes } from "../../action/recipesAction";
 
-export const RecipeDetail = () => {
+import { notify_fail, notify_success, Toast_Container } from "../../toast";
+import { checkAuth } from "../../action/accountAction";
 
+export const RecipeDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const notify = () => {
-    toast.success("🦄 Save recipes successfull!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
   const recipeId = new URLSearchParams(useLocation().search).get("ID");
   const [recipe, setRecipe] = React.useState(null);
   const [relatedRecipes, setRelatedRecipes] = React.useState([]);
@@ -76,14 +64,13 @@ export const RecipeDetail = () => {
 
   const handleUpdateFavoriteRecipes = async () => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = checkAuth();
 
       if (!accessToken) {
-        message.error("Bạn cần đăng nhập để lưu công thức này.");
+        message.error("Please login to save recipes!");
         navigate("/login", { state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
         return;
       }
-
 
       const result = await axios.post(
         `http://127.0.0.1:8000/users/favourites`,
@@ -96,6 +83,7 @@ export const RecipeDetail = () => {
       );
 
       if (result.data.success) {
+        notify_success("Save recipes successfull!");
         return result.data;
       } else {
         message.error(result.data.error);
@@ -168,7 +156,9 @@ export const RecipeDetail = () => {
 
             <div className="w-full pr-5 bg-white rounded-md ml-20 py-2 mt-4 shadow-lg">
               <div className="flex items-center mb-2">
-                <h2 className="ml-4 text-2xl font-bold">Cooking instructions</h2>
+                <h2 className="ml-4 text-2xl font-bold">
+                  Cooking instructions
+                </h2>
                 <img src={Clock} alt="time" className="h-5 w-5 ml-6 mt-1" />
                 <span className="text-gray-700 ml-1 mt-1">
                   {recipe.cook_time}
@@ -221,24 +211,13 @@ export const RecipeDetail = () => {
                 className="text-gray-900 p-1 rounded-md border border-black flex items-center justify-center space-x-2"
                 onClick={() => {
                   handleUpdateFavoriteRecipes();
-                  notify();
                 }}
               >
                 <img src={Bookmark} alt="Bookmark Icon" className="h-4 w-4" />
                 <span>Save recipe</span>
               </button>
-              <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
+
+              <Toast_Container />
 
               <button className="text-gray-900 p-1 rounded-md border border-black bg-white flex items-center justify-center space-x-2">
                 <img src={Share} alt="Share Icon" className="h-4 w-4" />
@@ -251,9 +230,7 @@ export const RecipeDetail = () => {
 
       {relatedRecipes && relatedRecipes.length > 0 && (
         <div className="container px-4">
-          <h2 className="text-2xl font-bold mb-6 ml-4">
-            Related Recipes
-          </h2>
+          <h2 className="text-2xl font-bold mb-6 ml-4">Related Recipes</h2>
           <RelatedRecipes relatedRecipes={relatedRecipes} />
         </div>
       )}

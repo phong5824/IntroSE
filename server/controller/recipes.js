@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
-const RecipeModel = require("../model/recipeModel");
+const Recipe = require("../model/recipeModel");
 const User = require("../model/userModel");
 const Ingredient = require("../model/ingredientModel");
 const Comment = require("../model/commentModel");

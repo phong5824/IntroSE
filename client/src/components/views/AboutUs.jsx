@@ -8,12 +8,8 @@ const AboutUs = () => {
       <NavBar />
       <div className="text-center italic text-lg mt-8 mx-24 mb-10">
         <p>
-          Chúng mình là nhóm 9. Trang web này được tạo ra mục đích đầu tiên là
-          để hoàn thành bài tập trên trường. Lý do thứ 2 chúng mình lựa chọn tạo
-          nên một trang web chia sẻ công thức nấu ăn vì chúng mình có sở thích
-          nấu ăn và muốn chia sẻ nó đến với nhiều người. Hy vọng mọi người sẽ
-          tìm thấy được công thức nấu ăn yêu thích của bản thân ở trang web này.
-          Cảm ơn mọi người đã ghé thăm.
+        We are group 9. This website was created for the first purpose of completing schoolwork. The second reason we chose to create a recipe sharing website is 
+        because we have a passion for cooking and want to share it with many people. Hope everyone will find their favorite recipes on this website. Thank you everyone for visiting.
         </p>
       </div>
       <div
@@ -24,7 +20,7 @@ const AboutUs = () => {
       ></div>
 
       <h1 className="text-center text-2xl font-bold italic text-black mt-4">
-        Các thành viên của nhóm
+      Group members
       </h1>
 
       <div className="container mt-5">

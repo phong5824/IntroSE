@@ -6,6 +6,7 @@ import {
 } from "../components/Firebase/firebase.initialize";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 //Login
 export const handleLogin = async (userData) => {
@@ -132,3 +133,8 @@ export const handleLogout = () => {
     localStorage.removeItem("google-user");
   }
 };
+
+export function checkAuth() {
+  const accessToken = localStorage.getItem("accessToken");
+  return accessToken;
+}

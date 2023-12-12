@@ -20,7 +20,7 @@ const Home = () => {
           to="/create-recipe"
           className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
-          Đăng công thức
+          Post Recipe
         </Link>
         <button
           onClick={() => {
@@ -28,13 +28,13 @@ const Home = () => {
           }}
           className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
-          Tổ chức bữa ăn
+         Organize meals
         </button>
         <button
           onClick={() => {}}
           className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
-          Tip và tricks
+          Tip and tricks
         </button>
         <button
           onClick={() => {
