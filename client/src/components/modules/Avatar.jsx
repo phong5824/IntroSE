@@ -48,19 +48,44 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
         <div className="auth-menu absolute transform -translate-x-1/2 mt-2 w-36 bg-white text-black border-gray-300 rounded shadow-lg z-10 transition duration-300">
           {user ? (
             <>
-              <button
-                onClick={navigateToAdmin}
-                className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
-              >
-              Admin
-              </button>
+              {user.is_admin ? (
+                <>
+                  <button
+                    onClick={navigateToAdmin}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    User Management
+                  </button>
 
-              <button
-                onClick={navigateToProfile}
-                className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
-              >
-                Profile
-              </button>
+                  <button
+                    onClick={navigateToAdmin}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    Recipes Management
+                  </button>
+
+                  <button
+                    onClick={navigateToAdmin}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    Blogs Management
+                  </button>
+
+                  <button
+                    onClick={navigateToProfile}
+                    className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                  >
+                    Profile
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={navigateToProfile}
+                  className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
+                >
+                  Profile
+                </button>
+              )}
 
               <button
                 onClick={navigateToLogout}

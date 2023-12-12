@@ -54,7 +54,7 @@ export default function Login() {
             onSubmit={onSubmit}
           >
             <div className="bg-green-300 text-black text-lg font-semibold text-left p-2 px-4 my-1 mx-auto w-[max-content]">
-              Email
+              Your Email
             </div>
             <input
               type="text"
@@ -63,11 +63,11 @@ export default function Login() {
                 setEmail(e.target.value);
               }}
               className="border py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-300 w-full bg-white text-center"
-              placeholder="Nhập ở đây..."
+              placeholder="your email"
             />
 
             <div className="bg-green-250 text-black text-lg font-semibold text-left p-2 px-2 my-1 mx-auto w-[max-content]">
-              Mật khẩu
+             Password
             </div>
             <input
               type="password"
@@ -76,7 +76,7 @@ export default function Login() {
                 setPassword(e.target.value);
               }}
               className="border py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-300 w-full bg-white text-center"
-              placeholder="Nhập ở đây..."
+              placeholder="password"
             />
 
             <div className="flex justify-between items-center">
@@ -91,7 +91,7 @@ export default function Login() {
                   htmlFor="rememberMe"
                   className="text-gray-700 text-sm ml-1"
                 >
-                  Ghi nhớ đăng nhập
+                  Remember me
                 </label>
               </div>
 
@@ -99,16 +99,16 @@ export default function Login() {
                 to="/resetPassword"
                 className="text-gray-700 font-semibold text-sm"
               >
-                Quên mật khẩu
+                Forgot your password?
               </Link>
             </div>
 
             <button className="btn w-[50%] py-1.5 rounded-full mt-2.5 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
-              Đăng nhập
+             Login
             </button>
 
             <div className="bg-green-300 text-black text-base font-semibold text-left mt-2 mx-auto w-[max-content]">
-              --hoặc--
+              -- or --
             </div>
 
             <div className="flex justify-center space-x-4">
@@ -133,7 +133,7 @@ export default function Login() {
               to="/register"
               className="text-gray-700 hover:font-bold mt-3 mx-auto"
             >
-              Đăng ký tài khoản
+              Don't have an account? Register
             </Link>
           </form>
         </div>
