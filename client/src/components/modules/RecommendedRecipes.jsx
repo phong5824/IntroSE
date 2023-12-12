@@ -28,7 +28,7 @@ const RecommendRecipe = () => {
 
     return (
         <div className="container border-t mx-auto px-4 py-7">
-            <h2 className="text-2xl font-bold mb-6">Một số món ăn gợi ý</h2>
+            <h2 className="text-2xl font-bold mb-6">Recommended recipes</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
                 {listRecipes.slice(0, recipesToShow).map((recipe, index) => (
                     <Link to={`/recipes/?ID=${recipe.recipe_id}`} key={recipe.recipe_id}>
@@ -81,14 +81,14 @@ const RecommendRecipe = () => {
                         onClick={handleShowLess}
                         className="bg-red-400 text-white px-6 py-2 rounded-full"
                     >
-                        Rút gọn
+                       Collapse
                     </button>
                 ) : (
                     <button
                         onClick={handleLoadMore}
                         className="bg-red-400 text-white px-6 py-2 rounded-full"
                     >
-                        Xem thêm món ăn gợi ý
+                       See more recipes
                     </button>
                 )}
             </div>

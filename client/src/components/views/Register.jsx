@@ -49,7 +49,7 @@ export default function Register() {
             onSubmit={onSubmit}
           >
             <div className="bg-green-300 text-black text-lg font-semibold text-left p-2 px-4 my-1 mx-auto w-[max-content]">
-              Tên người dùng
+              User name
             </div>
             <input
               type="text"
@@ -61,7 +61,7 @@ export default function Register() {
               placeholder="Nhập ở đây..."
             />
             <div className="bg-green-300 text-black text-lg font-semibold text-left p-2 px-4 my-1 mx-auto w-[max-content]">
-              Địa chỉ email
+              Your email
             </div>
             <input
               type="text"
@@ -73,7 +73,7 @@ export default function Register() {
               placeholder="Nhập ở đây..."
             />
             <div className="bg-green-300 text-black text-lg font-semibold text-left p-2 px-4 my-1 mx-auto w-[max-content]">
-              Mật khẩu
+              Password
             </div>
             <input
               type="password"
@@ -85,7 +85,7 @@ export default function Register() {
               placeholder="Mật khẩu chứa ít nhất 6 kí tự và có chữ số"
             />
             <button className="btn w-[50%] py-2 rounded-full mt-4 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
-              Đăng ký
+             Regsister
             </button>
           </form>
         </div>

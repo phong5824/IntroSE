@@ -56,7 +56,7 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
   return (
     <div className="recipe-ranking-container container border-t mx-auto px-4 py-7">
       <div className="flex justify-between items-center mb-4 space-x-4">
-        <h2 className="text-2xl font-bold mb-2">Công thức hàng đầu</h2>
+        <h2 className="text-2xl font-bold mb-2">Top Recipes</h2>
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center space-x-3">
             <img src={filterIcon} alt='filter' className="h-8 w-8 mr-2" />
@@ -72,7 +72,7 @@ const RecipeRanking = ({ recipes: initialRecipes = recipes_db }) => {
                 }`}
               onClick={handleSortByCookTime}
             >
-              Thời gian
+              Time
             </button>
           </div>
         </div>
