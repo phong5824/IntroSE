@@ -53,7 +53,7 @@ const Profile = () => {
                 <div className="flex items-center justify-center space-x-3">
                   <img className="h-5 w-5" src={RecipeIcon} alt="" />
                   <a
-                    href="/recipes"
+                    href="/users/recipeManager"
                     className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
                   >
                     Your recipes

@@ -56,14 +56,11 @@ function App() {
               <Route path="blog" element={<Blog />} />
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="users/profile" element={<Profile />} />
+              <Route path="users/admin" element={<Admin />} />
+              <Route path="users/recipeManager" element={<RecipeManager/>} />
               <Route path="others" element={<Others />} />
               <Route path="recipes/:recipeId" element={<RecipeDetail />} />
-              <Route path="recipes/" element={<RecipeDetail />} />
-              <Route path="details" element={<RecipeDetail />} />
               <Route path="search" element={<Search />} />
-              <Route path="users/admin" element={<Admin />} />
-              <Route path="users/admin" element={<Admin />} />
-              <Route path="users/recipeManager" element={<RecipeManager />} />
 
             </Route>
           </Routes>
