@@ -34,62 +34,50 @@ const Profile = () => {
   return (
     <div className="flex flex-col min-h-screen bg-red-100 ">
       <NavBar />
-      <div className=" bg-red-100 py-6 flex flex-col sm:flex-row justify-center space-x-6 mt-3 ml-4 mr-4">
-        {/* Column 1 */}
-        <div className="flex-grow h-full w-1/5 py-10 bg-green-300 shadow-lg sm:rounded-3xl">
-          <div className="text-base space-y-4 text-gray-700 sm:text-lg ">
-            <nav className="flex text-center">
-              <div className="max-w-md mx-auto font-bold">
-                <div className="flex items-center justify-center space-x-3 ">
-                  <img className="h-5 w-5" src={ProfileIcon} alt="" />
-                  <a
-                    href="/users/profile"
-                    className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
-                  >
-                    Profile
-                  </a>
-                </div>
-
-                <div className="flex items-center justify-center space-x-3">
-                  <img className="h-5 w-5" src={RecipeIcon} alt="" />
-                  <a
-                    href="/users/recipeManager"
-                    className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
-                  >
-                    Your recipes
-                  </a>
-                </div>
-
-                <div className="flex items-center justify-center space-x-3">
-                  <img className="h-5 w-5" src={FavoriteIcon} alt="" />
-                  <a
-                    href="/favorites"
-                    className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
-                  >
-                    Favorite recipes
-                  </a>
-                </div>
-
-                <div className="flex items-center justify-center space-x-3">
-                  <img className="h-5 w-5" src={BlogIcon} alt="" />
-                  <a
-                    href="/blog"
-                    className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
-                  >
-                    Blogs
-                  </a>
-                </div>
-
-                <div className="flex items-center justify-center space-x-3">
-                  <img className="h-5 w-5" src={NotiIcon} alt="" />
-                  <a
-                    href="/notifications"
-                    className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
-                  >
-                    Notifications
-                  </a>
-                </div>
-              </div>
+      <div className="flex-grow">
+        <div className="flex h-full">
+          <div className="w-1/5 bg-green-400 ml-4 mt-2 text-black p-5 rounded-2xl">
+            {/* Sidebar header */}
+            <div className="flex items-center mb-6">
+              <img
+                src={avatar}
+                alt="Avatar"
+                className="rounded-full h-14 w-14 mr-4"
+              />
+              <h2 className="text-lg font-semibold">{userProfile.name}</h2>
+            </div>
+            {/* Sidebar navigation items */}
+            <nav className="flex flex-col text-center">
+              <a
+                href="/users/profile"
+                className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
+              >
+                Thông tin cá nhân
+              </a>
+              <a
+                href="/recipes"
+                className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
+              >
+                Công thức của bạn
+              </a>
+              <a
+                href="/favorites"
+                className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
+              >
+                Công thức ưa thích
+              </a>
+              <a
+                href="/blog"
+                className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
+              >
+                Blogs
+              </a>
+              <a
+                href="/notifications"
+                className="bg-orange-400 text-black p-2.5 my-2 rounded-full transition duration-300 ease-in-out hover:bg-orange-500"
+              >
+                Thông báo hệ thống
+              </a>
             </nav>
           </div>
         </div>
@@ -176,27 +164,6 @@ const Profile = () => {
                     <dd>{userProfile.age}</dd>
                   </div>
                 </dl>
-              </div>
-              <div className="flex flex-col items-center justify-center pt-6 text-base leading-6 sm:text-lg sm:leading-7">
-                <div className="flex space-x-3 items-center justify-center mt-3">
-                  <img className="h-6 w-6" src={EditIcon} alt="" />
-                  <button className=" bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-1/2 sm:w-full">
-                    Edit personal information
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-center space-x-3 mt-3">
-                  <img className="h-6 w-6" src={KeyIcon} alt="" />
-                  <button className=" bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-full sm:w-full">
-
-                    <Link
-                      to="/reset-password"
-                      className="text-gray-700 font-semibold text-sm"
-                    >
-                      Change password
-                    </Link>
-                  </button>
-                </div>
               </div>
             </div>
           </div>
