@@ -39,12 +39,15 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-green-400">
-      <div className="login-container flex relative flex-col p-4 items-center justify-around w-[500px] h-auto bg-green-300 rounded-3xl">
-        <img
-          className="w-24 h-24 rounded-full object-cover"
-          src={Logo}
-          alt="Logo"
-        />
+      <div className="login-container flex relative flex-col items-center justify-around w-[500px] h-[550px] bg-green-300 rounded-3xl">
+        <div
+          className="login-logo w-24 h-24 rounded-full mb-[-4rem]"
+          style={{
+            backgroundImage: `url(${Logo})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
+        ></div>
         <div className="login-form w-[350px] py-1">
           <form
             className="flex flex-col justify-around w-full"
