@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/userModel");
 const Account = require("../model/accountModel");
 const Recipe = require("../model/recipeModel");
+const Comment = require("../model/commentModel");
+
 const verifyToken = require("../middleware/account");
 const mongoose = require("mongoose");
 
@@ -258,6 +260,7 @@ const deleteRecipeControl = async (req, res) => {
         { new: true } // This option returns the updated document
       );
       await Recipe.findOneAndDelete({ recipe_id: recipeID });
+      await Comment.deleteMany({ recipe_id: recipeID });
     }
 
     // Find the recipe and remove the recipe from the recipe collection
@@ -269,6 +272,7 @@ const deleteRecipeControl = async (req, res) => {
         { new: true } // This option returns the updated document
       );
       await Recipe.findOneAndDelete({ recipe_id: recipeID });
+      await Comment.deleteMany({ recipe_id: recipeID });
     }
 
     if (!roleUser) {
