@@ -96,7 +96,7 @@ export default function Login() {
               </div>
 
               <Link
-                to="/resetPassword"
+                to="/reset-password"
                 className="text-gray-700 font-semibold text-sm"
               >
                 Forgot your password?
