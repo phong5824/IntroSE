@@ -36,7 +36,7 @@ export default function ResetPassword() {
     const user = {
       email: email,
       password: password,
-    }
+    };
 
     if (handleResetPassword(user)) {
       navigate("/login");
@@ -46,7 +46,6 @@ export default function ResetPassword() {
   return (
     <div className="flex items-center justify-center h-full bg-green-400">
       <div className="login-container flex relative flex-col items-center justify-around w-[500px] h-auto bg-green-300 rounded-3xl p-4">
-
         <img
           className="w-24 h-24 rounded-full object-cover"
           src={Logo}
@@ -95,10 +94,11 @@ export default function ResetPassword() {
               className="border px-3 py-2 rounded-5 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-[100%] bg-white text-center"
               placeholder="type here..."
             />
-            <button className="btn w-[50%] py-2 rounded-full mt-4 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300"
-              onSubmit={onSubmit}>
+            <button
+              className="btn w-[50%] py-2 rounded-full mt-4 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300"
+              onSubmit={onSubmit}
+            >
               Change Password
-
             </button>
           </form>
         </div>
