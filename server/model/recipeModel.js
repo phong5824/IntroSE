@@ -26,6 +26,7 @@ const recipeSchema = new Schema({
   user_contribution: String,
   tags: [String], // Một mảng các chuỗi
   nutritions: [String], // Một mảng các chuỗi
+  author : Number,
   ingredients_list: [String],
   ingredients: [Number],
   created_time: Date,

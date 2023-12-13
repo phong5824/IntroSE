@@ -45,4 +45,9 @@ router.post("/admin/changepassword", verifyToken, userController.changePassword)
 // @access private
 router.post("/admin/deleteUser", verifyToken, userController.deleteUser);
 
+router.get("/recipeManager",verifyToken,userController.getRecipeManagerControl);
+
+
+router.post("/deleteRecipe",verifyToken,userController.deleteRecipeControl);
+
 module.exports = router;

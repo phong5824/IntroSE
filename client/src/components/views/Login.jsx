@@ -39,15 +39,12 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-green-400">
-      <div className="login-container flex relative flex-col items-center justify-around w-[500px] h-[550px] bg-green-300 rounded-3xl">
-        <div
-          className="login-logo w-24 h-24 rounded-full mb-[-4rem]"
-          style={{
-            backgroundImage: `url(${Logo})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
-        ></div>
+      <div className="login-container flex relative flex-col p-4 items-center justify-around w-[500px] h-auto bg-green-300 rounded-3xl">
+        <img
+          className="w-24 h-24 rounded-full object-cover"
+          src={Logo}
+          alt="Logo"
+        />
         <div className="login-form w-[350px] py-1">
           <form
             className="flex flex-col justify-around w-full"
@@ -67,7 +64,7 @@ export default function Login() {
             />
 
             <div className="bg-green-250 text-black text-lg font-semibold text-left p-2 px-2 my-1 mx-auto w-[max-content]">
-             Password
+              Password
             </div>
             <input
               type="password"
@@ -96,7 +93,7 @@ export default function Login() {
               </div>
 
               <Link
-                to="/resetPassword"
+                to="/reset-password"
                 className="text-gray-700 font-semibold text-sm"
               >
                 Forgot your password?
@@ -104,7 +101,7 @@ export default function Login() {
             </div>
 
             <button className="btn w-[50%] py-1.5 rounded-full mt-2.5 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
-             Login
+              Login
             </button>
 
             <div className="bg-green-300 text-black text-base font-semibold text-left mt-2 mx-auto w-[max-content]">
