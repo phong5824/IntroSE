@@ -25,11 +25,9 @@ const loginControl = async (req, res) => {
     .findOne({ email: email })
     .then((result) => {
       if (!result) {
-        console.log("Username does not exist!");
         res.json({ success: false, error: "Username does not exist!" });
       } else {
         if (result.password === password && result.password) {
-          console.log("Success");
           const accessToken = jwt.sign(
             { userid: result._id },
             process.env.ACCESS_TOKEN_SECRET
@@ -38,7 +36,6 @@ const loginControl = async (req, res) => {
             .status(200)
             .json({ success: true, message: "Login Success", accessToken });
         } else {
-          console.log("Fail");
           res
             .status(404)
             .json({ success: false, error: "Incorrect password!" });
@@ -63,7 +60,6 @@ const registerControl = async (req, res) => {
           .status(409)
           .json({ success: false, error: "Username already exists!" });
       } else {
-        console.log("Success");
         const maxUserId = await accountModel.estimatedDocumentCount();
         const account = new accountModel({
           user_id: maxUserId + 1,
@@ -112,7 +108,6 @@ const sendVerificationCodeControl = async (req, res) => {
       text: `Mã xác thực cho tài khoản LoveCook của bạn là: ${verificationCode}`,
     };
     // Gửi email
-    console.log(transporter, mailOptions);
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         res
@@ -133,7 +128,6 @@ const changePasswordControl = async (req, res) => {
   const email = req.body.email;
   const verificationCode = req.body.verificationCode;
   const newPassword = req.body.newPassword;
-  console.log(verificationCodes[email], verificationCode);
   // Kiểm tra mã xác thực
   if (
     verificationCodes[email] &&
@@ -165,7 +159,6 @@ const resetPasswordControl = async (req, res) => {
       result = await accountModel.findOneAndUpdate({ email: email }, result, {
         new: true,
       });
-      console.log(result);
       if (!result) {
         return res.status(401).json({
           success: false,
@@ -192,9 +185,7 @@ const resetPasswordControl = async (req, res) => {
 };
 
 const loginWithGoogleControl = async (req, res) => {
-  console.log("loginWithGoogleControl");
   const { email } = req.body;
-  console.log("email:", email);
   res.json({ success: true, message: "Login Success" });
 };
 

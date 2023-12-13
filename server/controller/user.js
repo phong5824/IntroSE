@@ -50,6 +50,7 @@ const getAccountControl = async (req, res) => {
   }
 };
 
+
 // @route POST API/POST
 // @desc Create user
 // @access private
@@ -63,7 +64,7 @@ const createUserControl = async (req, res) => {
   }
 
   try {
-    console.log(req.userid);
+    
     const newUser = new User({
       user_id: user_id,
       name: name,
@@ -79,6 +80,26 @@ const createUserControl = async (req, res) => {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
+};
+
+const getUserByUserIdControl = async (req,res) => {
+
+  const userID = req.params.user_id;
+  
+  try {
+    const user = await User.findOne({user_id : userID});
+    
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    res.status(200).json({ success: true, message: "User found", user: user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+
 };
 
 const getProfileControl = async (req, res) => {
@@ -119,7 +140,6 @@ const addFavouriteControl = async (req, res) => {
     let { recipeId } = req.body; // ID của công thức từ request body
 
     recipeId = parseInt(recipeId);
-    console.log(recipeId);
 
     // Tìm người dùng và thêm ID công thức vào mục yêu thích
     const user = await User.findOneAndUpdate(
@@ -208,7 +228,6 @@ const getRecipeManagerControl = async (req, res) => {
   }
 
   const recipesIds_list = user.user_recipes;
-  console.log(recipesIds_list);
 
   if (user.is_admin === false) {
     const recipes = await Recipe.find({ recipe_id: { $in: recipesIds_list } });
@@ -222,8 +241,7 @@ const getRecipeManagerControl = async (req, res) => {
 const deleteRecipeControl = async (req, res) => {
   try {
     const recipeID = req.body.recipe_id;
-    console.log("recipeID ", recipeID);
-
+   
     const roleUser = await User.findOne({ account: req.userid });
     // Find the user and remove the recipeID from the user_recipes array
     if (!roleUser) {
@@ -232,7 +250,6 @@ const deleteRecipeControl = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    console.log("roleUser.is_admin ", roleUser.is_admin);
 
     if (roleUser.is_admin === false) {
       await User.findOneAndUpdate(
@@ -272,6 +289,7 @@ module.exports = {
   getAllUsersControl,
   getAccountControl,
   createUserControl,
+  getUserByUserIdControl,
   getProfileControl,
   getFavouriteControl,
   addFavouriteControl,

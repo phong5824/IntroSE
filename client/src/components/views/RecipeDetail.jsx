@@ -43,7 +43,6 @@ export const RecipeDetail = () => {
       const result = await handleGetCommentsByRecipeId(recipeId);
       if (result.success) {
         setComments(result.comments);
-        console.log(result.comments);
       } else {
         console.error(result.message);
       }
@@ -66,7 +65,6 @@ export const RecipeDetail = () => {
         }
       );
       setUser(userInfo.data.user);
-      console.log(userInfo.data.user);
     } catch (err) {
       console.log(err);
     }
@@ -252,7 +250,7 @@ export const RecipeDetail = () => {
                 <Comment comments={comments} />
               </div>
 
-              <CommentInput recipeId={recipeId} userId={user?._id} onCommentSubmit={fetchComments} />
+              <CommentInput recipeId={recipeId} userId={user?.user_id} onCommentSubmit={fetchComments} />
             </div>
           </div>
         </div>
