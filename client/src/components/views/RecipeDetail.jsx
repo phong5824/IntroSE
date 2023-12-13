@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import React from "react";
-import StarRatings from "react-star-ratings";
 import { useLocation, useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 
-import NavBar from "../modules/Navbar.jsx";
-import Footer from "../modules/Footer";
 import { handleSearchRecipesID } from "../../action/recipesAction";
-import Loading from "../modules/Loading";
 import Comment from "../modules/Comment.jsx";
+import Footer from "../modules/Footer";
+import Loading from "../modules/Loading";
+import NavBar from "../modules/Navbar.jsx";
 import RelatedRecipes from "../modules/RelatedRecipes.jsx";
 
+import { message } from "antd";
+import axios from "axios";
+import { handleGetRelatedRecipes } from "../../action/recipesAction";
 import { Bookmark, Clock, SendIcon, Share, chatIcon } from "../../assets";
 import "./Profile.css";
-import axios from "axios";
-import { message } from "antd";
-import { handleGetRelatedRecipes } from "../../action/recipesAction";
 
-import { notify_fail, notify_success, Toast_Container } from "../../toast";
 import { checkAuth } from "../../action/accountAction";
+import { Toast_Container, notify_success } from "../../toast";
 
 export const RecipeDetail = () => {
   const navigate = useNavigate();

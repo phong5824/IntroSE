@@ -32,18 +32,17 @@ const schema = new Schema({
     default: 0,
   },
 
-  user_recipes: 
-  {
+  user_recipes: {
     type: [Number],
     default: [],
   },
 
-  favourites:  {
+  favourites: {
     type: [Number],
     default: [],
   },
 
-  followers:  {
+  followers: {
     type: [Number],
     default: [],
   },
@@ -52,6 +51,7 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "accounts",
   },
+  phone: { type: String },
 });
 
 module.exports = mongoose.model("users", schema);

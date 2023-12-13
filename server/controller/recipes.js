@@ -106,12 +106,6 @@ const postRecipeControl = async (req, res) => {
     const { recipe_name, nutrition, ingredients_list, tagname, rating } =
       recipe;
 
-    // if (!token) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "You are not authorized to access this route",
-    //   });
-    // }
 
     const user = await User.findOne({ account: req.userid }).populate(
       "account",
@@ -128,14 +122,7 @@ const postRecipeControl = async (req, res) => {
 
     const maxRecipeId = await RecipeModel.estimatedDocumentCount();
     const recipe_id = maxRecipeId + 1;
-    // const recipe = await Recipe.findOne({ recipe_id });
 
-    // console.log("Found recipe: ", recipe);
-    // if (recipe) {
-    //   return res
-    //     .status(400)
-    //     .json({ success: false, message: "Recipe already exists" });
-    // }
     const newRecipe = new RecipeModel({
       recipe_id: recipe_id,
       recipe_name: recipe_name,
@@ -143,6 +130,7 @@ const postRecipeControl = async (req, res) => {
       ingredients_list: ingredients_list,
       tagname: tagname,
       rating: rating,
+      author: user.user_id,
     });
 
     await newRecipe.save();
