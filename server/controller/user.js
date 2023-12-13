@@ -220,34 +220,32 @@ const getRecipeManagerControl = async (req, res) => {
 };
 
 const deleteRecipeControl = async (req, res) => {
-
   try {
     const recipeID = req.body.recipe_id;
-    console.log("recipeID ",recipeID);
+    console.log("recipeID ", recipeID);
 
     const roleUser = await User.findOne({ account: req.userid });
     // Find the user and remove the recipeID from the user_recipes array
     if (!roleUser) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
-  
-  console.log("roleUser.is_admin ",roleUser.is_admin);
 
-  if(roleUser.is_admin === false){
-    
-    await User.findOneAndUpdate(
-      { account: req.userid },
-      { $pull: { user_recipes: recipeID } },
-      { new: true } // This option returns the updated document
-    );
-    await Recipe.findOneAndDelete({ recipe_id: recipeID });
+    console.log("roleUser.is_admin ", roleUser.is_admin);
 
-  }
-    
+    if (roleUser.is_admin === false) {
+      await User.findOneAndUpdate(
+        { account: req.userid },
+        { $pull: { user_recipes: recipeID } },
+        { new: true } // This option returns the updated document
+      );
+      await Recipe.findOneAndDelete({ recipe_id: recipeID });
+    }
+
     // Find the recipe and remove the recipe from the recipe collection
-    if(roleUser.is_admin)
-    {
-      const recipe = await Recipe.findOne({recipe_id: recipeID });
+    if (roleUser.is_admin) {
+      const recipe = await Recipe.findOne({ recipe_id: recipeID });
       await User.findOneAndUpdate(
         { user_id: recipe.author },
         { $pull: { user_recipes: recipeID } },
@@ -257,15 +255,17 @@ const deleteRecipeControl = async (req, res) => {
     }
 
     if (!roleUser) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
-    return res.status(200).json({ success: true, message: 'Recipe deleted successfully' });
-  } 
-  catch (error) {
+    return res
+      .status(200)
+      .json({ success: true, message: "Recipe deleted successfully" });
+  } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
-
 };
 
 module.exports = {
