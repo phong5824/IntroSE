@@ -22,11 +22,9 @@ const Blog = () => {
           Chào mừng bạn đến với Blogs của LoveCook.
         </h1>
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {blogPosts.map((post) => (
-              <BlogPostCard key={post.id} post={post} />
-            ))}
-          </div>
+          {blogPosts.map((post) => (
+            <BlogPostCard key={post.id} post={post} />
+          ))}
         </div>
       </div>
       <Pagination defaultCurrent={1} total={500} />;
