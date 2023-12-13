@@ -18,7 +18,7 @@ const BlogPostCard = ({ post }) => {
                     />
                     <div className="ml-2 items-center">
                         <div className="flex flex-row space-x-2 items-center">
-                            <h1 className="text-base font-semibold">sontung.mtp</h1>
+                            <h1 className="text-base font-semibold text-black">sontung.mtp</h1>
                             <h1>1 hour ago</h1>
                         </div>
                         <h1>TP Hồ Chí Minh, Việt Nam</h1>
@@ -33,8 +33,9 @@ const BlogPostCard = ({ post }) => {
                 </div>
             </div>
 
-            <div className="mt-2 text-gray-600 bg-blue-300 p-4">
-                Tips nấu ăn hôm nay: Nếu muốn giữ cho cơm chẳng bao giờ cháy nữa, hãy dùng nước thay vì dầu ảo tưởng. Đúng vậy, bạn không nghe nhầm đâu, nước ấy! Hồi tối, khi mình đang định chiến đấu với chảo rán, thì bỗng "A-ha!", một ý tưởng lóe sáng. Đổ một ít nước vào chảo trước khi ném thứ gì đó vào đó, kể cả trứng hay cơm. Nước sẽ giữ cho thức ăn không bị cháy xém mà không làm mất đi hương vị thơm ngon tự nhiên. Và thế là, bạn có một bữa tối ngon lành mà không phải lo lắng về một chiếc chảo cơm đen xì. Thử đi, rồi cảm ơn mình sau! 😚😚😚😚😚            </div>
+            <div className="mt-2 text-black bg-blue-300 p-4">
+                Có ai giống em không, từ ngày dùng cái web này, chồng tối ngày cứ tấm tắc khen cơm mình nấu ngon chứ chẳng bao giờ khen mình ngon bao giờ như ngày xưa nữa không ạ? Dạo này em rầu quá 😢. Phải chăng khi mà tình yêu đã hết, quá khứ tốt đẹp không thể quay trở lại được nữa?
+                Có ai có chung cảm giác này với em không ạ? 😢 Em cần một người tâm sự ngay lúc này... 🌹🌹🌹 Chúc cả nhà một ngày an lành ạ 🍀🍀🍀                </div>
             <div className="flex items-center p-2.5 ml-3 mr-3">
                 {/* Like Icon */}
                 <div className="flex items-center mr-4">
