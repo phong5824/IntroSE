@@ -100,10 +100,9 @@ const getRecipesByID = async (req, res) => {
 
 const postRecipeControl = async (req, res) => {
   try {
-    // const { token } = req.cookies;
-    console.log("req.body: ", req.body);
+   
     const recipe = req.body.recipe;
-    const { recipe_name, nutrition, ingredients_list, tagname, rating } =
+    const { recipe_name, nutrition, ingredients_list, tagname, rating,img_src,cook_time,prep_time} =
       recipe;
 
 
@@ -112,7 +111,6 @@ const postRecipeControl = async (req, res) => {
       ["email"]
     );
 
-    console.log("Found user: ", user);
 
     if (!user) {
       return res
@@ -120,17 +118,21 @@ const postRecipeControl = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const maxRecipeId = await RecipeModel.estimatedDocumentCount();
+    const maxRecipeId = await Recipe.estimatedDocumentCount();
     const recipe_id = maxRecipeId + 1;
 
-    const newRecipe = new RecipeModel({
+    const newRecipe = new Recipe({
       recipe_id: recipe_id,
       recipe_name: recipe_name,
       nutrition: nutrition,
       ingredients_list: ingredients_list,
       tagname: tagname,
+      cook_time: cook_time,
+      prep_time : prep_time,
       rating: rating,
       author: user.user_id,
+      img_src: img_src,
+      created_time: new Date(),
     });
 
     await newRecipe.save();
@@ -149,8 +151,9 @@ const postRecipeControl = async (req, res) => {
 const getCommentsByRecipeId = async (req, res) => {
   try {
     const recipeId = req.params.id;
-
-    const comments = await Comment.find({ recipe_id: recipeId }).limit(5);
+    
+    const comments = await Comment.find({ recipe_id: recipeId })
+      .limit(5);
 
     res.json({ success: true, comments });
   } catch (error) {

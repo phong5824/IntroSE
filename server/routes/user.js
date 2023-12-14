@@ -47,6 +47,7 @@ router.post("/admin/deleteUser", verifyToken, userController.deleteUser);
 
 router.get("/recipeManager",verifyToken,userController.getRecipeManagerControl);
 
+router.get(`/getUser/:user_id`,userController.getUserByUserIdControl);
 
 router.post("/deleteRecipe",verifyToken,userController.deleteRecipeControl);
 
