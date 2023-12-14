@@ -27,7 +27,7 @@ const Blog = () => {
       <Navbar />
       <div className="bg-green-200 py-8">
         <h1 className="text-2xl font-bold mb-8 text-center">
-          Chào mừng bạn đến với Blogs của LoveCook.
+          Welcome to LoveCook's Flavorful World! 🌟
         </h1>
         <div className="container mx-auto px-4">
           {blogPosts.map((post) => (

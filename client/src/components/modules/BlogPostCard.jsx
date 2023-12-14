@@ -3,26 +3,30 @@ import likeIcon from "/src/assets/heart.png";
 import shareIcon from "/src/assets/send_2.png";
 import saveIcon from "/src/assets/bookmark.png";
 import moreIcon from "/src/assets/more.png";
-import {handleGetUserByID} from "../../action/userAction";
+import { handleGetUserByID } from "../../action/userAction";
 import { message } from 'antd';
 import { useEffect, useState } from "react";
+import moment from 'moment';
 
-const BlogPostCard =  ({ post }) => {
-   
+
+
+const BlogPostCard = ({ post }) => {
+
     const [user, setUser] = useState({});
 
-    useEffect(() =>async () => {
-    try {
-        const userFound = await handleGetUserByID(post?.user_id);
-        setUser(userFound);
-        
-    } catch (error) {
-        message.error(error.message);
-    }
-    
-}, [post]);
+    useEffect(() => async () => {
+        try {
+            const userFound = await handleGetUserByID(post?.user_id);
+            setUser(userFound);
 
+        } catch (error) {
+            message.error(error.message);
+        }
 
+    }, [post]);
+
+    const createdTime = moment(post.created_time);
+    const timeAgo = createdTime.fromNow();
     return (
         <div className="w-1/2 mx-auto mb-3 bg-gray-100 rounded-lg shadow-md">
 
@@ -36,7 +40,7 @@ const BlogPostCard =  ({ post }) => {
                     <div className="ml-2 items-center">
                         <div className="flex flex-row space-x-2 items-center">
                             <h1 className="text-base font-semibold text-black">{user.name}</h1>
-                            <h1>{post?.created_time}</h1>
+                            <h1>{timeAgo}</h1>
                         </div>
                         <h1>TP Hồ Chí Minh, Việt Nam</h1>
                     </div>
@@ -51,7 +55,7 @@ const BlogPostCard =  ({ post }) => {
             </div>
 
             <div className="mt-2 text-black bg-blue-300 p-4">
-               {post?.content} </div>
+                {post?.content} </div>
             <div className="flex items-center p-2.5 ml-3 mr-3">
                 {/* Like Icon */}
                 <div className="flex items-center mr-4">
