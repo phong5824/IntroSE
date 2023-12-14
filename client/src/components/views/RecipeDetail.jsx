@@ -154,16 +154,16 @@ export const RecipeDetail = () => {
       <div className="container bg-green-200 p-8">
         <div className="text-center">
           {/* Added text-center class */}
-          <h1 className="text-4xl font-bold mb-4">{recipe.recipe_name}</h1>
+          <h1 className="text-4xl font-bold mb-4">{recipe?.recipe_name}</h1>
           <img
-            src={recipe.img_src}
-            alt={recipe.recipe_name}
+            src={recipe?.img_src}
+            alt={recipe?.recipe_name}
             className="mb-3 rounded-lg mx-auto max-w-md"
           />
           <div className="flex items-center justify-center">
             <div className="mr-2">
               <StarRatings
-                rating={recipe.rating}
+                rating={recipe?.rating}
                 starRatedColor="orange"
                 numberOfStars={5}
                 name="rating"
@@ -171,7 +171,7 @@ export const RecipeDetail = () => {
                 starSpacing="2px"
               />
             </div>
-            <span className="text-sm font-bold">{recipe.rating}</span>
+            <span className="text-sm font-bold">{recipe?.rating}</span>
           </div>
 
           {/* Added mx-auto class */}
@@ -184,12 +184,12 @@ export const RecipeDetail = () => {
                 <h2 className="ml-4 text-2xl font-bold">Ingredient</h2>
                 <img src={Clock} alt="time" className="h-5 w-5 ml-6 mt-1" />
                 <span className="text-gray-700 ml-1 mt-1">
-                  {recipe.prep_time}
+                  {recipe?.prep_time}
                 </span>
               </div>
 
               <ul className="ml-8 mt-3 list-inside">
-                {recipe.ingredients_list.map((ingredient, index) => (
+                {recipe?.ingredients_list && recipe.ingredients_list.map((ingredient, index) => (
                   <li key={index} className="mb-2 pb-2">
                     {ingredient.trim()}
                   </li>
@@ -210,7 +210,7 @@ export const RecipeDetail = () => {
 
               <div className="ml-8 mb-2 mt-3">
                 <ol className="prose prose-blue list-inside">
-                  {recipe.directions.split("\n").map((step, index) => (
+                  {recipe?.directions && recipe?.directions.split("\n").map((step, index) => (
                     <li key={index} className="mb-2 pb-2">
                       <span className="font-bold">Step {index + 1}:</span>{" "}
                       {step}

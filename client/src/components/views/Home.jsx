@@ -27,24 +27,20 @@ const Home = () => {
           }}
           className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
-         Organize meals
+          Organize meals
         </button>
         <button
-          onClick={() => {}}
+          onClick={() => { }}
           className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
         >
           Tip and tricks
         </button>
-        <button
-          onClick={() => {
-            /* Logic for "Blog" */
-          }}
-          className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium"
-        >
-          <Link to="/blog" className="text-black font-medium">
-            Blog
-          </Link>
-        </button>
+
+
+        <Link to="/blog" className="btn w-1/4 bg-green-500 hover:bg-green-300 px-4 py-2.5 rounded-full font-medium">
+          Blog
+        </Link>
+
       </div>
     );
   };
