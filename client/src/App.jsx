@@ -12,6 +12,7 @@ import Others from "./components/views/Others";
 import RecipeDetail from "./components/views/RecipeDetail";
 import Search from "./components/views/search";
 import Admin from "./components/views/Admin";
+import RecipeManager from "./components/views/RecipeManager";
 import { useEffect, useState } from "react";
 import { handleGetUser } from "./action/accountAction";
 import { UserContext } from "./context/userContext";

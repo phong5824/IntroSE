@@ -2,11 +2,26 @@ import React from "react";
 import Loading from "../modules/Loading";
 import { handleGetUser } from "../../action/accountAction";
 import { useEffect, useState } from "react";
-import { Clock, chatIcon, avatarIcon, SendIcon, Bookmark, Share,ProfileIcon,
-  NotiIcon,KeyIcon,EditIcon,RecipeIcon,BlogIcon,FavoriteIcon,fbIcon,instaIcon,twIcon}
-  from "../../assets";  
+import {
+  Clock,
+  chatIcon,
+  avatarIcon,
+  SendIcon,
+  Bookmark,
+  Share,
+  ProfileIcon,
+  NotiIcon,
+  KeyIcon,
+  EditIcon,
+  RecipeIcon,
+  BlogIcon,
+  FavoriteIcon,
+  fbIcon,
+  instaIcon,
+  twIcon,
+} from "../../assets";
 import NavBar from "../modules/Navbar";
-import Footer from "../modules/Footer"; // Đảm bảo rằng bạn nhập Footer từ đường dẫn chính xác
+import Footer from "../modules/Footer";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
@@ -51,7 +66,7 @@ const Profile = () => {
                 <div className="flex items-center justify-center space-x-3">
                   <img className="h-5 w-5" src={RecipeIcon} alt="" />
                   <a
-                    href="/recipes"
+                    href="/users/recipeManager"
                     className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
                   >
                     Your recipes
@@ -186,7 +201,6 @@ const Profile = () => {
                 <div className="flex items-center justify-center space-x-3 mt-3">
                   <img className="h-6 w-6" src={KeyIcon} alt="" />
                   <button className=" bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-full sm:w-full">
-                   
                     <Link
                       to="/reset-password"
                       className="text-gray-700 font-semibold text-sm"

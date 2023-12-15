@@ -67,7 +67,7 @@ export default function Login({ setCookie }) {
             />
 
             <div className="bg-green-250 text-black text-lg font-semibold text-left p-2 px-2 my-1 mx-auto w-[max-content]">
-             Password
+              Password
             </div>
             <input
               type="password"
@@ -96,7 +96,7 @@ export default function Login({ setCookie }) {
               </div>
 
               <Link
-                to="/resetPassword"
+                to="/reset-password"
                 className="text-gray-700 font-semibold text-sm"
               >
                 Forgot your password?
@@ -104,7 +104,7 @@ export default function Login({ setCookie }) {
             </div>
 
             <button className="btn w-[50%] py-1.5 rounded-full mt-2.5 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
-             Login
+              Login
             </button>
 
             <div className="bg-green-300 text-black text-base font-semibold text-left mt-2 mx-auto w-[max-content]">

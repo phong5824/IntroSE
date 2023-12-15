@@ -1,19 +1,27 @@
 import Navbar from "../modules/Navbar";
 import Footer from "../modules/Footer";
-import slide_2 from "../../assets/slide_2.png";
+import { useEffect, useState } from "react";
 import BlogPostCard from "../modules/BlogPostCard";
 import { Pagination } from "antd";
-
-const blogPosts = Array.from({ length: 10 }, (_, index) => ({
-  id: index + 1,
-  title: `Blog Post Title ${index + 1}`,
-  excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-  imageUrl: slide_2,
-  date: "3 April 2022",
-  readTime: "5",
-}));
+import { handleGetAllBlogs } from "../../action/blogAction";
 
 const Blog = () => {
+  const [blogPosts, setBlogPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const blogs = await handleGetAllBlogs();
+        setBlogPosts(blogs);
+
+      } catch (error) {
+        console.error('Error fetching blogs:', error.message);
+      }
+    };
+
+    fetchBlog();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -22,11 +30,9 @@ const Blog = () => {
           Chào mừng bạn đến với Blogs của LoveCook.
         </h1>
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {blogPosts.map((post) => (
-              <BlogPostCard key={post.id} post={post} />
-            ))}
-          </div>
+          {blogPosts.map((post) => (
+            <BlogPostCard key={post.id} post={post} />
+          ))}
         </div>
       </div>
       <Pagination defaultCurrent={1} total={500} />;

@@ -53,39 +53,29 @@ const IngredientsList = ({
     setIsAddingIngredient(true);
 
     setIngredientsList([...ingredientsList, ""]);
-    console.log(ingredientsList);
-    console.log("Add ingredient");
   };
 
   const handleChangeIngredient = (event) => {
     const index = event.target.id;
-    console.log("id: ", index);
     const newIngredientsList = [...ingredientsList];
     newIngredientsList[index] = event.target.value;
     setIngredientsList(newIngredientsList);
-    console.log(ingredientsList);
-    console.log("Change ingredient");
   };
 
   const handleRemove = (index) => {
     const newIngredientsList = [...ingredientsList];
     newIngredientsList.splice(index, 1);
     setIngredientsList(newIngredientsList);
-    console.log(ingredientsList);
-    console.log("Remove");
   };
 
   const handleAdd = () => {
     setIsAddingIngredient(false);
 
-    console.log(ingredientsList);
-    console.log("Add");
   };
 
   const handleCancel = () => {
     setIsAddingIngredient(false);
     setIngredientsList(ingredientsList.slice(0, -1));
-    console.log("Cancel");
   };
   return (
     <div className="flex items-center">
@@ -242,38 +232,28 @@ const InstructionInfo = ({ steps, setSteps }) => {
   const handleAddStep = () => {
     setIsAddingStep(true);
     setSteps([...steps, ""]);
-    console.log(steps);
-    console.log("Add step");
   };
 
   const handleChangeStep = (event) => {
     const index = event.target.id;
-    console.log("id: ", index);
     const newSteps = [...steps];
     newSteps[index] = event.target.value;
     setSteps(newSteps);
-    console.log(steps);
-    console.log("Change step");
   };
 
   const handleRemove = (index) => {
     const newSteps = [...steps];
     newSteps.splice(index, 1);
     setSteps(newSteps);
-    console.log(steps);
-    console.log("Remove");
   };
 
   const handleAdd = () => {
     setIsAddingStep(false);
-    console.log(steps);
-    console.log("Add");
   };
 
   const handleCancel = () => {
     setIsAddingStep(false);
     setSteps(steps.slice(0, -1));
-    console.log("Cancel");
   };
 
   return (
@@ -332,11 +312,11 @@ const InstructionInfo = ({ steps, setSteps }) => {
   );
 };
 
-const SubmitForm = ({ onSubmit }) => {
+const SubmitForm = ({ onSubmit, user }) => {
   return (
     <div className="flex flex-row justify-around">
       <button
-        onClick={() => onSubmit}
+        onClick={()=> {onSubmit(user.user_id)}}
         className="text-2xl bg-red-300 px-4 py-2 mt-4 rounded-full font-bold"
       >
         Submit
@@ -345,7 +325,7 @@ const SubmitForm = ({ onSubmit }) => {
   );
 };
 
-const CreateRecipeForm = () => {
+const CreateRecipeForm = ({user}) => {
   const [recipeName, setRecipeName] = useState("");
   const [prepTime, setPrepTime] = useState("");
   const [cookTime, setCookTime] = useState("");
@@ -354,7 +334,8 @@ const CreateRecipeForm = () => {
   const [steps, setSteps] = useState([]);
   const [nutritions, setNutritions] = useState([]); // ["Fat 10g  20%", "Protein 20g  40%", ...
 
-  const onSubmit = async () => {
+  
+  const onSubmit = async (user_id) => {
     const recipe = {
       recipe_name: recipeName,
       prep_time: prepTime,
@@ -362,8 +343,10 @@ const CreateRecipeForm = () => {
       ingredients_list: ingredientsList,
       steps: steps,
       nutritions: [],
+      author: user_id,
+      img_src:"https://i.pinimg.com/originals/c8/77/c1/c877c1ed6abae4438c1b41cb1a91aa9b.jpg",
     };
-    console.log(recipe);
+    
     if (recipeName === "" || prepTime === "" || cookTime === "") {
       notify_fail("Please fill in all fields");
       return;
@@ -372,7 +355,6 @@ const CreateRecipeForm = () => {
       notify_success("Create recipe successfully");
     }
 
-    console.log("Submit");
   };
 
   return (
@@ -389,7 +371,7 @@ const CreateRecipeForm = () => {
         setIngredientsList={setIngredientsList}
       />
       <InstructionInfo steps={steps} setSteps={setSteps} />
-      <SubmitForm onSubmit={onSubmit} />
+      <SubmitForm onSubmit={onSubmit} user={user} />
       <Toast_Container />
     </div>
   );
@@ -410,7 +392,7 @@ export default function CreateRecipe() {
   return (
     <div className="home-wrapper h-screen overflow-y-auto bg-white">
       <NavBar />
-      <CreateRecipeForm />
+      <CreateRecipeForm user = {user}/>
       <Footer />
     </div>
   );

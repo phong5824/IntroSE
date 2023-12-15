@@ -100,25 +100,22 @@ const getRecipesByID = async (req, res) => {
 
 const postRecipeControl = async (req, res) => {
   try {
-    // const { token } = req.cookies;
-    console.log("req.body: ", req.body);
     const recipe = req.body.recipe;
-    const { recipe_name, nutrition, ingredients_list, tagname, rating } =
-      recipe;
-
-    // if (!token) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: "You are not authorized to access this route",
-    //   });
-    // }
+    const {
+      recipe_name,
+      nutrition,
+      ingredients_list,
+      tagname,
+      rating,
+      img_src,
+      cook_time,
+      prep_time,
+    } = recipe;
 
     const user = await User.findOne({ account: req.userid }).populate(
       "account",
       ["email"]
     );
-
-    console.log("Found user: ", user);
 
     if (!user) {
       return res
@@ -128,21 +125,19 @@ const postRecipeControl = async (req, res) => {
 
     const maxRecipeId = await Recipe.estimatedDocumentCount();
     const recipe_id = maxRecipeId + 1;
-    // const recipe = await Recipe.findOne({ recipe_id });
 
-    // console.log("Found recipe: ", recipe);
-    // if (recipe) {
-    //   return res
-    //     .status(400)
-    //     .json({ success: false, message: "Recipe already exists" });
-    // }
     const newRecipe = new Recipe({
       recipe_id: recipe_id,
       recipe_name: recipe_name,
       nutrition: nutrition,
       ingredients_list: ingredients_list,
       tagname: tagname,
+      cook_time: cook_time,
+      prep_time: prep_time,
       rating: rating,
+      author: user.user_id,
+      img_src: img_src,
+      created_time: new Date(),
     });
 
     await newRecipe.save();

@@ -76,13 +76,13 @@ export const handleCreateRecipe = async (recipe) => {
         },
       }
     );
-    console.log(result);
+
     if (result.data.success === true) {
-      console.log(result.data.message);
+     
       message.success("Create successfully!");
       return true;
     } else {
-      console.log(result.data.message);
+      
       message.error(result.data.message);
     }
   } catch (err) {

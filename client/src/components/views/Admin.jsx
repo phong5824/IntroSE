@@ -17,7 +17,6 @@ const Admin = () => {
         const fetchUsers = async () => {
             try {
                 const response = await handleGetAllUsers();
-                console.log(response);
                 if (response.success) {
                     setUsers(response.users);
                 } else {
@@ -62,7 +61,6 @@ const Admin = () => {
 
             // Kiểm tra phản hồi từ server và xử lý nếu cần
             if (response.data.success) {
-                console.log('Password changed successfully!');
 
                 const updatedUsers = users.map((user) =>
                     user.user_id === selectedUserId ? { ...user, account: { ...user.account, password: newPassword } } : user
@@ -104,7 +102,6 @@ const Admin = () => {
 
             // Xử lý phản hồi từ server
             if (response.data.success) {
-                console.log('User deleted successfully!');
                 notify_success("User deleted successfully!");
                 // Cập nhật trạng thái của người dùng trong state hoặc component
             } else {

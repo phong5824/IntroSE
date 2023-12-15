@@ -31,6 +31,10 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
     navigate("/users/admin");
   };
 
+  const navigateToRecipesManager = () => {
+    navigate("/users/recipeManager");
+  };
+
   const navigateToProfile = () => {
     navigate("/users/profile");
   };
@@ -58,7 +62,7 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
                   </button>
 
                   <button
-                    onClick={navigateToAdmin}
+                    onClick={navigateToRecipesManager}
                     className="block w-full px-4 py-2 text-center rounded hover:bg-gray-200"
                   >
                     Recipes Management
