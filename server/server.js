@@ -11,6 +11,8 @@ const recipesRouter = require("./routes/recipes");
 const ingredientRouter = require("./routes/ingredient.js");
 const commentRouter = require("./routes/comment.js");
 const blogRouter = require("./routes/blog.js");
+const chatbotRouter = require("./routes/chatbot.js");
+
 const db = require("./db/index");
 
 const app = express();
@@ -19,7 +21,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/blog",blogRouter);
+app.use("/blog", blogRouter);
+app.use("/chatbot", chatbotRouter);
 app.use("/", accountRouter);
 app.use("/", recipesRouter);
 app.use("/users", userRouter);
