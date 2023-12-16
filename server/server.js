@@ -23,7 +23,12 @@ app.use(cookieParser());
 app.use("/chatbot", chatbotRouter);
 app.use("/blog",blogRouter);
 app.use("/",blogRouter);
->>>>>>>>> Temporary merge branch 2
+
+
+app.use("/blog", blogRouter);
+app.use("/chatbot", chatbotRouter);
+app.use("/",blogRouter);
+
 app.use("/", accountRouter);
 app.use("/", recipesRouter);
 app.use("/users", userRouter);
