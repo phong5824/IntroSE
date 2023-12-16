@@ -20,10 +20,8 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-<<<<<<<<< Temporary merge branch 1
+app.use("/chatbot", chatbotRouter);
 app.use("/blog",blogRouter);
-=========
 app.use("/",blogRouter);
 >>>>>>>>> Temporary merge branch 2
 app.use("/", accountRouter);
