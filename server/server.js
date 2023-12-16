@@ -11,6 +11,8 @@ const recipesRouter = require("./routes/recipes");
 const ingredientRouter = require("./routes/ingredient.js");
 const commentRouter = require("./routes/comment.js");
 const blogRouter = require("./routes/blog.js");
+
+const chatbotRouter = require("./routes/chatbot.js");
 const db = require("./db/index");
 
 const app = express();
@@ -19,6 +21,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+<<<<<<<<< Temporary merge branch 1
+app.use("/blog",blogRouter);
+=========
+app.use("/",blogRouter);
+>>>>>>>>> Temporary merge branch 2
 app.use("/", accountRouter);
 app.use("/", recipesRouter);
 app.use("/users", userRouter);
@@ -31,4 +38,3 @@ db.on("error", (stream) => {
 app.listen(8000, () => {
   console.log(`Node API app is running on port 8000`);
 });
-// app.use('/',accountModel)
