@@ -8,6 +8,7 @@ const getAllBlogs = async (req, res) => {
         const blogs = await Blogs.find({});
 
         res.status(200).json({ success: true, blogs });
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

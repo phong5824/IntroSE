@@ -56,6 +56,7 @@ const BlogPostCard = ({ post }) => {
 
             <div className="mt-2 text-black bg-blue-300 p-4">
                 {post?.content} </div>
+
             <div className="flex items-center p-2.5 ml-3 mr-3">
                 {/* Like Icon */}
                 <div className="flex items-center mr-4">
