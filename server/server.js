@@ -19,7 +19,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/blog",blogRouter);
 app.use("/", accountRouter);
 app.use("/", recipesRouter);
 app.use("/users", userRouter);
