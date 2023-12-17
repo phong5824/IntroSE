@@ -21,7 +21,6 @@ export const handleRecommendedRecipes = async () => {
 export const handleRankingRecipes = async () => {
   try {
     const result = await axios.get("http://127.0.0.1:8000/");
-
     if (result.data.success === true) {
       return result.data.ranking_recipes;
     } else {
@@ -78,11 +77,11 @@ export const handleCreateRecipe = async (recipe) => {
     );
 
     if (result.data.success === true) {
-     
+
       message.success("Create successfully!");
       return true;
     } else {
-      
+
       message.error(result.data.message);
     }
   } catch (err) {

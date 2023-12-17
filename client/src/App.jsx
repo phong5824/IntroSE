@@ -12,6 +12,7 @@ import Others from "./components/views/Others";
 import RecipeDetail from "./components/views/RecipeDetail";
 import Search from "./components/views/search";
 import Admin from "./components/views/Admin";
+import FeedBack from "./components/views/FeedBack";
 import RecipeManager from "./components/views/RecipeManager";
 import { useEffect, useState } from "react";
 import { handleGetUser } from "./action/accountAction";
@@ -63,6 +64,7 @@ function App() {
               <Route path="search" element={<Search />} />
               <Route path="/recipes/" element={<RecipeDetail />} />
               <Route path="/details" element={<RecipeDetail />} />
+              <Route path="/feedback" element={<FeedBack />} />
             </Route>
           </Routes>
         </HandleLoginStatus>
