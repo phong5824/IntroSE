@@ -91,3 +91,30 @@ export const handleDeleteRecipes = async (recipe_id) => {
     console.error("Error deleting user:", error.message);
   }
 };
+
+export const updateUserProfile = async (updatedProfile, userId) => {
+  try {
+    // Get the authentication token from localStorage or wherever you store it
+    const token = localStorage.getItem("accessToken");
+    // Make an API request to update the user profile with token in headers
+    const response = await axios.put(
+      `http://127.0.0.1:8000/users/updateProfile/${userId}`,
+      updatedProfile,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log('Updated User in action:', response);
+
+    // Assuming the API response contains the updated user profile
+    const updatedUserProfile = response.data;
+
+    return updatedUserProfile;
+  } catch (error) {
+    console.error("Error updating user profile:", error.message);
+    throw error;
+  }
+};
+
