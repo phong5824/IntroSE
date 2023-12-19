@@ -49,7 +49,7 @@ const Recipe = (recipe) => {
           <button
             className="bg-white-300 hover:bg-yellow-300 text-white font-bold py-2 px-4 rounded"
             onClick={() => handleDeleteRecipes(recipe.recipe_id)}
-           
+
           >
             <img className="h-10 w-10" src={deleteIcon} alt="" />
           </button>
