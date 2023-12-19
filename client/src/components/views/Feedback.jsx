@@ -1,197 +1,108 @@
-import React, { useState } from "react";
-import Navbar from "../modules/Navbar";
+import React, { useState } from 'react';
+import NavBar from "../modules/Navbar";
 import Footer from "../modules/Footer";
-import { message } from "antd";
+import FeedbackIcon from "../../assets/feedback.png";
+const FeedBack = () => {
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        feedback: '',
+        satisfaction: '',
+    });
 
-const SuccessNotification = ({ onClose }) => (
-  <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div className="bg-white p-8 rounded-lg text-center">
-      <p className="text-green-600 font-semibold">
-        Gửi ý kiến thành công! Cảm ơn bạn đã đóng góp cho chúng mình nha ❤️❤️❤️
-      </p>
-      <button
-        onClick={onClose}
-        className="mt-4 bg-blue-500 text-white px-3 py-1 rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-      >
-        Đóng
-      </button>
-    </div>
-  </div>
-);
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
 
-const Feedback = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    address: "",
-    phoneNumber: "",
-    email: "",
-    title: "",
-    content: "",
-  });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(form);
+    };
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+    return (
+        <div className="home-wrapper h-screen overflow-y-auto">
+            <NavBar />
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+            <div className="feedback-page flex mt-16 ml-32 mr-32 space-x-10">
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+                <div className="w-2/5 flex flex-col items-center justify-center font-bold">
+                    <h1 className="text-5xl text-left text-blue-400">Feel free to drop us your feedback</h1>
+                    <img src={FeedbackIcon} alt="" className="w-3/4 h-3/4 mt-10" />
+                </div>
 
-    // Kiểm tra các ô bắt buộc
-    const requiredFields = ["fullName", "email", "title", "content"];
+                <div className="w-3/5">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Your full name:
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={form.name}
+                                onChange={handleChange}
+                                className="border-2 border-gray-500 rounded p-2 w-full"
+                                required
+                            />
+                        </div>
 
-    const hasEmptyFields = requiredFields.some(
-      (field) => !formData[field].trim()
-    );
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Email:
+                            </label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={form.email}
+                                onChange={handleChange}
+                                className="border-2 border-gray-500 rounded p-2 w-full"
+                                required
+                            />
+                        </div>
 
-    if (hasEmptyFields) {
-      // Nếu có ô bắt buộc rỗng, hiển thị thông báo và không thực hiện gửi
-      message.warning("Vui lòng điền đầy đủ thông tin");
-      return;
-    }
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Feedback:
+                            </label>
+                            <textarea
+                                name="feedback"
+                                value={form.feedback}
+                                onChange={handleChange}
+                                className="h-32 border-2 border-gray-500 rounded p-1 w-full"
+                                required
+                            />
+                        </div>
 
-    // Xử lý logic gửi dữ liệu lên server hoặc làm những thao tác khác ở đây
-    console.log("Đã gửi dữ liệu:", formData);
-    setIsSubmitted(true);
-  };
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">
+                                Satisfaction level:
+                            </label>
+                            <select
+                                name="satisfaction"
+                                value={form.satisfaction}
+                                onChange={handleChange}
+                                className="border-2 border-gray-500 rounded p-2 w-full"
+                                required
+                            >
+                                <option value="satisfied">Satisfied</option>
+                                <option value="neutral">Normal</option>
+                                <option value="dissatisfied">Unsatisfied</option>
+                            </select>
+                        </div>
 
-  const handleCloseNotification = () => {
-    setIsSubmitted(false);
-  };
-
-  return (
-    <div className="bg-white">
-      <Navbar />
-      <div className="container mx-auto mt-8 flex justify-center items-center h-screen">
-        <div className="max-w-2xl p-8 rounded-lg w-[200%]">
-          <div className="bg-gray-200 p-3 rounded-md mb-4">
-            <h2 className="text-xl font-semibold text-center text-gray-800 m-0">
-              Gửi ý kiến đóng góp tới chúng mình bên dưới nhé!
-            </h2>
-          </div>
-          <p className="text-base text-left text-black">
-            Những vị trí có dấu (<span className="text-red-500">*</span>) là bắt
-            buộc phải có.
-          </p>
-          <form onSubmit={handleSubmit}>
-            <table className="w-full">
-              <tbody>
-                <tr>
-                  <td className="bg-[#e6f6ff] text-gray-800 p-2 font-bold">
-                    Họ và tên<span className="text-red-500">*</span>
-                  </td>
-                  <td className="bg-[#ade2ff] p-2 text-base">
-                    <input
-                      type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="bg-[#e6f6ff] text-gray-800 p-2 font-bold">
-                    Địa chỉ
-                  </td>
-                  <td className="bg-[#ade2ff] p-2 text-base">
-                    <input
-                      type="text"
-                      id="address"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-md"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="bg-[#e6f6ff] text-gray-800 p-2 font-bold">
-                    Số điện thoại
-                  </td>
-                  <td className="bg-[#ade2ff] p-2 text-base">
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      value={formData.phoneNumber}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-md"
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="bg-[#e6f6ff] text-gray-800 p-2 font-bold">
-                    Email<span className="text-red-500">*</span>
-                  </td>
-                  <td className="bg-[#ade2ff] p-2 text-base">
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="bg-[#e6f6ff] text-gray-800 p-2 font-bold">
-                    Tiêu đề<span className="text-red-500">*</span>
-                  </td>
-                  <td className="bg-[#ade2ff] p-2 text-base">
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      value={formData.title}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className="bg-[#e6f6ff] text-gray-800 p-2 font-bold">
-                    Nội dung<span className="text-red-500">*</span>
-                  </td>
-                  <td className="bg-[#ade2ff] p-2 text-base">
-                    <textarea
-                      id="content"
-                      name="content"
-                      value={formData.content}
-                      onChange={handleChange}
-                      className="w-full p-2 border rounded-md"
-                      required
-                    ></textarea>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
-          <div className="mt-4 text-center">
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="bg-[#ff8f76] text-white px-8 py-1 rounded-3xl text-lg hover:bg-[#ff7d5f] hover:text-bold focus:outline-none focus:shadow-outline-blue"
-            >
-              Gửi
-            </button>
-          </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                        >
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <Footer />
         </div>
-      </div>
-      {isSubmitted && <SuccessNotification onClose={handleCloseNotification} />}
-      <Footer />
-    </div>
-  );
+    );
 };
 
-export default Feedback;
+export default FeedBack;
