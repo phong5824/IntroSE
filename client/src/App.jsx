@@ -13,6 +13,7 @@ import RecipeDetail from "./components/views/RecipeDetail";
 import Search from "./components/views/search";
 import Admin from "./components/views/Admin";
 import RecipeManager from "./components/views/RecipeManager";
+import Feedback from "./components/views/Feedback";
 import { useEffect, useState } from "react";
 import { handleGetUser } from "./action/accountAction";
 import { UserContext } from "./context/userContext";
@@ -64,6 +65,7 @@ function App() {
               <Route path="search" element={<Search />} />
               <Route path="/recipes/" element={<RecipeDetail />} />
               <Route path="/details" element={<RecipeDetail />} />
+              <Route path="/feedback" element={<Feedback />} />
             </Route>
           </Routes>
         </HandleLoginStatus>
