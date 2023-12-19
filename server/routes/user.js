@@ -45,10 +45,16 @@ router.post("/admin/changepassword", verifyToken, userController.changePassword)
 // @access private
 router.post("/admin/deleteUser", verifyToken, userController.deleteUser);
 
-router.get("/recipeManager",verifyToken,userController.getRecipeManagerControl);
+router.get("/recipeManager", verifyToken, userController.getRecipeManagerControl);
 
-router.get(`/getUser/:user_id`,userController.getUserByUserIdControl);
+router.get(`/getUser/:user_id`, userController.getUserByUserIdControl);
 
-router.post("/deleteRecipe",verifyToken,userController.deleteRecipeControl);
+router.post("/deleteRecipe", verifyToken, userController.deleteRecipeControl);
+
+// @route PUT API/updateProfile
+// @desc Update User
+// @access private
+router.put("/updateProfile/:userId", userController.updateProfile);
+
 
 module.exports = router;

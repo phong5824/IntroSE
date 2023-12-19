@@ -22,9 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
+
 app.use("/blog", blogRouter);
 app.use("/chatbot", chatbotRouter);
-app.use("/",blogRouter);
 
 app.use("/", accountRouter);
 app.use("/", recipesRouter);
