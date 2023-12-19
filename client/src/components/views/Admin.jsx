@@ -63,7 +63,7 @@ const Admin = () => {
             if (response.data.success) {
 
                 const updatedUsers = users.map((user) =>
-                    user.user_id === selectedUserId ? { ...user, account: { ...user.account, password: newPassword } } : user
+                    user?.user_id === selectedUserId ? { ...user, account: { ...user?.account, password: newPassword } } : user
                 );
 
                 // Cập nhật state
@@ -132,14 +132,14 @@ const Admin = () => {
                         </thead>
                         <tbody>
                             {users.map((user) => (
-                                <tr key={user.user_id}>
-                                    <td className="border px-4 py-2">{user.user_id}</td>
-                                    <td className="border px-4 py-2">{user.account.email}</td>
-                                    <td className="border px-4 py-2">{user.name}</td>
-                                    <td className="border px-4 py-2">{user.is_admin ? 'ADMIN' : 'USER'}</td>
-                                    <td className="border px-4 py-2">{user.account.password}</td>
+                                <tr key={user?.user_id}>
+                                    <td className="border px-4 py-2">{user?.user_id}</td>
+                                    <td className="border px-4 py-2">{user?.account?.email}</td>
+                                    <td className="border px-4 py-2">{user?.name}</td>
+                                    <td className="border px-4 py-2">{user?.is_admin ? 'ADMIN' : 'USER'}</td>
+                                    <td className="border px-4 py-2">{user?.account?.password}</td>
                                     <td className="border px-4 py-2">
-                                        {showChangePassword && selectedUserId === user.user_id ? (
+                                        {showChangePassword && selectedUserId === user?.user_id ? (
                                             <div className="flex justify-center items-center">
                                                 <input
                                                     type="password"
@@ -149,7 +149,7 @@ const Admin = () => {
                                                     placeholder="New password"
                                                 />
                                                 <button
-                                                    onClick={() => {handleChangePasswordClick(user.user_id)}}
+                                                    onClick={() => {handleChangePasswordClick(user?.user_id)}}
                                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                                 >
                                                     Save
@@ -157,7 +157,7 @@ const Admin = () => {
                                             </div>
                                         ) : (
                                             <button
-                                                onClick={() => handleShowChangePassword(user.user_id)}
+                                                onClick={() => handleShowChangePassword(user?.user_id)}
                                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                                
                                             >
@@ -171,7 +171,7 @@ const Admin = () => {
                                             src={banIcon}
                                             alt="Ban Icon"
                                             className="w-8 h-8 mx-auto cursor-pointer hover:opacity-80 transition duration-300"
-                                            onClick={() => {handleBanClick(user.user_id);}
+                                            onClick={() => {handleBanClick(user?.user_id);}
                                         }
                                         />
                                     </td>
