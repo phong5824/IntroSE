@@ -77,11 +77,11 @@ export const handleCreateRecipe = async (recipe) => {
     );
 
     if (result.data.success === true) {
-     
+
       message.success("Create successfully!");
       return true;
     } else {
-      
+
       message.error(result.data.message);
     }
   } catch (err) {
