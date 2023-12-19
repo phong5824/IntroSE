@@ -136,10 +136,10 @@ const Admin = () => {
                             {users && users.map((user) => (
                                 <tr key={user.user_id}>
                                     <td className="border px-4 py-2">{user?.user_id}</td>
-                                    <td className="border px-4 py-2">{user.account.email}</td>
+                                    <td className="border px-4 py-2">{user?.account?.email}</td>
                                     <td className="border px-4 py-2">{user?.name}</td>
                                     <td className="border px-4 py-2">{user?.is_admin ? 'ADMIN' : 'USER'}</td>
-                                    <td className="border px-4 py-2">{user?.account.password}</td>
+                                    <td className="border px-4 py-2">{user?.account?.password}</td>
                                     <td className="border px-4 py-2">
                                         {showChangePassword && selectedUserId === user.user_id ? (
                                             <div className="flex justify-center items-center">
