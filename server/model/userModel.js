@@ -70,6 +70,7 @@ const schema = new Schema({
   account: {
     type: Schema.Types.ObjectId,
     ref: "accounts",
+    required: false,
   },
   phone: { type: String },
 });

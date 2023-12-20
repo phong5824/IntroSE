@@ -126,8 +126,10 @@ const postRecipeControl = async (req, res) => {
     const maxRecipeId = await Recipe.estimatedDocumentCount();
     const recipe_id = maxRecipeId + 1;
 
+    console.log(recipe_id);
+
     const newRecipe = new Recipe({
-      recipe_id: recipe_id,
+      recipe_id: recipe_id+1,
       recipe_name: recipe_name,
       nutrition: nutrition,
       ingredients_list: ingredients_list,

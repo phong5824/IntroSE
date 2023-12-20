@@ -12,7 +12,9 @@ import Others from "./components/views/Others";
 import RecipeDetail from "./components/views/RecipeDetail";
 import Search from "./components/views/search";
 import Admin from "./components/views/Admin";
+import FeedBack from "./components/views/FeedBack";
 import RecipeManager from "./components/views/RecipeManager";
+import Feedback from "./components/views/Feedback";
 import { useEffect, useState } from "react";
 import { handleGetCurrentUser } from "./action/userAction";
 import CreateRecipe from "./components/views/CreateRecipe";
@@ -54,7 +56,8 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<Home />} />
-              <Route path="home" element={<Home />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
               <Route path="create-recipe" element={<CreateRecipe />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
@@ -68,6 +71,7 @@ function App() {
               <Route path="details" element={<RecipeDetail />} />
               <Route path="search" element={<Search />} />
               <Route path="users/admin" element={<Admin />} />
+              <Route path="/feedback" element={<FeedBack />} />
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>

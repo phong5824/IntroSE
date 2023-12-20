@@ -284,6 +284,24 @@ const deleteRecipeControl = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  const userId = req.params.userId;
+  const updatedProfile = req.body;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { user_id: userId },
+      { $set: updatedProfile },
+      { new: true }
+    );
+    // Trả về người dùng đã được cập nhật
+    res.json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error("Error updating user profile:", error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getAllUsersControl,
   getAccountControl,
@@ -296,4 +314,5 @@ module.exports = {
   changePassword,
   getRecipeManagerControl,
   deleteRecipeControl,
+  updateProfile,
 };
