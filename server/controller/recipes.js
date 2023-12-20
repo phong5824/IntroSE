@@ -129,7 +129,7 @@ const postRecipeControl = async (req, res) => {
     console.log(recipe_id);
 
     const newRecipe = new Recipe({
-      recipe_id: recipe_id+1,
+      recipe_id: recipe_id,
       recipe_name: recipe_name,
       nutrition: nutrition,
       ingredients_list: ingredients_list,
@@ -148,7 +148,11 @@ const postRecipeControl = async (req, res) => {
 
     await user.save();
 
-    res.json({ success: true, message: "Recipe created successfully" });
+    res.json({
+      success: true,
+      message: "Recipe created successfully",
+      recipe_id: recipe_id,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: "Internal server error" });

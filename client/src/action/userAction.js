@@ -56,17 +56,16 @@ export const handleGetUserByID = async (user_id) => {
   }
 };
 
-export const handleGetRecipesUser = async () => {
+export const handleGetRecipesUser = async (accessToken) => {
   try {
-    const token = localStorage.getItem("accessToken");
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     };
 
     const recipes = await axios.get(
-      "http://127.0.0.1:8000/users/recipeManager",
+      "http://127.0.0.1:8000/users/recipe-manager",
       config
     );
 
@@ -79,11 +78,8 @@ export const handleGetRecipesUser = async () => {
   }
 };
 
-export const handleDeleteRecipes = async (recipe_id) => {
+export const handleDeleteRecipes = async (recipe_id, accessToken) => {
   try {
-    // Get the authentication token from localStorage or wherever you store it
-    const token = localStorage.getItem("accessToken");
-
     // Gọi API để cập nhật trạng thái "ban" của người dùng
     const response = await axios.post(
       "http://127.0.0.1:8000/users/deleteRecipe",
@@ -92,7 +88,7 @@ export const handleDeleteRecipes = async (recipe_id) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -110,21 +106,23 @@ export const handleDeleteRecipes = async (recipe_id) => {
   }
 };
 
-export const updateUserProfile = async (updatedProfile, userId) => {
+export const updateUserProfile = async (
+  updatedProfile,
+  userId,
+  accessToken
+) => {
   try {
-    // Get the authentication token from localStorage or wherever you store it
-    const token = localStorage.getItem("accessToken");
     // Make an API request to update the user profile with token in headers
     const response = await axios.put(
       `http://127.0.0.1:8000/users/updateProfile/${userId}`,
       updatedProfile,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
-    console.log('Updated User in action:', response);
+    console.log("Updated User in action:", response);
 
     // Assuming the API response contains the updated user profile
     const updatedUserProfile = response.data;
@@ -135,4 +133,3 @@ export const updateUserProfile = async (updatedProfile, userId) => {
     throw error;
   }
 };
-

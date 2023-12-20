@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import Loading from "../modules/Loading";
-import { handleGetUser } from "../../action/accountAction";
+import { handleGetCurrentUser } from "../../action/userAction";
 import { updateUserProfile } from "../../action/userAction";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import {
   Clock,
   chatIcon,
@@ -46,7 +47,8 @@ const Profile = () => {
     try {
       const updatedUserProfile = await updateUserProfile(
         editingProfile,
-        userProfile.user_id
+        userProfile.user_id,
+        cookies.accessToken
       );
       const profile = await handleGetUser();
       setUserProfile(profile);
@@ -108,7 +110,7 @@ const Profile = () => {
                 <div className="flex items-center justify-center space-x-3">
                   <img className="h-5 w-5" src={RecipeIcon} alt="" />
                   <a
-                    href="/users/recipeManager"
+                    href="/users/recipe-manager"
                     className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
                   >
                     Your recipes
@@ -164,15 +166,15 @@ const Profile = () => {
               <div className="divide-y divide-gray-200">
                 <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7 text-center">
                   <h2 className="text-2xl leading-9 font-bold text-gray-900">
-                    {user.name}
+                    {userProfile.name}
                   </h2>
                   <div className="flex justify-center items-center space-x-4">
-                    <p className="text-gray-600">35K Followers</p>
-                    <p className="text-gray-600">11K Following</p>
+                    <p className="text-gray-600">\follower\</p>
+                    <p className="text-gray-600">\following\</p>
                   </div>
-                  <p className="text-gray-600">TP Hồ Chí Minh, Việt Nam</p>
+                  <p className="text-gray-600">\address\</p>
                   <p className="text-gray-600">{userProfile.account.email}</p>
-                  <p className="text-gray-600">+88 01749-565659</p>
+                  <p className="text-gray-600">\phone-number\</p>
 
                   <button className="mt-4 bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-full sm:w-auto">
                     Verify account

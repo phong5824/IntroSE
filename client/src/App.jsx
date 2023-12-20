@@ -70,6 +70,7 @@ function App() {
               <Route path="details" element={<RecipeDetail />} />
               <Route path="search" element={<Search />} />
               <Route path="users/admin" element={<Admin />} />
+              <Route path="users/recipe-manager" element={<RecipeManager />} />
               <Route path="/feedback" element={<FeedBack />} />
               <Route path="*" element={<NoPage />} />
             </Route>

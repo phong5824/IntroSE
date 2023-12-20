@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+
 import NavBar from "../modules/Navbar";
 import Footer from "../modules/Footer";
 import { handleCreateRecipe } from "../../action/recipesAction";
@@ -335,6 +336,7 @@ const CreateRecipeForm = ({ user, accessToken }) => {
   const [ingredientsList, setIngredientsList] = useState([]); // ["100g flour", "100ml water" ...
   const [steps, setSteps] = useState([]);
   const [nutritions, setNutritions] = useState([]); // ["Fat 10g  20%", "Protein 20g  40%", ...
+  const navigate = useNavigate();
 
   const onSubmit = async (user_id) => {
     const recipe = {
@@ -353,8 +355,10 @@ const CreateRecipeForm = ({ user, accessToken }) => {
       notify_fail("Please fill in all fields!");
       return;
     }
-    if (await handleCreateRecipe(recipe, accessToken)) {
+    const recipe_id = await handleCreateRecipe(recipe, accessToken);
+    if (recipe_id) {
       notify_success("Create recipe successfully!");
+      navigate(`/recipes/?ID=${recipe_id}`);
     }
   };
 

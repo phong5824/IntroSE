@@ -6,6 +6,7 @@ import axios from "axios";
 import { message } from "antd";
 import banIcon from "/src/assets/ban.png";
 import { notify_success, notify_fail, Toast_Container } from "../../toast";
+import { useCookies } from "react-cookie";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -42,8 +43,6 @@ const Admin = () => {
 
   const handleChangePasswordClick = async (accessToken) => {
     try {
-      // Get the authentication token from localStorage or wherever you store it
-
       if (!newPassword) {
         message.error("Password is invalid.");
         return;
@@ -88,8 +87,6 @@ const Admin = () => {
 
   const handleBanClick = async (userId, accessToken) => {
     try {
-      // Get the authentication token from localStorage or wherever you store it
-
       // Gọi API để cập nhật trạng thái "ban" của người dùng
       const response = await axios.post(
         "http://127.0.0.1:8000/users/admin/deleteUser",
@@ -114,85 +111,99 @@ const Admin = () => {
       console.error("Error deleting user:", error.message);
     }
   };
-};
 
-return (
-  <div>
-    <NavBar />
-    <h1 className="text-4xl font-bold text-center mt-4">User Management</h1>
-    {users && users.length > 0 ? (
-      <div className="w-full overflow-x-auto p-5">
-        <table className="w-full text-center table-auto">
-          <thead className="bg-green-200">
-            <tr>
-              <th className="border px-4 py-2">ID</th>
-              <th className="border px-4 py-2">Email</th>
-              <th className="border px-4 py-2">Full name</th>
-              <th className="border px-4 py-2">Role</th>
-              <th className="border px-4 py-2">Password</th>
-              <th className="border px-4 py-2">Change password</th>
-              <th className="border px-4 py-2">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.user_id}>
-                <td className="border px-4 py-2">{user.user_id}</td>
-                <td className="border px-4 py-2">{user.account.email}</td>
-                <td className="border px-4 py-2">{user.name}</td>
-                <td className="border px-4 py-2">
-                  {user.is_admin ? "ADMIN" : "USER"}
-                </td>
-                <td className="border px-4 py-2">{user.account.password}</td>
-                <td className="border px-4 py-2">
-                  {showChangePassword && selectedUserId === user.user_id ? (
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        className="border p-1 mr-2 rounded"
-                        placeholder="New password"
-                      />
-                      <button
-                        onClick={() => {
-                          handleChangePasswordClick(user.user_id);
-                        }}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => handleShowChangePassword(user.user_id)}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Change password
-                    </button>
-                  )}
-                  <Toast_Container />
-                </td>
-                <td className="border px-4 py-2">
-                  <img
-                    src={banIcon}
-                    alt="Ban Icon"
-                    className="w-8 h-8 mx-auto cursor-pointer hover:opacity-80 transition duration-300"
-                    onClick={() => {
-                      handleBanClick(user.user_id);
-                    }}
-                  />
-                </td>
+  return (
+    <div>
+      <NavBar />
+      <h1 className="text-4xl font-bold text-center mt-4">User Management</h1>
+      {users && users.length > 0 ? (
+        <div className="w-full overflow-x-auto p-5">
+          <table className="w-full text-center table-auto">
+            <thead className="bg-green-200">
+              <tr>
+                <th className="border px-4 py-2">ID</th>
+                <th className="border px-4 py-2">Email</th>
+                <th className="border px-4 py-2">Full name</th>
+                <th className="border px-4 py-2">Role</th>
+                <th className="border px-4 py-2">Password</th>
+                <th className="border px-4 py-2">Change password</th>
+                <th className="border px-4 py-2">Delete</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    ) : (
-      <p>No users found.</p>
-    )}
-    <Footer />
-  </div>
-);
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.user_id}>
+                  <td className="border px-4 py-2">{user.user_id}</td>
+                  <td className="border px-4 py-2">
+                    {user.account
+                      ? user.account.email
+                      : user.google_id
+                      ? "Google Account"
+                      : user.facebook_id
+                      ? "Facebook Account"
+                      : "Cant find email"}
+                  </td>
+                  <td className="border px-4 py-2">{user.name}</td>
+                  <td className="border px-4 py-2">
+                    {user.is_admin ? "ADMIN" : "USER"}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {user.account ? user.account.password : "No password"}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {user.account ? (
+                      showChangePassword && selectedUserId === user.user_id ? (
+                        <div className="flex justify-center items-center">
+                          <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            className="border p-1 mr-2 rounded"
+                            placeholder="New password"
+                          />
+                          <button
+                            onClick={() => {
+                              handleChangePasswordClick(cookies.accessToken);
+                            }}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => handleShowChangePassword(user.user_id)}
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Change password
+                        </button>
+                      )
+                    ) : (
+                      "Can't change password"
+                    )}
+                    <Toast_Container />
+                  </td>
+                  <td className="border px-4 py-2">
+                    <img
+                      src={banIcon}
+                      alt="Ban Icon"
+                      className="w-8 h-8 mx-auto cursor-pointer hover:opacity-80 transition duration-300"
+                      onClick={() => {
+                        handleBanClick(user.user_id, cookies.accessToken);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p>No users found.</p>
+      )}
+      <Footer />
+    </div>
+  );
+};
 
 export default Admin;

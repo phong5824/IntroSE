@@ -76,14 +76,14 @@ export const handleCreateRecipe = async (recipe, accessToken) => {
 
     if (result.data.success === true) {
       message.success("Create successfully!");
-      return true;
+      return result.data.recipe_id;
     } else {
       message.error(result.data.message);
     }
   } catch (err) {
     console.log(err);
   }
-  return false;
+  return null;
 };
 
 export const handleGetCommentsByRecipeId = async (recipeId) => {

@@ -84,7 +84,6 @@ const createUserControl = async (req, res) => {
 
 const getUserByUserIdControl = async (req, res) => {
   const userID = req.params.user_id;
-
   try {
     const user = await User.findOne({ user_id: userID });
 
