@@ -63,9 +63,7 @@ export const handleSearchRecipesID = async (ID) => {
   return false;
 };
 
-export const handleCreateRecipe = async (recipe) => {
-  // const accessToken = Cookies.get("accessToken");
-  const accessToken = localStorage.getItem("accessToken");
+export const handleCreateRecipe = async (recipe, accessToken) => {
   try {
     const result = await axios.post(
       "http://127.0.0.1:8000/recipe/create",
@@ -78,11 +76,9 @@ export const handleCreateRecipe = async (recipe) => {
     );
 
     if (result.data.success === true) {
-     
       message.success("Create successfully!");
       return true;
     } else {
-      
       message.error(result.data.message);
     }
   } catch (err) {

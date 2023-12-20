@@ -52,7 +52,6 @@ const getAccountControl = async (req, res) => {
   }
 };
 
-
 // @route POST API/POST
 // @desc Create user
 // @access private
@@ -66,7 +65,6 @@ const createUserControl = async (req, res) => {
   }
 
   try {
-    
     const newUser = new User({
       user_id: user_id,
       name: name,
@@ -84,13 +82,12 @@ const createUserControl = async (req, res) => {
   }
 };
 
-const getUserByUserIdControl = async (req,res) => {
-
+const getUserByUserIdControl = async (req, res) => {
   const userID = req.params.user_id;
-  
+
   try {
-    const user = await User.findOne({user_id : userID});
-    
+    const user = await User.findOne({ user_id: userID });
+
     if (!user) {
       return res
         .status(404)
@@ -101,7 +98,6 @@ const getUserByUserIdControl = async (req,res) => {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
-
 };
 
 const getProfileControl = async (req, res) => {
@@ -243,7 +239,7 @@ const getRecipeManagerControl = async (req, res) => {
 const deleteRecipeControl = async (req, res) => {
   try {
     const recipeID = req.body.recipe_id;
-   
+
     const roleUser = await User.findOne({ account: req.userid });
     // Find the user and remove the recipeID from the user_recipes array
     if (!roleUser) {
@@ -251,7 +247,6 @@ const deleteRecipeControl = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-
 
     if (roleUser.is_admin === false) {
       await User.findOneAndUpdate(

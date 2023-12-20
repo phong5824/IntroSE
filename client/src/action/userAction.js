@@ -2,12 +2,31 @@ import axios from "axios";
 import { Toast_Container, notify_success } from "./../toast";
 import { message } from "antd";
 
-export const handleGetAllUsers = async () => {
+// Get user
+export const handleGetCurrentUser = async (accessToken) => {
   try {
-    const token = localStorage.getItem("accessToken");
+    const result = await axios.get("http://127.0.0.1:8000/users/profile", {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+
+    if (result.data.success === true) {
+      return result.data.user;
+    } else {
+      message.error(result.data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return null;
+};
+
+export const handleGetAllUsers = async (accessToken) => {
+  try {
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     };
 
@@ -25,9 +44,8 @@ export const handleGetAllUsers = async () => {
 export const handleGetUserByID = async (user_id) => {
   try {
     const user = await axios.get(
-      `http://127.0.0.1:8000/users/getUser/${user_id}`,
+      `http://127.0.0.1:8000/users/getUser/${user_id}`
     );
-
 
     if (user.data.success) {
       return user.data.user;

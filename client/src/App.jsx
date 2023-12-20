@@ -14,34 +14,34 @@ import Search from "./components/views/search";
 import Admin from "./components/views/Admin";
 import RecipeManager from "./components/views/RecipeManager";
 import { useEffect, useState } from "react";
-import { handleGetUser } from "./action/accountAction";
-import { UserContext } from "./context/userContext";
+import { handleGetCurrentUser } from "./action/userAction";
 import CreateRecipe from "./components/views/CreateRecipe";
 import { CookiesProvider, useCookies } from "react-cookie";
 import NoPage from "./components/views/NoPage";
 
-// eslint-disable-next-line react/prop-types
-const HandleLoginStatus = ({ children, cookies }) => {
-  const [user, setUser] = useState(null);
-  const location = useLocation();
-  // const [cookies, setCookie] = useCookies(["accessToken"]);
+// const HandleLoginStatus = ({ children, cookies }) => {
+//   const [user, setUser] = useState(null);
+//   const [accessToken, setAccessToken] = useState(null);
+//   const location = useLocation();
 
-  useEffect(() => {
-    const fetchAccount = async () => {
-      const accessToken = cookies.accessToken;
-      console.log("accessToken", accessToken);
-      // const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        return;
-      }
-      setUser(await handleGetUser(accessToken));
-      console.log("user", user);
-    };
-    fetchAccount();
-  }, [location]); // Add location to the dependency array
+//   useEffect(() => {
+//     const fetchAccount = async () => {
+//       const accessToken = cookies.accessToken;
+//       console.log("accessToken", accessToken);
+//       if (!accessToken) {
+//         return;
+//       }
+//       setAccessToken(accessToken);
+//     };
+//     fetchAccount();
+//   }, [location]); // Add location to the dependency array
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
-};
+//   return (
+//     <AccessTokenContext.Provider value={accessToken}>
+//       {children}
+//     </AccessTokenContext.Provider>
+//   );
+// };
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
@@ -50,31 +50,28 @@ function App() {
     <div className="h-screen w-screen overflow-auto">
       <CookiesProvider>
         <BrowserRouter>
-          <HandleLoginStatus cookies={cookies}>
-            <Routes>
-              <Route path="/">
-                <Route index element={<Home />} />
-                <Route
-                  path="home"
-                  element={<Home removeCookie={removeCookie} />}
-                />
-                <Route path="create-recipe" element={<CreateRecipe />} />
-                <Route path="login" element={<Login setCookie={setCookie} />} />
-                <Route path="register" element={<Register />} />
-                <Route path="about-us" element={<AboutUs />} />
-                <Route path="blog" element={<Blog />} />
-                <Route path="reset-password" element={<ResetPassword />} />
-                <Route path="users/profile" element={<Profile />} />
-                <Route path="others" element={<Others />} />
-                <Route path="recipes/:recipeId" element={<RecipeDetail />} />
-                <Route path="recipes/" element={<RecipeDetail />} />
-                <Route path="details" element={<RecipeDetail />} />
-                <Route path="search" element={<Search />} />
-                <Route path="users/admin" element={<Admin />} />
-                <Route path="*" element={<NoPage />} />
-              </Route>
-            </Routes>
-          </HandleLoginStatus>
+          {/* <HandleLoginStatus cookies={cookies}> */}
+          <Routes>
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
+              <Route path="create-recipe" element={<CreateRecipe />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="about-us" element={<AboutUs />} />
+              <Route path="blog" element={<Blog />} />
+              <Route path="reset-password" element={<ResetPassword />} />
+              <Route path="users/profile" element={<Profile />} />
+              <Route path="others" element={<Others />} />
+              <Route path="recipes/:recipeId" element={<RecipeDetail />} />
+              <Route path="recipes/" element={<RecipeDetail />} />
+              <Route path="details" element={<RecipeDetail />} />
+              <Route path="search" element={<Search />} />
+              <Route path="users/admin" element={<Admin />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+          </Routes>
+          {/* </HandleLoginStatus> */}
         </BrowserRouter>
       </CookiesProvider>
     </div>

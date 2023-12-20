@@ -1,24 +1,31 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
 import avatar from "/src/assets/user.png";
+import { handleGetCurrentUser } from "../../action/userAction";
 import { handleLogout } from "../../action/accountAction";
+import { useCookies } from "react-cookie";
 
 const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
-  const user = useContext(UserContext);
-  // this useEffect is
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+  const [user, setUser] = useState(null);
+
+  const getUser = async () => {
+    const accessToken = cookies.accessToken;
+    if (!accessToken) {
+      setUser(null);
+    } else setUser(await handleGetCurrentUser(accessToken));
+  };
+
   useEffect(() => {
-    if (!user) {
-      return;
-    }
-  }, [user]);
+    getUser();
+  }, [cookies.accessToken]);
 
   const navigate = useNavigate();
 
   const navigateToLogout = () => {
-    handleLogout();
+    handleLogout(removeCookie);
     navigate("/login");
   };
 

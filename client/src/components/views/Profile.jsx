@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import Loading from "../modules/Loading";
-import { handleGetUser } from "../../action/accountAction";
+import { handleGetCurrentUser } from "../../action/userAction";
 import { useEffect, useState } from "react";
 import {
   Clock,
@@ -25,18 +25,18 @@ import Footer from "../modules/Footer";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
-  const [userProfile, setUserProfile] = useState(null);
-
+  const [user, setUser] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      const profile = await handleGetUser();
-      setUserProfile(profile);
+    const fetchUser = async () => {
+      const profile = await handleGetCurrentUser(cookies.accessToken);
+      setUser(profile);
     };
 
-    fetchUserProfile();
+    fetchUser();
   }, []);
 
-  if (!userProfile) {
+  if (!user) {
     return (
       <div className="absolute top-1/2 left-1/2">
         <Loading />;
@@ -122,14 +122,14 @@ const Profile = () => {
               <div className="divide-y divide-gray-200">
                 <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7 text-center">
                   <h2 className="text-2xl leading-9 font-bold text-gray-900">
-                    {userProfile.name}
+                    {user.name}
                   </h2>
                   <div className="flex justify-center items-center space-x-4">
                     <p className="text-gray-600">35K Followers</p>
                     <p className="text-gray-600">11K Following</p>
                   </div>
                   <p className="text-gray-600">TP Hồ Chí Minh, Việt Nam</p>
-                  <p className="text-gray-600">{userProfile.account.email}</p>
+                  <p className="text-gray-600">{user.account.email}</p>
                   <p className="text-gray-600">+88 01749-565659</p>
 
                   <button className="mt-4 bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-full sm:w-auto">
@@ -184,9 +184,9 @@ const Profile = () => {
                     <dt>Age:</dt>
                   </div>
                   <div className="text-left">
-                    <dd>{userProfile.name}</dd>
-                    <dd>{userProfile.gender}</dd>
-                    <dd>{userProfile.age}</dd>
+                    <dd>{user.name}</dd>
+                    <dd>{user.gender}</dd>
+                    <dd>{user.age}</dd>
                   </div>
                 </dl>
               </div>
