@@ -14,7 +14,6 @@ import Search from "./components/views/search";
 import Admin from "./components/views/Admin";
 import FeedBack from "./components/views/FeedBack";
 import RecipeManager from "./components/views/RecipeManager";
-import Feedback from "./components/views/Feedback";
 import { useEffect, useState } from "react";
 import { handleGetCurrentUser } from "./action/userAction";
 import CreateRecipe from "./components/views/CreateRecipe";
