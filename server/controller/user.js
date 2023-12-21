@@ -52,7 +52,6 @@ const getAccountControl = async (req, res) => {
   }
 };
 
-
 // @route POST API/POST
 // @desc Create user
 // @access private
@@ -66,7 +65,6 @@ const createUserControl = async (req, res) => {
   }
 
   try {
-
     const newUser = new User({
       user_id: user_id,
       name: name,
@@ -85,9 +83,7 @@ const createUserControl = async (req, res) => {
 };
 
 const getUserByUserIdControl = async (req, res) => {
-
   const userID = req.params.user_id;
-
   try {
     const user = await User.findOne({ user_id: userID });
 
@@ -101,7 +97,6 @@ const getUserByUserIdControl = async (req, res) => {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
-
 };
 
 const getProfileControl = async (req, res) => {
@@ -252,7 +247,6 @@ const deleteRecipeControl = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-
     if (roleUser.is_admin === false) {
       await User.findOneAndUpdate(
         { account: req.userid },
@@ -289,7 +283,6 @@ const deleteRecipeControl = async (req, res) => {
   }
 };
 
-
 const updateProfile = async (req, res) => {
   const userId = req.params.userId;
   const updatedProfile = req.body;
@@ -303,15 +296,10 @@ const updateProfile = async (req, res) => {
     // Trả về người dùng đã được cập nhật
     res.json({ success: true, user: updatedUser });
   } catch (error) {
-    console.error('Error updating user profile:', error.message);
-    res.status(500).json({ success: false, message: 'Internal Server Error' });
+    console.error("Error updating user profile:", error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
-
-
-
-
-
 
 module.exports = {
   getAllUsersControl,

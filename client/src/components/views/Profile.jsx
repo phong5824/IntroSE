@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Loading from "../modules/Loading";
-import { handleGetUser } from "../../action/accountAction";
+import { handleGetCurrentUser } from "../../action/userAction";
 import { updateUserProfile } from "../../action/userAction";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import {
   Clock,
   chatIcon,
@@ -26,10 +27,11 @@ import Footer from "../modules/Footer";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
   const [userProfile, setUserProfile] = useState(null);
   const [editingProfile, setEditingProfile] = useState({
-    name: '',
-    gender: '',
+    name: "",
+    gender: "",
     age: 0,
   });
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -43,7 +45,11 @@ const Profile = () => {
 
   const handleSaveProfile = async () => {
     try {
-      const updatedUserProfile = await updateUserProfile(editingProfile, userProfile.user_id);
+      const updatedUserProfile = await updateUserProfile(
+        editingProfile,
+        userProfile.user_id,
+        cookies.accessToken
+      );
       const profile = await handleGetUser();
       setUserProfile(profile);
       setShowEditProfile(false);
@@ -54,12 +60,12 @@ const Profile = () => {
 
   const handleCancel = () => {
     setShowEditProfile(false);
-  }
+  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const profile = await handleGetUser();
+        const profile = await handleGetCurrentUser(cookies.accessToken);
         setUserProfile(profile);
         setEditingProfile({
           name: profile.name,
@@ -104,7 +110,7 @@ const Profile = () => {
                 <div className="flex items-center justify-center space-x-3">
                   <img className="h-5 w-5" src={RecipeIcon} alt="" />
                   <a
-                    href="/users/recipeManager"
+                    href="/users/recipe-manager"
                     className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
                   >
                     Your recipes
@@ -163,12 +169,12 @@ const Profile = () => {
                     {userProfile.name}
                   </h2>
                   <div className="flex justify-center items-center space-x-4">
-                    <p className="text-gray-600">35K Followers</p>
-                    <p className="text-gray-600">11K Following</p>
+                    <p className="text-gray-600">\follower\</p>
+                    <p className="text-gray-600">\following\</p>
                   </div>
-                  <p className="text-gray-600">TP Hồ Chí Minh, Việt Nam</p>
+                  <p className="text-gray-600">\address\</p>
                   <p className="text-gray-600">{userProfile.account.email}</p>
-                  <p className="text-gray-600">+84 {userProfile.phone}</p>
+                  <p className="text-gray-600">\phone-number\</p>
 
                   <button className="mt-4 bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-full sm:w-auto">
                     Verify account
@@ -238,39 +244,49 @@ const Profile = () => {
                     Edit personal information
                   </button>
 
-
                   {showEditProfile && (
                     <div className="flex flex-col space-y-2 text-base">
                       <input
                         type="text"
                         value={editingProfile.name}
-                        onChange={(e) => handleEditProfileChange('name', e.target.value)}
+                        onChange={(e) =>
+                          handleEditProfileChange("name", e.target.value)
+                        }
                         className="bg-white rounded-full p-2 text-center"
                       />
                       <input
                         type="text"
                         value={editingProfile.gender}
-                        onChange={(e) => handleEditProfileChange('gender', e.target.value)}
+                        onChange={(e) =>
+                          handleEditProfileChange("gender", e.target.value)
+                        }
                         className="bg-white rounded-full p-2 text-center"
                       />
                       <input
                         type="number"
                         value={editingProfile.age}
-                        onChange={(e) => handleEditProfileChange('age', e.target.value)}
+                        onChange={(e) =>
+                          handleEditProfileChange("age", e.target.value)
+                        }
                         className="bg-white rounded-full p-2 text-center"
                       />
                       <div className="flex flex-row items-center justify-center space-x-3">
-                        <button className="w-1/2 p-1 bg-red-300 rounded-full text-gray-800 text-base"
-                          onClick={() => handleSaveProfile(editingProfile)}>Save</button>
-                        <button className="w-1/2 p-1 bg-red-300 rounded-full text-gray-800 text-base"
-                          onClick={() => handleCancel()}>Cancel</button>
+                        <button
+                          className="w-1/2 p-1 bg-red-300 rounded-full text-gray-800 text-base"
+                          onClick={() => handleSaveProfile(editingProfile)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="w-1/2 p-1 bg-red-300 rounded-full text-gray-800 text-base"
+                          onClick={() => handleCancel()}
+                        >
+                          Cancel
+                        </button>
                       </div>
-
                     </div>
                   )}
-
                 </div>
-
 
                 <div className="flex items-center justify-center space-x-3 mt-3">
                   <img className="h-6 w-6" src={KeyIcon} alt="" />
