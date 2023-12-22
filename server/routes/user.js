@@ -52,6 +52,8 @@ router.get(
   userController.getRecipeManagerControl
 );
 
+router.get("/blogManager", verifyToken, userController.getBlogManagerControl);
+
 router.get(`/getUser/:user_id`, userController.getUserByUserIdControl);
 
 router.post("/deleteRecipe", verifyToken, userController.deleteRecipeControl);

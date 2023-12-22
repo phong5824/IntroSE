@@ -1,30 +1,22 @@
-import React, { useContext } from "react";
-import Loading from "../modules/Loading";
-import { handleGetCurrentUser } from "../../action/userAction";
-import { updateUserProfile } from "../../action/userAction";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
+import { handleGetCurrentUser, updateUserProfile } from "../../action/userAction";
 import {
-  Clock,
-  chatIcon,
-  avatarIcon,
-  SendIcon,
-  Bookmark,
-  Share,
-  ProfileIcon,
-  NotiIcon,
-  KeyIcon,
-  EditIcon,
-  RecipeIcon,
   BlogIcon,
+  EditIcon,
   FavoriteIcon,
+  KeyIcon,
+  NotiIcon,
+  ProfileIcon,
+  RecipeIcon,
   fbIcon,
   instaIcon,
-  twIcon,
+  twIcon
 } from "../../assets";
-import NavBar from "../modules/Navbar";
 import Footer from "../modules/Footer";
-import { Link } from "react-router-dom";
+import Loading from "../modules/Loading";
+import NavBar from "../modules/Navbar";
 
 const Profile = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
@@ -45,12 +37,12 @@ const Profile = () => {
 
   const handleSaveProfile = async () => {
     try {
-      const updatedUserProfile = await updateUserProfile(
+      await updateUserProfile(
         editingProfile,
         userProfile.user_id,
         cookies.accessToken
       );
-      const profile = await handleGetUser();
+      const profile = await handleGetCurrentUser(cookies.accessToken);
       setUserProfile(profile);
       setShowEditProfile(false);
     } catch (error) {
@@ -130,10 +122,10 @@ const Profile = () => {
                 <div className="flex items-center justify-center space-x-3">
                   <img className="h-5 w-5" src={BlogIcon} alt="" />
                   <a
-                    href="/blog"
+                    href="/users/blogManager"
                     className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
                   >
-                    Blogs
+                    Your blogs
                   </a>
                 </div>
 
@@ -174,7 +166,7 @@ const Profile = () => {
                   </div>
                   <p className="text-gray-600">\address\</p>
                   <p className="text-gray-600">{userProfile.account.email}</p>
-                  <p className="text-gray-600">\phone-number\</p>
+                  <p className="text-gray-600">+84 {userProfile.phone}</p>
 
                   <button className="mt-4 bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-full sm:w-auto">
                     Verify account
@@ -273,7 +265,7 @@ const Profile = () => {
                       <div className="flex flex-row items-center justify-center space-x-3">
                         <button
                           className="w-1/2 p-1 bg-red-300 rounded-full text-gray-800 text-base"
-                          onClick={() => handleSaveProfile(editingProfile)}
+                          onClick={() => handleSaveProfile()}
                         >
                           Save
                         </button>

@@ -78,6 +78,28 @@ export const handleGetRecipesUser = async (accessToken) => {
   }
 };
 
+export const handleGetBlogUser = async (accessToken) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    const blogs = await axios.get(
+      "http://127.0.0.1:8000/users/blogManager",
+      config
+    );
+
+    if (blogs.data.success) {
+      return blogs.data.blogs;
+    }
+  } catch (error) {
+    console.error("Error fetching all users:", error.message);
+    throw error;
+  }
+}
+
 export const handleDeleteRecipes = async (recipe_id, accessToken) => {
   try {
     // Gọi API để cập nhật trạng thái "ban" của người dùng

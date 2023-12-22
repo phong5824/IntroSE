@@ -6,6 +6,7 @@ const User = require("../model/userModel");
 const Account = require("../model/accountModel");
 const Recipe = require("../model/recipeModel");
 const Comment = require("../model/commentModel");
+const Blog = require("../model/blogModel");
 
 const verifyToken = require("../middleware/account");
 const mongoose = require("mongoose");
@@ -235,6 +236,27 @@ const getRecipeManagerControl = async (req, res) => {
   }
 };
 
+const getBlogManagerControl = async (req, res) => {
+  try {
+    const user = await User.findOne({ account: req.userid });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (user.is_admin === false) {
+      const blogs = await Blog.find({ user_id: user.user_id });
+      return res.status(200).json({ success: true, blogs });
+    }
+    else {
+      const blogs = await Blog.find({});
+      return res.status(200).json({ success: true, blogs });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
 const deleteRecipeControl = async (req, res) => {
   try {
     const recipeID = req.body.recipe_id;
@@ -312,6 +334,7 @@ module.exports = {
   deleteUser,
   changePassword,
   getRecipeManagerControl,
+  getBlogManagerControl,
   deleteRecipeControl,
   updateProfile,
 };
