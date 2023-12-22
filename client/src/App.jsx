@@ -19,6 +19,8 @@ import { handleGetCurrentUser } from "./action/userAction";
 import CreateRecipe from "./components/views/CreateRecipe";
 import { CookiesProvider, useCookies } from "react-cookie";
 import NoPage from "./components/views/NoPage";
+import BlogManager from "./components/views/BlogManager";
+
 
 // const HandleLoginStatus = ({ children, cookies }) => {
 //   const [user, setUser] = useState(null);
@@ -72,6 +74,7 @@ function App() {
               <Route path="users/admin" element={<Admin />} />
               <Route path="users/recipe-manager" element={<RecipeManager />} />
               <Route path="/feedback" element={<FeedBack />} />
+              <Route path="users/blogManager" element={<BlogManager />} />
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>

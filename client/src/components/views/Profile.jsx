@@ -130,10 +130,10 @@ const Profile = () => {
                 <div className="flex items-center justify-center space-x-3">
                   <img className="h-5 w-5" src={BlogIcon} alt="" />
                   <a
-                    href="/blog"
+                    href="/users/blogManager"
                     className="flex-grow bg-green-400 text-black p-2.5 my-2 rounded-r-full transition duration-300 ease-in-out hover:bg-green-500 shadow-md"
                   >
-                    Blogs
+                    Your blogs
                   </a>
                 </div>
 
@@ -174,7 +174,7 @@ const Profile = () => {
                   </div>
                   <p className="text-gray-600">\address\</p>
                   <p className="text-gray-600">{userProfile.account.email}</p>
-                  <p className="text-gray-600">\phone-number\</p>
+                  <p className="text-gray-600">+84 {userProfile.phone}</p>
 
                   <button className="mt-4 bg-blue-300 text-gray-800 rounded-full hover:font-semibold hover:bg-blue-400 px-4 py-1.5 w-full sm:w-auto">
                     Verify account
