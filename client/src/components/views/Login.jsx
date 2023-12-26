@@ -22,9 +22,11 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
   if (cookies.accessToken) {
     navigate(location.state?.from || "/home");
   }
+}, []);
 
   const onSubmit = async (event) => {
     event.preventDefault();

@@ -96,7 +96,7 @@ export const RecipeDetail = () => {
 
   const handleUpdateFavoriteRecipes = async () => {
     try {
-      const accessToken = checkAuth();
+      const accessToken = checkAuth(cookies.accessToken);
 
       if (!accessToken) {
         message.error("Please login to save recipes!");
