@@ -124,7 +124,6 @@ export const handleLogout = (removeCookie) => {
 };
 
 export function checkAuth(accessToken) {
-  if (accessToken) {
-    return true;
-  }
+ 
+    return accessToken;
 }

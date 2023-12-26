@@ -278,6 +278,13 @@ const deleteRecipeControl = async (req, res) => {
         { $pull: { user_recipes: recipeID } },
         { new: true } // This option returns the updated document
       );
+
+      await User.updateMany(
+        { favourites: recipeID },
+        { $pull: { favourites: recipeID } },
+        { new: true }
+      );
+
       await Recipe.findOneAndDelete({ recipe_id: recipeID });
       await Comment.deleteMany({ recipe_id: recipeID });
     }
@@ -289,6 +296,12 @@ const deleteRecipeControl = async (req, res) => {
         { user_id: recipe.author },
         { $pull: { user_recipes: recipeID } },
         { new: true } // This option returns the updated document
+      );
+
+      await User.updateMany(
+        { favourites: recipeID },
+        { $pull: { favourites: recipeID } },
+        { new: true }
       );
       await Recipe.findOneAndDelete({ recipe_id: recipeID });
       await Comment.deleteMany({ recipe_id: recipeID });
