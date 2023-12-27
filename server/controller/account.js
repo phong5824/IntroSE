@@ -33,16 +33,18 @@ const loginControl = async (req, res) => {
           if (!result.is_verified) {
             return res.status(401).json({
               success: false,
-              message: "Account not verified",
+              message: "Account has not been verified!",
             });
           }
           const accessToken = jwt.sign(
             { userid: result._id },
             process.env.ACCESS_TOKEN_SECRET
           );
-          res
-            .status(200)
-            .json({ success: true, message: "Login Success", accessToken });
+          res.status(200).json({
+            success: true,
+            message: "Login successfully",
+            accessToken,
+          });
         } else {
           res
             .status(404)
@@ -122,22 +124,25 @@ const registerWithVerificationControl = async (req, res) => {
           account: account._id,
         });
 
+        const verificationCode = Math.floor(100000 + Math.random() * 900000);
         const token = new Token({
           email: email,
-          token: crypto.randomBytes(16).toString("hex"),
+          code: verificationCode,
         });
 
+        await account.save();
+        await user.save();
         await token.save();
-        console.log("account mail: ", token.email, " token: ", token.token);
+        console.log("account mail: ", token.email, " code: ", token.code);
 
         // WARNING: This is not a good way to generate a verification code.
         // This is the verification code.
         // const verificationCode = Math.floor(100000 + Math.random() * 900000);
-        let link = "http://localhost:3000/account/verify/" + token.token;
+        // let link = "http://127.0.0.1:8000/account/verify/" + token.code;
         let isSentSuccessfully = await sendverificationLink(
           email,
           "Verify your account",
-          link
+          verificationCode
         );
         if (!isSentSuccessfully) {
           return res.status(500).json({
@@ -172,7 +177,7 @@ const registerWithVerificationControl = async (req, res) => {
 
 const confirmEmailControl = async (req, res) => {
   try {
-    const token = await Token.findOne({ token: req.params.token });
+    const token = await Token.findOne({ code: req.params.code });
     console.log("confirm token: ", token);
     await Account.findOne({ email: token.email })
       .then(async (result) => {
@@ -182,7 +187,10 @@ const confirmEmailControl = async (req, res) => {
             message: "We were unable to find a account for this token.",
           });
         } else {
-          await Account.findOneAndUpdate({ is_verified: true });
+          result.is_verified = true;
+          await result.save();
+          Token.findOneAndRemove({ code: req.params.code }).exec();
+
           res.status(200).json({
             success: true,
             message: "The account has been verified. Please log in.",

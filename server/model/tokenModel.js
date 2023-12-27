@@ -7,8 +7,8 @@ const tokenSchema = new Schema({
     ref: "accounts",
     required: true,
   },
-  token: {
-    type: String,
+  code: {
+    type: Number,
     required: true,
   },
   created_time: {
