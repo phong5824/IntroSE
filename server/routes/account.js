@@ -2,15 +2,17 @@ const express = require("express");
 const router = express.Router();
 const accountController = require("../controller/account");
 
-router.post("/api/login", accountController.loginControl);
-router.post("/api/register", accountController.registerControl);
+router.post("/login", accountController.loginControl);
+// router.post("/register", accountController.registerControl);
+router.post("/register", accountController.registerWithVerificationControl);
+router.get("/confirm/:token", accountController.confirmEmailControl);
 router.post(
   "/api/sendVerificationCode",
   accountController.sendVerificationCodeControl
 );
-router.post("/api/changePassword", accountController.changePasswordControl);
-router.put("/api/resetPassword", accountController.resetPasswordControl);
-router.post("/api/login/google", accountController.loginWithGoogleControl);
-// router.post("/api/login/facebook", accountController.loginWithFacebookControl);
+router.post("/changePassword", accountController.changePasswordControl);
+router.put("/resetPassword", accountController.resetPasswordControl);
+router.post("/login/google", accountController.loginWithGoogleControl);
+// router.post("/login/facebook", accountController.loginWithFacebookControl);
 
 module.exports = router;

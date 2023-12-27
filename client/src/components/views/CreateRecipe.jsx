@@ -7,7 +7,6 @@ import { handleCreateRecipe } from "../../action/recipesAction";
 import cookingICon from "../../assets/cooking.png";
 import cookingBookICon from "../../assets/cook-book.png";
 import deleteICon from "../../assets/trash_can.svg";
-import { checkAuth } from "../../action/accountAction";
 import { notify_fail, notify_success, Toast_Container } from "../../toast";
 import { message } from "antd";
 import { useCookies } from "react-cookie";
@@ -393,7 +392,7 @@ export default function CreateRecipe() {
       const user = await handleGetCurrentUser(cookies.accessToken);
       setUser(user);
     };
-    if (!checkAuth(cookies.accessToken)) {
+    if (!cookies.accessToken) {
       navigate("/login", { state: { from: location } }); // Chuyển hướng người dùng đến trang đăng nhập
       message.error("Please login to create recipe!");
     } else {
