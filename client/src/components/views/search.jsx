@@ -13,6 +13,7 @@ import commentIcon from "/src/assets/chat.png";
 import likeIcon from "/src/assets/heart.png";
 import Menu from "../modules/Menu";
 import NavBar from "../modules/Navbar";
+
 const initialRecipesToShow = 10;
 
 const Search = () => {
@@ -26,6 +27,7 @@ const Search = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const fetchRecommendedRecipes = async () => {
@@ -51,6 +53,12 @@ const Search = () => {
 
   const handleAvatarClick = () => {
     setShowLoginForm(!showLoginForm);
+    setShowMenu(false);
+  };
+
+  const handleMenuClick = () => {
+    setShowMenu(!showMenu);
+    setShowLoginForm(false);
   };
 
   const navigate = useNavigate();
