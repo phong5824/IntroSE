@@ -2,7 +2,7 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 
-const sendverificationLink = async (email, subject, code) => {
+const sendMail = async (email, subject, code) => {
   try {
     const transporter = nodemailer.createTransport({
       host: process.env.HOST,
@@ -19,7 +19,7 @@ const sendverificationLink = async (email, subject, code) => {
       from: process.env.USER,
       to: email,
       subject: subject,
-      text: "Verify your account",
+      text: subject,
       // html: `
       // <div>
       // <h1>Verify your account</h1>
@@ -33,7 +33,7 @@ const sendverificationLink = async (email, subject, code) => {
       // `,
       html: `
       <div>
-      <h1>Verify your account</h1>
+      <h1>${subject}</h1>
       <p>Your verification code is: <strong>${code}</strong></p>
       <p>This code will expire in 10 minutes</p>
       <p>Thanks</p>
@@ -52,4 +52,4 @@ const sendverificationLink = async (email, subject, code) => {
   }
 };
 
-module.exports = sendverificationLink;
+module.exports = sendMail;

@@ -5,7 +5,13 @@ const accountController = require("../controller/account");
 router.post("/login", accountController.loginControl);
 // router.post("/register", accountController.registerControl);
 router.post("/register", accountController.registerWithVerificationControl);
-router.get("/verify/:code", accountController.confirmEmailControl);
+router.get("/register/verify/:code", accountController.verifyAccountControl);
+router.post("/forgotPassword", accountController.forgotPasswordControl);
+router.get(
+  "/forgotPassword/verify/:code",
+  accountController.verifyForgotPasswordControl
+);
+
 // router.post(
 //   "/api/sendVerificationCode",
 //   accountController.sendVerificationCodeControl
