@@ -381,6 +381,7 @@ const UpdateRecipeForm = ({ recipe_id, accessToken }) => {
       setSteps(step_directions);
       setNutritions(recipeData?.nutritions);
       setDirections(recipeData?.directions);
+  
     };
 
     fetchRecipeData();
@@ -435,7 +436,6 @@ const UpdateRecipeForm = ({ recipe_id, accessToken }) => {
       recipe,
       accessToken
     );
-    console.log(updateRecipe);
 
     if (updateRecipe) {
       notify_success("Update recipe successfully!");
