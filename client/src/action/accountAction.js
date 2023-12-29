@@ -89,6 +89,32 @@ export const handleResetPassword = async (userData) => {
 //       image: photoURL,
 //       lastLoginTime: metadata.lastSignInTime,
 //     };
+// login with google
+export const handleLoginWithGoogle1 = async () => {
+  window.open("http://127.0.0.1:8000/auth/google", "_self");
+  const result = await axios
+    .get("http://127.0.0.1:8000/auth/login/success", {
+      withCredentials: true,
+    })
+    .then((res) => {
+      console.log(res);
+      return true;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// export const handleLoginWithGoogle = async () => {
+//   try {
+//     const data = await signInWithPopup(auth, googleprovider);
+//     const { displayName, email, metadata, photoURL } = data.user;
+//     const loggedInUser = {
+//       name: displayName,
+//       email: email,
+//       image: photoURL,
+//       lastLoginTime: metadata.lastSignInTime,
+//     };
 
 //     const result = await axios.post(
 //       "http://127.0.0.1:8000/account/google/login",

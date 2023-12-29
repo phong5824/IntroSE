@@ -116,6 +116,19 @@ const getProfileControl = async (req, res) => {
   }
 };
 
+const getFavouriteRecipesControl = async (req, res) => {
+  const user = await User.findOne({ account: req.userid });
+  
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+
+  const favouriteRecipeIds = user.favourites;
+
+  const recipes = await Recipe.find({ recipe_id: { $in: favouriteRecipeIds } });
+  return res.status(200).json({ success: true, recipes: recipes });
+};
+
 const getFavouriteControl = async (req, res) => {
   try {
     const fauvorite_recipes = await User.find({ account: req.userid }).populate(
@@ -240,20 +253,23 @@ const getBlogManagerControl = async (req, res) => {
   try {
     const user = await User.findOne({ account: req.userid });
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     if (user.is_admin === false) {
       const blogs = await Blog.find({ user_id: user.user_id });
       return res.status(200).json({ success: true, blogs });
-    }
-    else {
+    } else {
       const blogs = await Blog.find({});
       return res.status(200).json({ success: true, blogs });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ success: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 };
 
@@ -275,6 +291,13 @@ const deleteRecipeControl = async (req, res) => {
         { $pull: { user_recipes: recipeID } },
         { new: true } // This option returns the updated document
       );
+
+      await User.updateMany(
+        { favourites: recipeID },
+        { $pull: { favourites: recipeID } },
+        { new: true }
+      );
+
       await Recipe.findOneAndDelete({ recipe_id: recipeID });
       await Comment.deleteMany({ recipe_id: recipeID });
     }
@@ -286,6 +309,12 @@ const deleteRecipeControl = async (req, res) => {
         { user_id: recipe.author },
         { $pull: { user_recipes: recipeID } },
         { new: true } // This option returns the updated document
+      );
+
+      await User.updateMany(
+        { favourites: recipeID },
+        { $pull: { favourites: recipeID } },
+        { new: true }
       );
       await Recipe.findOneAndDelete({ recipe_id: recipeID });
       await Comment.deleteMany({ recipe_id: recipeID });
@@ -302,6 +331,86 @@ const deleteRecipeControl = async (req, res) => {
       .json({ success: true, message: "Recipe deleted successfully" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const editRecipeControl = async (req, res) => {
+  try {
+    const recipeID = req.params.recipeId;
+
+    const recipe = await Recipe.findOne({ recipe_id: recipeID });
+
+    if (!recipe) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Recipe not found" });
+    }
+
+    const roleUser = await User.findOne({ account: req.userid });
+
+    if (!roleUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    if (roleUser.is_admin === false) {
+      if (recipe.author !== roleUser.user_id) {
+        return res.status(403).json({ success: false, message: "Forbidden" });
+      }
+    }
+
+    const {
+      recipe_name,
+      prep_time,
+      cook_time,
+      ingredients_list,
+      directions,
+      nutritions,
+      img_src,
+      ingredients,
+    } = req.body;
+
+    console.log(ingredients);
+    
+    if (recipe_name) {
+      recipe.recipe_name = recipe_name;
+    }
+
+    if (prep_time){
+      recipe.prep_time = prep_time;
+    }
+
+    if (cook_time){
+      recipe.cook_time = cook_time;
+    }
+
+    if (ingredients_list) {
+      recipe.ingredients_list = ingredients_list;
+    }
+
+    if (directions) {
+      recipe.directions = directions;
+      }
+    if (nutritions) {
+      recipe.nutritions = nutritions;
+    }
+
+    if (img_src) {
+      recipe.img_src = img_src;
+    }
+
+    if (ingredients) {
+      recipe.ingredients = ingredients;
+    }
+
+    await recipe.save();
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Recipe updated successfully", recipe });
+  } catch (error) {
+    // message.error(error.message);
   }
 };
 
@@ -329,6 +438,7 @@ module.exports = {
   createUserControl,
   getUserByUserIdControl,
   getProfileControl,
+  getFavouriteRecipesControl,
   getFavouriteControl,
   addFavouriteControl,
   deleteUser,
@@ -336,5 +446,6 @@ module.exports = {
   getRecipeManagerControl,
   getBlogManagerControl,
   deleteRecipeControl,
+  editRecipeControl,
   updateProfile,
 };

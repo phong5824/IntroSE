@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../modules/Navbar";
 import Footer from "../modules/Footer";
 import deleteIcon from "../../assets/trash_can.svg";
@@ -11,18 +12,29 @@ import {
   handleGetRecipesUser,
   handleDeleteRecipes,
 } from "../../action/userAction";
+
 const Recipe = (recipe) => {
+  const navigate = useNavigate();
+  const navigationEditRecipes = () => {
+    navigate(`/edit-recipe/${recipe.recipe_id}`);
+  };
+
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
   return (
     <div className="flex items-center justify-center min-h-[50vh]">
       <div className="bg-white rounded-lg shadow pl-10 h-64 grid grid-cols-4 w-2/3 items-center justify-center ">
         <div className="col-span-3 flex items-center ">
           <div className="w-2/3 overflow-hidden">
-            <img
-              className="object-cover h-48 w-full rounded"
-              src={recipe.img_src}
-              alt=""
-            />
+            <Link
+              to={`/recipes/?ID=${recipe.recipe_id}`}
+              key={recipe.recipe_id}
+            >
+              <img
+                  className="object-cover h-48 w-full rounded transform transition duration-500 hover:scale-105"
+                src={recipe.img_src}
+                alt=""
+              />
+            </Link>
           </div>
 
           <div className="w-1/2 space-y-5">
@@ -46,7 +58,12 @@ const Recipe = (recipe) => {
         </div>
 
         <div className="col-span-1 flex items-center justify-center ml-10 space-x-5">
-          <img className="h-10 w-10" src={EditIcon} alt="" />
+          <button
+            className="bg-white-300 hover:bg-yellow-300 text-white font-bold py-2 px-4 rounded"
+            onClick={() => navigationEditRecipes()}
+          >
+            <img className="h-5 w-10" src={EditIcon} alt="" />
+          </button>
 
           <button
             className="bg-white-300 hover:bg-yellow-300 text-white font-bold py-2 px-4 rounded"

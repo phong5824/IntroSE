@@ -56,6 +56,28 @@ export const handleGetUserByID = async (user_id) => {
   }
 };
 
+export const handleGetFavouriteRecipesUser = async (accessToken) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    const favouriteRecipes = await axios.get(
+      "http://127.0.0.1:8000/users/favourites", // Update the endpoint
+      config
+    );
+
+    if (favouriteRecipes.data.success) {
+      return favouriteRecipes.data.recipes;
+    }
+  } catch (error) {
+    console.error("Error fetching favourite recipes:", error.message);
+    throw error;
+  }
+};
+
 export const handleGetRecipesUser = async (accessToken) => {
   try {
     const config = {
@@ -155,3 +177,28 @@ export const updateUserProfile = async (
     throw error;
   }
 };
+
+export const handleUpdateRecipe = async (recipe_id, updatedRecipe, token) => {
+  try {
+
+    const response = await axios.put(
+      `http://127.0.0.1:8000/users/edit-recipe/${recipe_id}`,
+      updatedRecipe,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    );
+
+    const updatedRecipeProfile = response.data;
+    if(updatedRecipeProfile.success) {
+    return updatedRecipeProfile;
+    }
+
+  } catch (error) {
+    console.error("Error updating recipe.", error.message);
+    throw error;
+  }
+}
+
