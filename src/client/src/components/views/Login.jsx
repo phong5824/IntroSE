@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { handleLogin } from "../../action/accountAction";
-// import { handleLoginWithGoogle } from "../../action/authAction";
 import { handleLoginWithGoogle } from "../../action/accountAction";
-// import GoogleLogin from "react-google-login";
 
 import Logo from "../../assets/logo-recipe.png";
 import GoogleIcon from "../../assets/google.png";
@@ -32,19 +30,20 @@ export default function Login() {
       password: password,
     };
     if (email === "" || password === "") {
-      message.warning("Vui lòng điền đầy đủ thông tin");
+      message.warning("Please fill in all fields");
       return;
     }
     const userId = await handleLogin(userData, setCookie);
     if (userId) {
       navigate(location.state?.from || "/home");
     } else {
-      message.error("Đã xảy ra lỗi");
+      message.error("Email or password is incorrect");
     }
   };
 
   const onLoginWithGoogle = async () => {
     const isLoggedIn = await handleLoginWithGoogle();
+
     if (isLoggedIn) {
       navigate(location.state?.from || "/home");
     }

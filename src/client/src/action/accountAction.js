@@ -1,12 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
-// import {
-//   auth,
-//   googleprovider,
-// } from "../components/Firebase/firebase.initialize";
-// import { signInWithPopup, signOut } from "firebase/auth";
 
-//Login
 export const handleLogin = async (userData, setCookie) => {
   try {
     const result = await axios.post(

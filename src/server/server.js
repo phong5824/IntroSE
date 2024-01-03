@@ -7,6 +7,7 @@ const cookieSession = require("cookie-session");
 const session = require("express-session");
 const passportSetup = require("./config/passport/passport.js");
 const passport = require("passport");
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const mongoose = require("mongoose");
 const accountRouter = require("./routes/account");

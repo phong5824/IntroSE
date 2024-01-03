@@ -1,14 +1,10 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-// const GithubStrategy = require("passport-github2").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const passport = require("passport");
 const User = require("../../model/userModel");
 const Account = require("../../model/accountModel");
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-
-// GITHUB_CLIENT_ID =
-// GITHUB_CLIENT_SECRET =
 
 const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
@@ -56,6 +52,11 @@ passport.use(
           user_id: maxUserId + 1,
           email: profile.emails[0].value,
           google_id: profile.id,
+          name: profile.displayName,
+          avatar: profile.photos[0].value,
+          profile_image : "https://e7.pngegg.com/pngimages/358/473/png-clipart-computer-icons-user-profile-person-child-heroes.png",
+          gender: "other",
+          is_admin: false,
         });
 
         const user = new User({
@@ -81,18 +82,6 @@ passport.use(
   )
 );
 
-// passport.use(
-//   new GithubStrategy(
-//     {
-//       clientID: GITHUB_CLIENT_ID,
-//       clientSecret: GITHUB_CLIENT_SECRET,
-//       callbackURL: "/auth/github/callback",
-//     },
-//     function (accessToken, refreshToken, profile, done) {
-//       done(null, profile);
-//     }
-//   )
-// );
 
 passport.use(
   new FacebookStrategy(
