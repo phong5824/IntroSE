@@ -15,7 +15,7 @@ const recipesRouter = require("./routes/recipes");
 const ingredientRouter = require("./routes/ingredient.js");
 const commentRouter = require("./routes/comment.js");
 const blogRouter = require("./routes/blog.js");
-const oauthRouter = require("./routes/oauth.js");
+const authRouter = require("./routes/auth.js");
 // const authRouter = require("./routes/auth.js");
 
 const chatbotRouter = require("./routes/chatbot.js");
@@ -23,7 +23,11 @@ const db = require("./db/index");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
@@ -31,7 +35,7 @@ app.use(
     secret: "your secret",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // set to true if your using https
+    cookie: { secure: false, domain: ".app.localhost" }, // set to true if your using https
   })
 );
 app.use(passport.initialize());
@@ -44,8 +48,7 @@ app.use("/", recipesRouter);
 app.use("/users", userRouter);
 app.use("/ingredients", ingredientRouter);
 app.use("/comment", commentRouter);
-app.use("/oauth", oauthRouter);
-// app.use("/auth", authRouter);
+app.use("/", authRouter);
 db.on("error", (stream) => {
   console.log("mongodb error");
 });

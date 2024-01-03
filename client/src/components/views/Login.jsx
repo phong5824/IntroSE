@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { handleLogin } from "../../action/accountAction";
-import { handleLoginWithGoogle } from "../../action/authAction";
+// import { handleLoginWithGoogle } from "../../action/authAction";
+import { handleLoginWithGoogle } from "../../action/accountAction";
 // import GoogleLogin from "react-google-login";
 
 import Logo from "../../assets/logo-recipe.png";
@@ -19,10 +20,10 @@ export default function Login() {
   const location = useLocation();
 
   useEffect(() => {
-  if (cookies.accessToken) {
-    navigate(location.state?.from || "/home");
-  }
-}, []);
+    if (cookies.accessToken) {
+      navigate(location.state?.from || "/home");
+    }
+  }, []);
 
   const onSubmit = async (event) => {
     event.preventDefault();

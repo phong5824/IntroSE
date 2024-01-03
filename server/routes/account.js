@@ -16,9 +16,9 @@ router.get(
 //   "/api/sendVerificationCode",
 //   accountController.sendVerificationCodeControl
 // );
-router.post("/changePassword", accountController.changePasswordControl);
-router.put("/resetPassword", accountController.resetPasswordControl);
-router.post("/login/google", accountController.loginWithGoogleControl);
+// router.post("/changePassword", accountController.changePasswordControl);
+// router.put("/resetPassword", accountController.resetPasswordControl);
+// router.post("/login/google", accountController.loginWithGoogleControl);
 // router.post("/login/facebook", accountController.loginWithFacebookControl);
 
 module.exports = router;

@@ -13,8 +13,10 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
 
   const getUser = async () => {
     const accessToken = cookies.accessToken;
+    console.log("accesstoken: ", accessToken);
     if (!accessToken) {
       setUser(null);
+      console.log("onot found");
     } else setUser(await handleGetCurrentUser(accessToken));
   };
 
