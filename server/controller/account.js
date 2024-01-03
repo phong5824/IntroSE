@@ -166,7 +166,7 @@ const registerWithVerificationControl = async (req, res) => {
 
 const verifyAccountControl = async (req, res) => {
   try {
-    const token = await Token.findOne({ code: req.params.code });
+    const token = await Token.findOne({ code: req.body.otp });
     console.log("confirm token: ", token);
     await Account.findOne({
       email: token.email,

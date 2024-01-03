@@ -36,7 +36,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
-              <Route path="/home/:token" element={<Home />} />
+              <Route path="/home/:token" element={<NoPage />} />
               <Route path="create-recipe" element={<CreateRecipe />} />
               <Route path="/edit-recipe/:recipeid" element={<UpdateRecipe />} />
               <Route path="login" element={<Login />} />

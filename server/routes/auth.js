@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const Account = require("../model/accountModel");
 
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:3000/";
 
@@ -51,7 +52,7 @@ router.get("/auth/google/callback", function (req, res, next) {
         return next(err);
       }
 
-      console.log("user auth: ", user);
+      // const account = Account.findOne({ google_id: user.google_id });
       const accessToken = jwt.sign(
         { userid: user.account },
         process.env.ACCESS_TOKEN_SECRET
@@ -63,7 +64,6 @@ router.get("/auth/google/callback", function (req, res, next) {
       //   accessToken,
       // });
 
-      //
       return res.redirect(CLIENT_URL + "?token=" + accessToken);
     });
   })(req, res, next);

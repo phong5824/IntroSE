@@ -50,6 +50,24 @@ export const handleRegister = async (userData) => {
   return false;
 };
 
+export const handleSubmitOTP = async (data) => {
+  try {
+    const result = await axios.post(
+      "http://127.0.0.1:8000/account/register/verify",
+      data
+    );
+    if (result.data.success == true) {
+      message.success(result.data.message);
+      return true;
+    } else {
+      message.error(result.data.error);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return false;
+};
+
 //Reset Password
 export const handleResetPassword = async (userData) => {
   try {

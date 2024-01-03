@@ -39,7 +39,7 @@ const Home = () => {
         console.log(err);
       }
     };
-    if (!cookies.accessToken) {
+    if (cookies.accessToken) {
       fetchUser();
     }
   }, [cookies.accessToken]);
