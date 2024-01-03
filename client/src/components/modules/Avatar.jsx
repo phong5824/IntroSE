@@ -15,7 +15,11 @@ const Avatar = ({ showLoginForm, setShowLoginForm, onClick }) => {
     const accessToken = cookies.accessToken;
     if (!accessToken) {
       setUser(null);
-    } else setUser(await handleGetCurrentUser(accessToken));
+      console.log("if noot token");
+    } else {
+      setUser(await handleGetCurrentUser(accessToken));
+      console.log("else token user: ", user);
+    }
   };
 
   useEffect(() => {

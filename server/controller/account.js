@@ -11,16 +11,6 @@ const User = require("../model/userModel");
 const Token = require("../model/tokenModel");
 const crypto = require("crypto");
 
-const verificationCodes = {};
-
-const transporter = nodemailer.createTransport({
-  service: "Gmail",
-  auth: {
-    user: "1nguyenan19072003@gmail.com",
-    pass: "ufns qanp qyvb fdhe",
-  },
-});
-
 const loginControl = async (req, res) => {
   const { email, password } = req.body;
 
