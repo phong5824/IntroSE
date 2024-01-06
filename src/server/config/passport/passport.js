@@ -69,6 +69,7 @@ passport.use(
           return cb(null, user);
         }
         console.log("profile: ", profile);
+        console.log("profile.picture: ", profile._json.picture);
         const maxUserId = await Account.estimatedDocumentCount();
         const newAccount = new Account({
           user_id: maxUserId + 1,
@@ -79,7 +80,6 @@ passport.use(
         const user = new User({
           user_id: maxUserId + 1,
           name: profile.displayName,
-          profile_image: profile.photos[0].value,
           is_admin: false,
           account: newAccount._id,
         });

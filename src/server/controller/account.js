@@ -38,7 +38,7 @@ const loginControl = async (req, res) => {
         } else {
           res
             .status(404)
-            .json({ success: false, error: "Incorrect password!" });
+            .json({ success: false, error: "Email or password is incorrect!" });
         }
       }
     })
@@ -167,7 +167,7 @@ const verifyAccountControl = async (req, res) => {
         if (!result) {
           res.status(400).json({
             success: false,
-            message: "We were unable to find a account for this token.",
+            message: "We were unable to find an account for this token.",
           });
         } else {
           result.is_verified = true;
