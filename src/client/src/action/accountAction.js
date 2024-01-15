@@ -9,7 +9,7 @@ export const handleLogin = async (userData, setCookie) => {
     );
 
     if (result.data.success === true) {
-      message.success("Login successful!");
+      message.success(result.data.message);
       setCookie("accessToken", result.data.accessToken, {
         path: "/",
         maxAge: 60 * 60 * 24 * 7, // Expires after 1week
@@ -37,6 +37,7 @@ export const handleRegister = async (userData) => {
       return true;
     } else {
       message.error(result.data.error);
+      return false;
     }
   } catch (err) {
     console.log(err);
@@ -45,21 +46,17 @@ export const handleRegister = async (userData) => {
 };
 
 export const handleSubmitOTP = async (data) => {
-  try {
-    const result = await axios.post(
-      "https://127.0.0.1:8000/account/register/verify",
-      data
-    );
-    if (result.data.success == true) {
-      message.success(result.data.message);
-      return true;
-    } else {
-      message.error(result.data.error);
-    }
-  } catch (err) {
-    console.log(err);
+  const result = await axios.post(
+    "https://127.0.0.1:8000/account/register/verify",
+    data
+  );
+  if (result.data.success == true) {
+    message.success(result.data.message);
+    return true;
+  } else {
+    message.error(result.data.message);
+    return false;
   }
-  return false;
 };
 
 //Reset Password

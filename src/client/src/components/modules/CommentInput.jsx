@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { SendIcon } from "../../assets";
+import { message } from "antd";
 
 const CommentInput = ({ recipeId, userId, onCommentSubmit }) => {
   const [comment, setComment] = useState("");
 
   const handleSendComment = async (e) => {
     e.preventDefault();
+    if (!userId) {
+      message.error("Please login to comment");
+      return;
+    }
     if (comment.trim() !== "") {
       try {
         const content = comment;

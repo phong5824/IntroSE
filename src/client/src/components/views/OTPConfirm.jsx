@@ -64,7 +64,7 @@ export default function OTPConfirm() {
           >
             {/* ... Existing code ... */}
             <div className="bg-green-300 text-black text-base text-center p-2 px-4 my-1 mx-auto w-[300px]">
-              We have sent the 4-digit OTP code to your email. If you have not
+              We have sent the 6-digit OTP code to your email. If you have not
               received the message, please click
               <span className="font-bold"> resend OTP</span>.
             </div>
@@ -93,7 +93,7 @@ export default function OTPConfirm() {
               ) : (
                 <button
                   type="button"
-                  className="text-blue-500 underline text-sm font-bold ml-2"
+                  className="text-blue-500 text-sm font-bold ml-2"
                   onClick={handleResendOTP}
                 >
                   Resend OTP

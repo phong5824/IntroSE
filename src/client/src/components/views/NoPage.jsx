@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { message } from "antd";
 
 export default function NoPage() {
   const [cookie, setCookie] = useCookies(["accessToken"]);
@@ -18,9 +19,10 @@ export default function NoPage() {
         maxAge: 60 * 60 * 24 * 7, // Expires after 1week
         sameSite: true,
       });
+
       navigate("/home");
     }
   }, []);
 
-  return <div>NoPage</div>;
+  return <h1>NoPage</h1>;
 }

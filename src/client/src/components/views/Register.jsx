@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { handleRegister } from "../../action/accountAction";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Logo from "../../assets/logo-recipe.png";
 import { message } from "antd";
 import { useCookies } from "react-cookie";
@@ -16,7 +16,7 @@ export default function Register() {
   if (cookies.accessToken) {
     navigate(location.state?.from || "/home");
   }
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const userData = {
       name: name,
@@ -28,8 +28,8 @@ export default function Register() {
       return;
     }
 
-    if (email.indexOf("@") === -1) {
-      message.warning("Email is invalid!");
+    if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email) === false) {
+      message.warning("Email is invalid");
       return;
     }
 
@@ -39,11 +39,11 @@ export default function Register() {
     }
 
     if (password.length > 20) {
-      message.warning("Password must be less than 20 characters!");
+      message.warning("Password must be at most 20 characters!");
       return;
     }
 
-    if (handleRegister(userData)) {
+    if (await handleRegister(userData)) {
       navigate("/confirm-otp");
       // navigate("/login");
     }
@@ -63,7 +63,7 @@ export default function Register() {
             onSubmit={onSubmit}
           >
             <div className="bg-green-300 text-black text-lg font-semibold text-left p-2 px-4 my-1 mx-auto w-[max-content]">
-              User name
+              User Name
             </div>
             <input
               type="text"
@@ -75,7 +75,7 @@ export default function Register() {
               placeholder="Insert here..."
             />
             <div className="bg-green-300 text-black text-lg font-semibold text-left p-2 px-4 my-1 mx-auto w-[max-content]">
-              Your email
+              Email
             </div>
             <input
               type="text"
@@ -101,6 +101,12 @@ export default function Register() {
             <button className="btn w-[50%] py-2 rounded-full mt-4 text-black text-base text-center cursor-pointer mx-auto bg-red-400 hover:bg-red-500 hover:font-semibold hover:shadow-lg transition duration-300">
               Register
             </button>
+            <Link
+              to="/login"
+              className="text-gray-700 hover:font-bold mt-3 mx-auto"
+            >
+              Already have an account? Login
+            </Link>
           </form>
         </div>
       </div>
