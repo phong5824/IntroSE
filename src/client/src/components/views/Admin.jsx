@@ -9,13 +9,14 @@ import NavBar from "../modules/Navbar";
 import banImage from "/src/assets/ban.png";
 import changePWImage from "/src/assets/changePW.png";
 import searchIcon from "/src/assets/loupe.png";
+import promoteImage from "/src/assets/promote.png";
 
 import ConfirmDialog from "../modules/ConfirmDialog";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
   const [newPassword, setNewPassword] = useState("");
-  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [foundUser, setFoundUser] = useState(null);
@@ -43,23 +44,73 @@ const Admin = () => {
     fetchUsers();
   }, [users]);
 
-  const handleShowChangePassword = (userId) => {
-    setShowChangePassword(true);
+  const handleShowResetPassword = (userId) => {
+    setShowResetPassword(true);
     setSelectedUserId(userId);
   };
 
-  const handleChangePasswordClick = async (accessToken) => {
+  const handleResetPasswordClick = async (userId, accessToken) => {
     try {
-      if (!newPassword) {
-        message.error("Password is invalid.");
-        return;
-      }
       // Gửi yêu cầu đổi mật khẩu trực tiếp
       const response = await axios.post(
-        "https://127.0.0.1:8000/users/admin/changepassword",
+        "https://127.0.0.1:8000/users/admin/resetPassword",
         {
-          userId: selectedUserId,
-          newPassword: newPassword,
+          userId: userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        message.success("Password reset successfully!");
+        // Update user's status in state or component
+      } else {
+        console.error("Error resetting password:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error resetting password:", error.message);
+    }
+  };
+
+  const handlePromoteClick = async (userId) => {
+    try {
+      // Call API to update user's "is_admin" status
+      const response = await axios.post(
+        "https://127.0.0.1:8000/users/admin/promoteUser",
+        {
+          userId: userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.accessToken}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        message.success("User promoted successfully!");
+        // Update user's status in state or component
+      } else {
+        console.error("Error promoting user:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error promoting user:", error.message);
+    }
+  };
+
+  const handleBanClick = async () => {
+    setShowDialog(true);
+  };
+
+  const handleConfirm = async (userId, accessToken) => {
+    setShowDialog(false);
+    try {
+      // Call API to update user's "ban" status
+      const response = await axios.post(
+        "https://127.0.0.1:8000/users/admin/deleteUser",
+        {
+          userId: userId,
         },
         {
           headers: {
@@ -68,73 +119,26 @@ const Admin = () => {
         }
       );
 
-      // Kiểm tra phản hồi từ server và xử lý nếu cần
+      // Handle response from server
       if (response.data.success) {
-        const updatedUsers = users.map((user) =>
-          user.user_id === selectedUserId
-            ? { ...user, account: { ...user.account, password: newPassword } }
-            : user
-        );
-
-        // Cập nhật state
-        setUsers(updatedUsers);
-        // Đặt lại trạng thái để ẩn input và reset dữ liệu
-        setShowChangePassword(false);
-        setSelectedUserId(null);
-        setNewPassword("");
-
-        message.success("Password changed successfully!");
+        message.success("User deleted successfully!");
+        // Update user's status in state or component
       } else {
-        console.error("Error changing password:", response.data.message);
+        console.error("Error deleting user:", response.data.message);
       }
     } catch (error) {
-      console.error("Error changing password:", error.message);
+      console.error("Error deleting user:", error.message);
     }
   };
 
-  const handleBanClick = async () => {
-    setShowDialog(true);
-  };
-
-  const handleConfirm = async (userId,accessToken) => {
-    setShowDialog(false);
-      try {
-        // Call API to update user's "ban" status
-        const response = await axios.post(
-          "https://127.0.0.1:8000/users/admin/deleteUser",
-          {
-            userId: userId,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-  
-        // Handle response from server
-        if (response.data.success) {
-          message.success("User deleted successfully!");
-          // Update user's status in state or component
-        } else {
-          console.error("Error deleting user:", response.data.message);
-        }
-      } catch (error) {
-        console.error("Error deleting user:", error.message);
-      }
-
-  }
-
   const handleCancel = () => {
     setShowDialog(false);
-  }
+  };
 
   const handleSearch = () => {
-    
-    const foundUser = users.find(
-      (user) => user.account.email.toLowerCase().includes(searchTerm.toLowerCase())
+    const foundUser = users.find((user) =>
+      user.account.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    
 
     if (foundUser) {
       setFoundUser(foundUser);
@@ -149,7 +153,6 @@ const Admin = () => {
     }
   };
 
-  
   return (
     <div className="home-wrapper h-screen overflow-y-auto">
       <NavBar />
@@ -195,9 +198,10 @@ const Admin = () => {
                   <th className="p-2">Role</th>
                   {/* <th className="">Password</th> */}
                   <th className="whitespace-no-wrap text-center">
-                    Change Password
+                    Reset Password
                   </th>
                   <th className="whitespace-no-wrap text-center">Delete</th>
+                  <th className="whitespace-no-wrap text-center">Promote</th>
                 </tr>
               </thead>
               <tbody>
@@ -212,11 +216,11 @@ const Admin = () => {
                   <td className="p-2">{foundUser.account.email}</td>
                   <td className="p-2">{foundUser.gender}</td>
                   <td className="p-2">{foundUser.age}</td>
-                 
+
                   <td className="whitespace-no-wrap text-center">
                     {!foundUser.account.google_id &&
                     !foundUser.account.facebook_id ? (
-                      showChangePassword &&
+                      showResetPassword &&
                       selectedUserId === foundUser.user_id ? (
                         <div className="flex justify-center items-center ">
                           <input
@@ -228,7 +232,10 @@ const Admin = () => {
                           />
                           <button
                             onClick={() => {
-                              handleChangePasswordClick(cookies.accessToken);
+                              handleResetPasswordClick(
+                                foundUser.user_id,
+                                cookies.accessToken
+                              );
                             }}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded"
                           >
@@ -238,21 +245,23 @@ const Admin = () => {
                       ) : (
                         <button
                           onClick={() =>
-                            handleShowChangePassword(foundUser.user_id)
+                            handleResetPasswordClick(
+                              foundUser.user_id,
+                              cookies.accessToken
+                            )
                           }
                           className="text-white px-2 py-1 rounded max-w-[50px]"
                         >
                           <img
                             src={changePWImage}
-                            alt="Change Password"
+                            alt="Reset Password"
                             className="w-7 h-auto"
                           />
                         </button>
                       )
                     ) : (
-                      "Can't change password"
+                      "Can't reset password"
                     )}
-                   
                   </td>
 
                   <td className="whitespace-no-wrap text-center">
@@ -264,6 +273,27 @@ const Admin = () => {
                     >
                       <img src={banImage} alt="Delete" className="w-8 h-auto" />
                     </button>
+                  </td>
+                  <td className="whitespace-no-wrap text-center">
+                    {!foundUser.is_admin ? (
+                      <button
+                        onClick={() => {
+                          handlePromoteClick(
+                            foundUser.user_id,
+                            cookies.accessToken
+                          );
+                        }}
+                        className="text-white px-2 py-1 rounded max-w-[50px]"
+                      >
+                        <img
+                          src={promoteImage}
+                          alt="Promote"
+                          className="w-8 h-auto"
+                        />
+                      </button>
+                    ) : (
+                      "Can't promote"
+                    )}
                   </td>
                 </tr>
               </tbody>
@@ -281,14 +311,15 @@ const Admin = () => {
                 <th className="p-2">Role</th>
                 {/* <th className="">Password</th> */}
                 <th className="whitespace-no-wrap text-center">
-                  Change Password
+                  Reset Password
                 </th>
                 <th className="whitespace-no-wrap text-center">Delete</th>
+                <th className="whitespace-no-wrap text-center">Promote</th>
               </tr>
             </thead>
             <tbody>
               {users &&
-                users.map((user,index) => (
+                users.map((user, index) => (
                   <tr key={index} className="">
                     <td className="p-2">
                       {user?.account?.google_id
@@ -301,11 +332,10 @@ const Admin = () => {
                     <td className="p-2">{user.gender}</td>
                     <td className="p-2">{user.age}</td>
                     <td className="p-2">{user.is_admin ? "Admin" : "User"}</td>
-                    
+
                     <td className="whitespace-no-wrap text-center">
                       {!user.account.google_id && !user.account.facebook_id ? (
-                        showChangePassword &&
-                        selectedUserId === user.user_id ? (
+                        showResetPassword && selectedUserId === user.user_id ? (
                           <div className="flex justify-center items-center ">
                             <input
                               type="password"
@@ -316,7 +346,10 @@ const Admin = () => {
                             />
                             <button
                               onClick={() => {
-                                handleChangePasswordClick(cookies.accessToken);
+                                handleResetPasswordClick(
+                                  user.user_id,
+                                  cookies.accessToken
+                                );
                               }}
                               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded"
                             >
@@ -326,19 +359,22 @@ const Admin = () => {
                         ) : (
                           <button
                             onClick={() =>
-                              handleShowChangePassword(user.user_id)
+                              handleResetPasswordClick(
+                                user.user_id,
+                                cookies.accessToken
+                              )
                             }
                             className="text-white px-2 py-1 rounded max-w-[50px]"
                           >
                             <img
                               src={changePWImage}
-                              alt="Change Password"
+                              alt="Reset Password"
                               className="w-7 h-auto"
                             />
                           </button>
                         )
                       ) : (
-                        "Can't change password"
+                        "Can't reset password"
                       )}
                       <Toast_Container />
                     </td>
@@ -355,14 +391,36 @@ const Admin = () => {
                           className="w-8 h-auto"
                         />
                       </button>
-                      {
-                        showDialog && <ConfirmDialog 
-                        message="Are you sure you want to delete this user?"
-                        onConfirm={() => handleConfirm(user.user_id,cookies.accessToken)}
-                        onCancel={handleCancel}
+                      {showDialog && (
+                        <ConfirmDialog
+                          message="Are you sure you want to delete this user?"
+                          onConfirm={() =>
+                            handleConfirm(user.user_id, cookies.accessToken)
+                          }
+                          onCancel={handleCancel}
                         />
-                       }
-
+                      )}
+                    </td>
+                    <td className="whitespace-no-wrap text-center">
+                      {!user.is_admin ? (
+                        <button
+                          onClick={() => {
+                            handlePromoteClick(
+                              user.user_id,
+                              cookies.accessToken
+                            );
+                          }}
+                          className="text-white px-2 py-1 rounded max-w-[50px]"
+                        >
+                          <img
+                            src={promoteImage}
+                            alt="Promote"
+                            className="w-8 h-auto"
+                          />
+                        </button>
+                      ) : (
+                        "Can't promote"
+                      )}
                     </td>
                   </tr>
                 ))}

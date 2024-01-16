@@ -26,6 +26,40 @@ const resetPasswordMailTemplate = (code) => {
   `;
 };
 
+const adminResetPasswordMailTemplate = () => {
+  return `
+  <div>
+  <h1>Admin has reset your password</h1>
+  <p>Your new password is: <strong>123456</strong></p>
+  <p>Please login with your new password</p>
+  <p>Thanks</p>
+  <p>Love Cook</p>
+  </div>
+  `;
+};
+
+const adminChangePasswordMailTemplate = (newPassword) => {
+  return `
+  <div>
+  <h1>Admin has change your password</h1>
+  <p>Your new password is: <strong>${newPassword}</strong></p>
+  <p>Thanks</p>
+  <p>Love Cook</p>
+  </div>
+  `;
+};
+
+const adminDeleteAccountMailTemplate = () => {
+  return `
+  <div>
+  <h1>Admin has deleted your account</h1>
+  <p>Please contact admin for more information</p>
+  <p>Thanks</p>
+  <p>Love Cook</p>
+  </div>
+  `;
+};
+
 const feedBackTemplate = (email_body) => {
   return `
   <div>
@@ -61,6 +95,15 @@ const sendMail = async (email, mailType, content) => {
     } else if (mailType === "feedback") {
       subject = "Feedback";
       html = feedBackTemplate(content);
+    } else if (mailType === "adminResetPassword") {
+      subject = "Admin has reset your password";
+      html = adminResetPasswordMailTemplate();
+    } else if (mailType === "adminChangePassword") {
+      subject = "Admin has change your password";
+      html = adminChangePasswordMailTemplate(content);
+    } else if (mailType === "adminDeleteAccount") {
+      subject = "Admin has delete your account";
+      html = adminDeleteAccountMailTemplate();
     }
 
     await transporter.sendMail({

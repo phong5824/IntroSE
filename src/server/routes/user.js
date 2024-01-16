@@ -28,7 +28,11 @@ router.post("/", verifyToken, userController.createUserControl);
 
 router.get("/profile", verifyToken, userController.getProfileControl);
 
-router.get("/favourites", verifyToken, userController.getFavouriteRecipesControl);
+router.get(
+  "/favourites",
+  verifyToken,
+  userController.getFavouriteRecipesControl
+);
 router.post("/favourites", verifyToken, userController.addFavouriteControl);
 
 // router.put("/edit", verifyToken, userController.editProfileUserControl);
@@ -47,6 +51,10 @@ router.post(
 // @access private
 router.post("/admin/deleteUser", verifyToken, userController.deleteUser);
 
+router.post("/admin/resetPassword", verifyToken, userController.resetPassword);
+
+router.post("/admin/promoteUser", verifyToken, userController.promoteUser);
+
 router.get(
   "/recipe-manager",
   verifyToken,
@@ -64,6 +72,10 @@ router.post("/deleteRecipe", verifyToken, userController.deleteRecipeControl);
 // @access private
 router.put("/updateProfile/:userId", userController.updateProfile);
 
-router.put(`/edit-recipe/:recipeId`,verifyToken,userController.editRecipeControl);
+router.put(
+  `/edit-recipe/:recipeId`,
+  verifyToken,
+  userController.editRecipeControl
+);
 
 module.exports = router;

@@ -17,7 +17,7 @@ const schema = new Schema({
   password: {
     type: String,
     required: true,
-    default: "123456",
+    default: "xxxxxx",
   },
   is_verified: {
     type: Boolean,

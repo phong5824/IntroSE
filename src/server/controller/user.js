@@ -12,16 +12,20 @@ const verifyToken = require("../middleware/account");
 const mongoose = require("mongoose");
 const blogModel = require("../model/blogModel");
 const commentModel = require("../model/commentModel");
-const {hashPassword} = require("../utils/hash");
+const { hashPassword } = require("../utils/hash");
+const { MailType } = require("../utils/mailType");
+const sendMail = require("../utils/sendMail");
 // @route GET API
 // @desc GET user
 // @access private
 
 const getAllUsersControl = async (req, res) => {
   try {
-    const currentUser = await User.findOne({ account: req.userid })
-    .populate("account", ["email", "password"]);
-  
+    const currentUser = await User.findOne({ account: req.userid }).populate(
+      "account",
+      ["email", "password"]
+    );
+
     if (!currentUser) {
       return res
         .status(403)
@@ -32,12 +36,10 @@ const getAllUsersControl = async (req, res) => {
     }
 
     // Lấy tất cả người dùng
-    
+
     const allUsers = await User.find({})
       .populate("account", ["email", "password"])
       .sort({ user_id: 1 });
-
-    
 
     res.status(200).json({ success: true, users: allUsers });
   } catch (error) {
@@ -205,11 +207,61 @@ const deleteUser = async (req, res) => {
 
     const account = await Account.findByIdAndDelete(user.account);
 
+    let isSentSuccessfully = await sendMail(
+      account.email,
+      MailType.ADMIN_DELETE_ACCOUNT,
+      ""
+    );
+    if (!isSentSuccessfully) {
+      return res.status(500).json({
+        success: false,
+        message: "Error sending mail to delete account",
+      });
+    }
     return res
       .status(200)
       .json({ success: true, message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error.message);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findOne({ user_id: userId });
+    if (!user) {
+      console.log("User not found", userId);
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    const account = await Account.findById(user.account);
+    console.log("account", account);
+    const newPassword = "123456";
+    const hashedPassword = await hashPassword(newPassword);
+    account.password = hashedPassword;
+    await account.save();
+
+    let isSentSuccessfully = await sendMail(
+      account.email,
+      MailType.ADMIN_RESET_PASSWORD,
+      ""
+    );
+    if (!isSentSuccessfully) {
+      return res.status(500).json({
+        success: false,
+        message: "Error sending mail to reset password",
+      });
+    }
+    return res
+      .status(200)
+      .json({ success: true, message: "Reset password successfully" });
+  } catch (error) {
+    console.error("Error reset password:", error.message);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
@@ -239,6 +291,11 @@ const changePassword = async (req, res) => {
 
     // Save the updated account document
     await account.save();
+    // let isSentSuccessfully = await sendMail(
+    //   account.email,
+    //   MailType.ADMIN_CHANGE_PASSWORD,
+    //   verificationCode
+    // );
 
     return res
       .status(200)
@@ -248,6 +305,28 @@ const changePassword = async (req, res) => {
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
+  }
+};
+
+const promoteUser = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findOne({ user_id: userId });
+    if (!user) {
+      return res
+
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    user.is_admin = true;
+    await user.save();
+    return res
+
+      .status(200)
+      .json({ success: true, message: "Promote user successfully" });
+  } catch (error) {
+    console.error("Error promoting user:", error.message);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -460,8 +539,10 @@ module.exports = {
   getFavouriteRecipesControl,
   getFavouriteControl,
   addFavouriteControl,
+  promoteUser,
   deleteUser,
   changePassword,
+  resetPassword,
   getRecipeManagerControl,
   getBlogManagerControl,
   deleteRecipeControl,
