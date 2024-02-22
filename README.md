@@ -1,5 +1,5 @@
 # IntroSE_21TN
-
+Video demo: https://www.youtube.com/watch?v=ZHkJ78wBq4g
 - Open 2 terminals
 
 ## Client
